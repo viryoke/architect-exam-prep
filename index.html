@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统架构设计师冲刺备考网站</title>
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #fafafa;
+            background-image:
+                linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px),
+                linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+            background-size: 40px 40px, 40px 40px, 80px 80px, 80px 80px;
+            padding: 15px;
+            color: #333;
+            min-height: 100vh;
+        }
+
+        /* 白板边框效果 */
+        .whiteboard-container {
+            position: relative;
+            background: rgba(255,255,255,0.3);
+            border: 12px solid #1976d2;
+            border-radius: 8px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 倒计时横幅 */
+        .countdown-banner {
+            background: rgba(211,47,47,0.1);
+            border: 3px solid #d32f2f;
+            border-radius: 8px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 3px 3px 0 rgba(211,47,47,0.2);
+        }
+
+        .countdown-title {
+            color: #d32f2f;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 22px;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+        }
+
+        .countdown-days {
+            display: flex;
+            gap: 10px;
+        }
+
+        .day-box {
+            background: #d32f2f;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 28px;
+            text-align: center;
+            min-width: 60px;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+        }
+
+        .day-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .exam-info {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .exam-info strong {
+            color: #d32f2f;
+        }
+
+        /* 页面标题 */
+        .page-title {
+            color: #d32f2f;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 32px;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 4px solid #d32f2f;
+            text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 360px;
+            gap: 20px;
+            min-height: calc(100vh - 250px);
+        }
+
+        /* 7天学习计划表格 */
+        .study-plan-section {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 3px 3px 0 rgba(25,118,210,0.2);
+        }
+
+        /* 科目列样式优化 - 标签不换行 */
+        .subject-tags-wrapper {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 4px;
+            align-items: center;
+        }
+
+        /* 科目标签 - 更紧凑 */
+        .subject-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .section-title {
+            color: #1976d2;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '◆';
+            color: #d32f2f;
+        }
+
+        /* 学习计划表格 */
+        .plan-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .plan-table th {
+            background: rgba(25,118,210,0.1);
+            color: #1976d2;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 14px;
+            padding: 10px 12px;
+            text-align: left;
+            border: 2px solid #1976d2;
+        }
+
+        .plan-table th:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+
+        .plan-table th:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .plan-table td {
+            padding: 12px 12px;
+            font-size: 13px;
+            background: rgba(255,255,255,0.8);
+            border: 2px solid rgba(25,118,210,0.3);
+            transition: all 0.3s;
+        }
+
+        .plan-table td:first-child {
+            border-radius: 8px 0 0 8px;
+            border-left: 3px solid #1976d2;
+        }
+
+        .plan-table td:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+
+        .plan-table tr:hover td {
+            background: rgba(25,118,210,0.1);
+            border-color: #1976d2;
+        }
+
+        /* 日期单元格 */
+        .day-cell {
+            font-weight: 700;
+            color: #1976d2;
+        }
+
+        .day-number {
+            display: inline-block;
+            background: #1976d2;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 16px;
+            margin-right: 8px;
+        }
+
+        /* 科目标签 - 更紧凑 */
+        .subject-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .subject-tag.red {
+            background: rgba(211,47,47,0.15);
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+        }
+
+        .subject-tag.blue {
+            background: rgba(25,118,210,0.15);
+            color: #1976d2;
+            border: 1px solid #1976d2;
+        }
+
+        .subject-tag.green {
+            background: rgba(56,142,60,0.15);
+            color: #388e3c;
+            border: 1px solid #388e3c;
+        }
+
+        .subject-tag.orange {
+            background: rgba(255,152,0,0.15);
+            color: #ff9800;
+            border: 1px solid #ff9800;
+        }
+
+        /* 内容要点 */
+        .content-points {
+            color: #666;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        /* 任务checkbox列表 */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 12px;
+            line-height: 1.6;
+            cursor: pointer;
+            padding: 3px 0;
+        }
+
+        .task-item:hover {
+            color: #1976d2;
+        }
+
+        .task-checkbox {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #1976d2;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            background: transparent;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .task-checkbox:hover {
+            background: rgba(25,118,210,0.1);
+        }
+
+        .task-checkbox.checked {
+            background: #388e3c;
+            border-color: #388e3c;
+        }
+
+        .task-checkbox.checked::after {
+            content: '✓';
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .task-text {
+            flex: 1;
+        }
+
+        .task-text.completed {
+            color: #666;
+            text-decoration: line-through;
+        }
+
+        /* 状态进度 */
+        .status-progress {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .mini-progress-bar {
+            width: 80px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .mini-progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            background: #1976d2;
+        }
+
+        .mini-progress-fill.completed {
+            background: #388e3c;
+        }
+
+        .progress-percent-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: #1976d2;
+        }
+
+        .progress-percent-text.completed {
+            color: #388e3c;
+        }
+
+        /* 右侧进度区域 */
+        .progress-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            height: 100%;
+        }
+
+        /* 总进度卡片 */
+        .total-progress-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #d32f2f;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 3px 3px 0 rgba(211,47,47,0.2);
+        }
+
+        .progress-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(#388e3c 0deg 0deg, #e0e0e0 0deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px auto;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .progress-circle::before {
+            content: '';
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #fff;
+            position: absolute;
+        }
+
+        .progress-value {
+            position: relative;
+            z-index: 1;
+            color: #388e3c;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .progress-label {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* 分科目进度 */
+        .subject-progress-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 3px 3px 0 rgba(25,118,210,0.2);
+        }
+
+        .progress-item {
+            margin-bottom: 10px;
+        }
+
+        .progress-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .progress-name {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .progress-percent {
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.red {
+            background: #d32f2f;
+        }
+
+        .progress-fill.blue {
+            background: #1976d2;
+        }
+
+        .progress-fill.green {
+            background: #388e3c;
+        }
+
+        /* 今日推荐卡片 */
+        .today-recommend-card {
+            background: rgba(255,152,0,0.15);
+            border: 3px solid #ff9800;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 3px 3px 0 rgba(255,152,0,0.2);
+        }
+
+        .today-recommend-card .section-title::before {
+            color: #ff9800;
+        }
+
+        .today-recommend-card .section-title {
+            color: #ff9800;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .recommend-item {
+            background: rgba(255,255,255,0.8);
+            padding: 6px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            border: 2px solid rgba(255,152,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .recommend-item:hover {
+            background: rgba(255,152,0,0.2);
+            transform: translateX(5px);
+        }
+
+        .recommend-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .recommend-title {
+            font-weight: 700;
+            font-size: 12px;
+            color: #333;
+        }
+
+        .recommend-desc {
+            font-size: 10px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        /* 快速导航区域 */
+        .quick-nav-section {
+            margin-top: 25px;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+        }
+
+        .nav-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 3px 3px 0;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .nav-card.red {
+            border-color: #d32f2f;
+            box-shadow: 3px 3px 0 rgba(211,47,47,0.2);
+        }
+
+        .nav-card.red:hover {
+            background: rgba(211,47,47,0.15);
+        }
+
+        .nav-card.blue {
+            border-color: #1976d2;
+            box-shadow: 3px 3px 0 rgba(25,118,210,0.2);
+        }
+
+        .nav-card.blue:hover {
+            background: rgba(25,118,210,0.15);
+        }
+
+        .nav-card.green {
+            border-color: #388e3c;
+            box-shadow: 3px 3px 0 rgba(56,142,60,0.2);
+        }
+
+        .nav-card.green:hover {
+            background: rgba(56,142,60,0.15);
+        }
+
+        .nav-card.orange {
+            border-color: #ff9800;
+            box-shadow: 3px 3px 0 rgba(255,152,0,0.2);
+        }
+
+        .nav-card.orange:hover {
+            background: rgba(255,152,0,0.15);
+        }
+
+        .nav-card.purple {
+            border-color: #7b1fa2;
+            box-shadow: 3px 3px 0 rgba(123,31,162,0.2);
+        }
+
+        .nav-card.purple:hover {
+            background: rgba(123,31,162,0.15);
+        }
+
+        .nav-card.teal {
+            border-color: #00796b;
+            box-shadow: 3px 3px 0 rgba(0,121,107,0.2);
+        }
+
+        .nav-card.teal:hover {
+            background: rgba(0,121,107,0.15);
+        }
+
+        .nav-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .nav-label {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nav-desc {
+            font-size: 11px;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .countdown-banner {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .countdown-days {
+                justify-content: center;
+            }
+
+            .plan-table th:nth-child(3),
+            .plan-table td:nth-child(3) {
+                display: none;
+            }
+        }
+
+        .clickable {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="whiteboard-container">
+        <!-- 倒计时横幅 -->
+        <div class="countdown-banner">
+            <div>
+                <div class="countdown-title">距离2026年系统架构设计师考试还有</div>
+                <div class="exam-info">
+                    <strong>考试日期：</strong>2026年11月7日-10日 |
+                    <strong>报名时间：</strong>2026年8月15日-9月15日 |
+                    <strong>准考证打印：</strong>考前一周
+                </div>
+            </div>
+            <div class="countdown-days">
+                <div class="day-box">
+                    <div class="day-label">天</div>
+                    <div id="countdownDays">176</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面标题 -->
+        <div class="page-title">📚 7天冲刺学习计划 - 系统架构设计师</div>
+
+        <!-- 主内容区域 -->
+        <div class="main-content">
+            <!-- 左侧：学习计划表格 -->
+            <div class="study-plan-section">
+                <div class="section-title">7天学习计划表</div>
+                <table class="plan-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">日期</th>
+                            <th style="width: 12%;">科目</th>
+                            <th style="width: 18%;">重点内容</th>
+                            <th style="width: 48%;">学习任务</th>
+                            <th style="width: 10%;">进度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Day 1 -->
+                        <tr data-day="1">
+                            <td class="day-cell">
+                                <span class="day-number">1</span>Day 1
+                            </td>
+                            <td>
+                                <span class="subject-tag red">综合知识</span>
+                            </td>
+                            <td class="content-points">
+                                架构设计基础<br>
+                                系统架构风格<br>
+                                软件工程基础
+                            </td>
+                            <td>
+                                <div class="task-list">
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">学习架构核心概念（构件、连接件、约束）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">掌握8种架构风格特点与应用场景</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">完成章节练习题（基础篇）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">整理笔记：架构风格对比表</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-progress">
+                                    <div class="mini-progress-bar">
+                                        <div class="mini-progress-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="progress-percent-text">0/4</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Day 2 -->
+                        <tr data-day="2">
+                            <td class="day-cell">
+                                <span class="day-number">2</span>Day 2
+                            </td>
+                            <td>
+                                <span class="subject-tag red">综合知识</span>
+                            </td>
+                            <td class="content-points">
+                                分布式系统<br>
+                                微服务架构<br>
+                                云原生架构
+                            </td>
+                            <td>
+                                <div class="task-list">
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">学习分布式系统原理（CAP、BASE）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">掌握微服务设计模式与服务拆分策略</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">了解云原生技术栈（容器、K8s、DevOps）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">完成2023-2025真题（分布式架构专题）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">整理错题：分布式系统常见考点</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-progress">
+                                    <div class="mini-progress-bar">
+                                        <div class="mini-progress-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="progress-percent-text">0/5</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Day 3 -->
+                        <tr data-day="3">
+                            <td class="day-cell">
+                                <span class="day-number">3</span>Day 3
+                            </td>
+                            <td>
+                                <span class="subject-tag red">综合知识</span>
+                                <span class="subject-tag blue">案例分析</span>
+                            </td>
+                            <td class="content-points">
+                                数据库架构<br>
+                                缓存架构<br>
+                                消息队列
+                            </td>
+                            <td>
+                                <div class="task-list">
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">学习数据库设计原则与分库分表策略</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">掌握缓存架构模式（本地缓存、分布式缓存）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">了解消息队列选型与应用场景</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">完成案例分析真题2-3道</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-progress">
+                                    <div class="mini-progress-bar">
+                                        <div class="mini-progress-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="progress-percent-text">0/4</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Day 4 -->
+                        <tr data-day="4">
+                            <td class="day-cell">
+                                <span class="day-number">4</span>Day 4
+                            </td>
+                            <td>
+                                <span class="subject-tag blue">案例分析</span>
+                            </td>
+                            <td class="content-points">
+                                性能优化<br>
+                                安全架构<br>
+                                系统可靠性
+                            </td>
+                            <td>
+                                <div class="task-list">
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">学习性能优化方法论（定位、分析、优化）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">掌握安全架构设计原则与常见威胁</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">了解高可用架构设计（容灾、备份）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">完成案例分析真题4-5道（性能+安全专题）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">整理案例分析答题模板</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-progress">
+                                    <div class="mini-progress-bar">
+                                        <div class="mini-progress-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="progress-percent-text">0/5</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Day 5 -->
+                        <tr data-day="5">
+                            <td class="day-cell">
+                                <span class="day-number">5</span>Day 5
+                            </td>
+                            <td>
+                                <span class="subject-tag green">论文写作</span>
+                            </td>
+                            <td class="content-points">
+                                论文框架<br>
+                                架构模式<br>
+                                项目经验
+                            </td>
+                            <td>
+                                <div class="task-list">
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">学习论文写作框架（摘要、正文、结论）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">准备2-3个项目案例（架构设计经验）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">掌握常见架构模式描述方法</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">阅读范文3-5篇，提炼写作技巧</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-progress">
+                                    <div class="mini-progress-bar">
+                                        <div class="mini-progress-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="progress-percent-text">0/4</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Day 6 -->
+                        <tr data-day="6">
+                            <td class="day-cell">
+                                <span class="day-number">6</span>Day 6
+                            </td>
+                            <td>
+                                <span class="subject-tag orange">综合模拟</span>
+                            </td>
+                            <td class="content-points">
+                                全真模拟<br>
+                                错题分析<br>
+                                知识补漏
+                            </td>
+                            <td>
+                                <div class="task-list">
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">完成一套完整真题模拟（严格计时）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">分析错题，记录薄弱知识点</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">针对薄弱环节重点复习</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">整理错题集，标注高频错误类型</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-progress">
+                                    <div class="mini-progress-bar">
+                                        <div class="mini-progress-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="progress-percent-text">0/4</span>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Day 7 -->
+                        <tr data-day="7">
+                            <td class="day-cell">
+                                <span class="day-number">7</span>Day 7
+                            </td>
+                            <td>
+                                <span class="subject-tag orange">考前冲刺</span>
+                            </td>
+                            <td class="content-points">
+                                重点回顾<br>
+                                论文练习<br>
+                                心态调整
+                            </td>
+                            <td>
+                                <div class="task-list">
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">快速回顾高频考点与必背知识点</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">练习一篇论文写作（限时2小时）</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">浏览错题集，强化记忆</span>
+                                    </div>
+                                    <div class="task-item" onclick="toggleTask(this)">
+                                        <div class="task-checkbox"></div>
+                                        <span class="task-text">调整心态，准备考试物品</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="status-progress">
+                                    <div class="mini-progress-bar">
+                                        <div class="mini-progress-fill" style="width: 0%;"></div>
+                                    </div>
+                                    <span class="progress-percent-text">0/4</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 右侧：进度与推荐 -->
+            <div class="progress-section">
+                <!-- 总进度 -->
+                <div class="total-progress-card">
+                    <div class="section-title" style="color: #d32f2f;">总学习进度</div>
+                    <div class="progress-circle">
+                        <div class="progress-value">0%</div>
+                    </div>
+                    <div class="progress-label">已完成 0 / 30 任务</div>
+                </div>
+
+                <!-- 分科目进度 -->
+                <div class="subject-progress-card">
+                    <div class="section-title">科目进度</div>
+
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name" style="color: #d32f2f;">综合知识（选择题）</span>
+                            <span class="progress-percent" style="color: #d32f2f;">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill red" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name" style="color: #1976d2;">案例分析</span>
+                            <span class="progress-percent" style="color: #1976d2;">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill blue" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="progress-item">
+                        <div class="progress-header">
+                            <span class="progress-name" style="color: #388e3c;">论文写作</span>
+                            <span class="progress-percent" style="color: #388e3c;">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill green" style="width: 0%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 今日推荐 -->
+                <div class="today-recommend-card">
+                    <div class="section-title">今日学习推荐</div>
+
+                    <div class="recommend-item clickable" onclick="alert('跳转到：架构设计基础详解')">
+                        <div class="recommend-title">⭐ 架构设计基础详解</div>
+                        <div class="recommend-desc">Day 1重点内容 · 高频考点 · 必学必记</div>
+                    </div>
+
+                    <div class="recommend-item clickable" onclick="alert('跳转到：架构风格对比表')">
+                        <div class="recommend-title">📊 架构风格对比表</div>
+                        <div class="recommend-desc">8种架构风格特点与应用场景速查</div>
+                    </div>
+
+                    <div class="recommend-item clickable" onclick="alert('跳转到：分布式系统原理')">
+                        <div class="recommend-title">🌐 分布式系统原理</div>
+                        <div class="recommend-desc">CAP定理 · BASE理论 · 一致性算法</div>
+                    </div>
+
+                    <div class="recommend-item clickable" onclick="alert('跳转到：微服务架构设计')">
+                        <div class="recommend-title">🔧 微服务架构设计</div>
+                        <div class="recommend-desc">服务拆分 · API网关 · 服务治理</div>
+                    </div>
+
+                    <div class="recommend-item clickable" onclick="alert('跳转到：数据库架构优化')">
+                        <div class="recommend-title">💾 数据库架构优化</div>
+                        <div class="recommend-desc">分库分表 · 缓存策略 · 读写分离</div>
+                    </div>
+
+                    <div class="recommend-item clickable" onclick="alert('跳转到：论文写作模板')">
+                        <div class="recommend-title">📄 论文写作模板</div>
+                        <div class="recommend-desc">摘要结构 · 正文框架 · 结论要点</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 快速导航区域 -->
+        <div class="quick-nav-section">
+            <div class="section-title">快速导航</div>
+            <div class="nav-grid">
+                <div class="nav-card red clickable" onclick="location.href='knowledge.html'">
+                    <div class="nav-icon" style="color: #d32f2f;">📚</div>
+                    <div class="nav-label" style="color: #d32f2f;">必学必记</div>
+                    <div class="nav-desc">高频考点 · 知识图谱</div>
+                </div>
+
+                <div class="nav-card blue clickable" onclick="location.href='tips.html'">
+                    <div class="nav-icon" style="color: #1976d2;">💡</div>
+                    <div class="nav-label" style="color: #1976d2;">备考技巧</div>
+                    <div class="nav-desc">答题方法 · 解题思路</div>
+                </div>
+
+                <div class="nav-card green clickable" onclick="location.href='questions.html'">
+                    <div class="nav-icon" style="color: #388e3c;">📊</div>
+                    <div class="nav-label" style="color: #388e3c;">真题分析</div>
+                    <div class="nav-desc">近5年真题 · 高频题型</div>
+                </div>
+
+                <div class="nav-card orange clickable" onclick="location.href='exam.html'">
+                    <div class="nav-icon" style="color: #ff9800;">✍️</div>
+                    <div class="nav-label" style="color: #ff9800;">考试模拟</div>
+                    <div class="nav-desc">模拟练习 · 错题本</div>
+                </div>
+
+                <div class="nav-card purple clickable" onclick="location.href='essay.html'">
+                    <div class="nav-icon" style="color: #7b1fa2;">📄</div>
+                    <div class="nav-label" style="color: #7b1fa2;">论文专区</div>
+                    <div class="nav-desc">范文库 · 写作模板</div>
+                </div>
+
+                <div class="nav-card teal clickable" onclick="location.href='heatmap.html'">
+                    <div class="nav-icon" style="color: #00796b;">🔥</div>
+                    <div class="nav-label" style="color: #00796b;">考点热力图</div>
+                    <div class="nav-desc">高频考点 · 可视化</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/common.js"></script>
+    <script>
+        // 计算考试倒计时
+        function calculateCountdown() {
+            const daysRemaining = calcDaysRemaining();
+            document.getElementById('countdownDays').textContent = daysRemaining;
+        }
+
+        // 切换任务checkbox（保存到localStorage）
+        function toggleTask(taskItem) {
+            const checkbox = taskItem.querySelector('.task-checkbox');
+            const taskText = taskItem.querySelector('.task-text');
+            const row = taskItem.closest('tr');
+            const day = row.dataset.day;
+            const taskIndex = Array.from(row.querySelectorAll('.task-item')).indexOf(taskItem);
+            const taskId = `task${taskIndex}`;
+
+            checkbox.classList.toggle('checked');
+            taskText.classList.toggle('completed');
+
+            // 保存到localStorage
+            const completed = checkbox.classList.contains('checked');
+            updateTask(day, taskId, completed);
+
+            updateRowProgress(row);
+            updateTotalProgress();
+        }
+
+        // 从localStorage加载任务状态
+        function loadTaskStatus() {
+            for (let day = 1; day <= 7; day++) {
+                const row = document.querySelector(`[data-day="${day}"]`);
+                if (!row) continue;
+                const tasks = row.querySelectorAll('.task-item');
+                tasks.forEach((task, index) => {
+                    const taskId = `task${index}`;
+                    const status = getTaskStatus(day, taskId);
+                    if (status) {
+                        task.querySelector('.task-checkbox').classList.add('checked');
+                        task.querySelector('.task-text').classList.add('completed');
+                    }
+                });
+                updateRowProgress(row);
+            }
+        }
+
+        // 更新单行进度
+        function updateRowProgress(row) {
+            const tasks = row.querySelectorAll('.task-item');
+            const completedTasks = row.querySelectorAll('.task-checkbox.checked');
+            const total = tasks.length;
+            const completed = completedTasks.length;
+            const percent = Math.round((completed / total) * 100);
+
+            const miniBar = row.querySelector('.mini-progress-fill');
+            const miniText = row.querySelector('.progress-percent-text');
+
+            miniBar.style.width = percent + '%';
+            miniText.textContent = `${completed}/${total}`;
+
+            if (percent === 100) {
+                miniBar.classList.add('completed');
+                miniText.classList.add('completed');
+            } else {
+                miniBar.classList.remove('completed');
+                miniText.classList.remove('completed');
+            }
+        }
+
+        // 更新总进度
+        function updateTotalProgress() {
+            const allTasks = document.querySelectorAll('.task-item');
+            const completedTasks = document.querySelectorAll('.task-checkbox.checked');
+            const total = allTasks.length;
+            const completed = completedTasks.length;
+            const percent = Math.round((completed / total) * 100);
+
+            // 更新圆形进度
+            document.querySelector('.progress-value').textContent = percent + '%';
+            document.querySelector('.progress-label').textContent = `已完成 ${completed} / ${total} 任务`;
+
+            const progressCircle = document.querySelector('.progress-circle');
+            const degrees = (percent / 100) * 360;
+            progressCircle.style.background = `conic-gradient(#388e3c 0deg ${degrees}deg, #e0e0e0 ${degrees}deg 360deg)`;
+
+            // 更新分科目进度
+            updateSubjectProgress();
+        }
+
+        // 更新分科目进度
+        function updateSubjectProgress() {
+            // 综合知识：Day 1, 2, 3 的部分任务
+            const zhTasks = [
+                ...document.querySelector('[data-day="1"]').querySelectorAll('.task-item'),
+                ...document.querySelector('[data-day="2"]').querySelectorAll('.task-item'),
+                ...document.querySelector('[data-day="3"]').querySelectorAll('.task-item').slice(0, 3)
+            ];
+            const zhCompleted = zhTasks.filter(t => t.querySelector('.task-checkbox.checked')).length;
+            const zhPercent = Math.round((zhCompleted / zhTasks.length) * 100);
+            document.querySelector('.progress-fill.red').style.width = zhPercent + '%';
+            document.querySelector('.progress-percent[style*="d32f2f"]').textContent = zhPercent + '%';
+
+            // 案例分析：Day 3, 4 的部分任务
+            const alTasks = [
+                ...document.querySelector('[data-day="3"]').querySelectorAll('.task-item').slice(3),
+                ...document.querySelector('[data-day="4"]').querySelectorAll('.task-item')
+            ];
+            const alCompleted = alTasks.filter(t => t.querySelector('.task-checkbox.checked')).length;
+            const alPercent = Math.round((alCompleted / alTasks.length) * 100);
+            document.querySelector('.progress-fill.blue').style.width = alPercent + '%';
+            document.querySelector('.progress-percent[style*="1976d2"]').textContent = alPercent + '%';
+
+            // 论文写作：Day 5 的任务
+            const paperTasks = document.querySelector('[data-day="5"]').querySelectorAll('.task-item');
+            const paperCompleted = paperTasks.filter(t => t.querySelector('.task-checkbox.checked')).length;
+            const paperPercent = Math.round((paperCompleted / paperTasks.length) * 100);
+            document.querySelector('.progress-fill.green').style.width = paperPercent + '%';
+            document.querySelector('.progress-percent[style*="388e3c"]').textContent = paperPercent + '%';
+        }
+
+        // 初始化
+        calculateCountdown();
+        loadTaskStatus();
+        updateTotalProgress();
+    </script>
+</body>
+</html>

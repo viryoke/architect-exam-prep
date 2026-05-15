@@ -1,0 +1,342 @@
+/* 系统架构设计师冲刺备考网站 - 公共样式 */
+
+/* 字体引入 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
+
+/* 基础重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 白板格纹背景 */
+body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: #fafafa;
+    background-image:
+        linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
+    background-size: 40px 40px;
+    padding: 15px;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* 白板容器 */
+.whiteboard-container {
+    background: rgba(255,255,255,0.3);
+    border: 12px solid #1976d2;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 模块标题 */
+.module-header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255,255,255,0.7);
+    border: 3px solid #d32f2f;
+    border-radius: 8px;
+}
+
+.module-title {
+    color: #d32f2f;
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 32px;
+}
+
+.module-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* 导航标签 */
+.nav-tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-tab {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 14px;
+    padding: 8px 20px;
+    border: 3px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: transparent;
+}
+
+.nav-tab.red.active { background: #d32f2f; color: #fff; }
+.nav-tab.red { color: #d32f2f; border-color: #d32f2f; }
+.nav-tab.blue.active { background: #1976d2; color: #fff; }
+.nav-tab.blue { color: #1976d2; border-color: #1976d2; }
+.nav-tab.green.active { background: #388e3c; color: #fff; }
+.nav-tab.green { color: #388e3c; border-color: #388e3c; }
+
+/* 顶部导航栏 */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 12px 15px;
+    background: rgba(255,255,255,0.7);
+    border: 3px solid #1976d2;
+    border-radius: 8px;
+}
+
+.breadcrumb {
+    font-size: 13px;
+    color: #666;
+}
+
+.breadcrumb span {
+    color: #1976d2;
+    font-weight: 700;
+}
+
+/* 返回首页按钮 */
+.back-home {
+    padding: 8px 15px;
+    background: rgba(25,118,210,0.1);
+    border: 2px solid #1976d2;
+    border-radius: 5px;
+    color: #1976d2;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.3s;
+}
+
+.back-home:hover {
+    background: rgba(25,118,210,0.2);
+}
+
+/* 标签样式 */
+.subject-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+.subject-tag.red {
+    background: rgba(211,47,47,0.15);
+    color: #d32f2f;
+    border: 2px solid #d32f2f;
+}
+
+.subject-tag.blue {
+    background: rgba(25,118,210,0.15);
+    color: #1976d2;
+    border: 2px solid #1976d2;
+}
+
+.subject-tag.green {
+    background: rgba(56,142,60,0.15);
+    color: #388e3c;
+    border: 2px solid #388e3c;
+}
+
+.subject-tag.orange {
+    background: rgba(255,152,0,0.15);
+    color: #ff9800;
+    border: 2px solid #ff9800;
+}
+
+/* 年份徽章 */
+.year-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: #1976d2;
+    color: #fff;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-right: 5px;
+}
+
+/* 考点徽章 */
+.topic-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(25,118,210,0.15);
+    color: #1976d2;
+    border: 1px solid #1976d2;
+    border-radius: 3px;
+    font-size: 11px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+}
+
+/* 比例徽章 */
+.percent-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(211,47,47,0.15);
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* 搜索框 */
+.search-box {
+    display: flex;
+    gap: 8px;
+}
+
+.search-input {
+    padding: 8px 15px;
+    border: 3px solid #1976d2;
+    border-radius: 5px;
+    width: 250px;
+}
+
+.search-btn {
+    padding: 8px 20px;
+    background: #1976d2;
+    color: #fff;
+    border: 3px solid #1976d2;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'ZCOOL KuaiLe', cursive;
+}
+
+/* 卡片标题 */
+.card-title {
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 22px;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid;
+}
+
+.card-title.blue { color: #1976d2; border-color: #1976d2; }
+.card-title.orange { color: #ff9800; border-color: #ff9800; }
+.card-title.green { color: #388e3c; border-color: #388e3c; }
+.card-title.red { color: #d32f2f; border-color: #d32f2f; }
+
+/* 内容区域标题 */
+.section-title {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 18px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid;
+}
+
+.section-title.blue { color: #1976d2; border-color: #1976d2; }
+.section-title.red { color: #d32f2f; border-color: #d32f2f; }
+.section-title.orange { color: #ff9800; border-color: #ff9800; }
+.section-title.green { color: #388e3c; border-color: #388e3c; }
+
+.section-title::before {
+    content: '◆';
+    margin-right: 10px;
+}
+
+.section-title.blue::before { color: #1976d2; }
+.section-title.red::before { color: #d32f2f; }
+.section-title.orange::before { color: #ff9800; }
+.section-title.green::before { color: #388e3c; }
+
+/* 表格基础样式 */
+.data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: rgba(255,255,255,0.8);
+}
+
+.data-table th {
+    font-family: 'ZCOOL KuaiLe', cursive;
+    padding: 10px;
+    text-align: center;
+}
+
+.data-table td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.data-table tr:hover td {
+    background: rgba(0,0,0,0.05);
+}
+
+/* 按钮基础样式 */
+.btn {
+    padding: 10px 25px;
+    border: 3px solid;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.btn.primary {
+    background: #1976d2;
+    color: #fff;
+    border-color: #1976d2;
+}
+
+.btn.primary:hover {
+    background: #1565c0;
+}
+
+.btn.secondary {
+    background: transparent;
+    color: #1976d2;
+    border-color: #1976d2;
+}
+
+.btn.secondary:hover {
+    background: rgba(25,118,210,0.15);
+}
+
+/* 进度条 */
+.progress-bar-container {
+    height: 12px;
+    background: #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: #388e3c;
+    border-radius: 6px;
+    transition: width 0.3s;
+}
+
+/* 响应式基础 */
+@media (max-width: 1024px) {
+    .main-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-nav {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .search-input {
+        width: 100%;
+    }
+}

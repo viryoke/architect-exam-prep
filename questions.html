@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>真题分析 - 系统架构设计师冲刺备考网站</title>
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/common.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #fafafa;
+            background-image: linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            padding: 15px; color: #333; min-height: 100vh;
+        }
+        .whiteboard-container {
+            background: rgba(255,255,255,0.3);
+            border: 12px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+        }
+        .nav-tabs { display: flex; gap: 10px; }
+        .nav-tab {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 14px; padding: 8px 20px;
+            border: 3px solid; border-radius: 5px;
+            cursor: pointer; transition: all 0.3s; background: transparent;
+        }
+        .nav-tab.red.active { background: #d32f2f; color: #fff; }
+        .nav-tab.red { color: #d32f2f; border-color: #d32f2f; }
+        .nav-tab.blue { color: #1976d2; border-color: #1976d2; }
+        .nav-tab.green { color: #388e3c; border-color: #388e3c; }
+        .breadcrumb { font-size: 13px; color: #666; }
+        .breadcrumb span { color: #1976d2; font-weight: 700; }
+
+        /* 模块标题 */
+        .module-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #d32f2f;
+            border-radius: 8px;
+        }
+        .module-title {
+            color: #d32f2f;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 32px;
+        }
+
+        /* 主内容区 */
+        .main-content { display: grid; grid-template-columns: 250px 1fr; gap: 20px; }
+
+        /* 左侧筛选区 */
+        .filter-panel {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .filter-title {
+            color: #1976d2;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 18px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #1976d2;
+            text-align: center;
+        }
+
+        /* 年份筛选 */
+        .filter-section { margin-bottom: 20px; }
+        .filter-section-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+            padding-left: 5px;
+        }
+        .filter-options { display: flex; flex-direction: column; gap: 8px; }
+        .filter-option {
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.6);
+            border: 2px solid rgba(25,118,210,0.3);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+        .filter-option:hover { background: rgba(25,118,210,0.15); border-color: #1976d2; }
+        .filter-option.active { background: rgba(211,47,47,0.15); border-color: #d32f2f; color: #d32f2f; }
+        .filter-count { font-size: 11px; color: #666; margin-left: 5px; }
+
+        /* 难度标签 */
+        .difficulty-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+        .diff-tag {
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 2px solid;
+        }
+        .diff-tag.easy { color: #388e3c; border-color: #388e3c; background: rgba(56,142,60,0.1); }
+        .diff-tag.medium { color: #ff9800; border-color: #ff9800; background: rgba(255,152,0,0.1); }
+        .diff-tag.hard { color: #d32f2f; border-color: #d32f2f; background: rgba(211,47,47,0.1); }
+        .diff-tag.active { opacity: 1; }
+        .diff-tag:not(.active) { opacity: 0.5; }
+
+        /* 右侧真题列表 */
+        .questions-area { display: flex; flex-direction: column; gap: 15px; }
+
+        /* 真题统计 */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #388e3c;
+            border-radius: 8px;
+        }
+        .stats-text { font-size: 13px; color: #388e3c; font-weight: 700; }
+        .stats-actions { display: flex; gap: 10px; }
+        .action-btn {
+            padding: 8px 15px;
+            border: 2px solid #1976d2;
+            border-radius: 5px;
+            color: #1976d2;
+            font-size: 12px;
+            cursor: pointer;
+            background: transparent;
+        }
+        .action-btn:hover { background: rgba(25,118,210,0.15); }
+
+        /* 真题卡片 */
+        .question-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        .question-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+        .question-card.choice { border-color: #1976d2; }
+        .question-card.case { border-color: #ff9800; }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0,0,0,0.1);
+        }
+        .question-meta { display: flex; align-items: center; gap: 10px; }
+        .question-number {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 16px;
+            color: #1976d2;
+        }
+        .year-tag {
+            padding: 4px 10px;
+            background: #1976d2;
+            color: #fff;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .topic-tag {
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            border: 1px solid;
+        }
+        .topic-tag.arch { color: #d32f2f; border-color: #d32f2f; background: rgba(211,47,47,0.1); }
+        .topic-tag.dist { color: #ff9800; border-color: #ff9800; background: rgba(255,152,0,0.1); }
+        .topic-tag.db { color: #388e3c; border-color: #388e3c; background: rgba(56,142,60,0.1); }
+
+        .question-type-badge {
+            padding: 6px 12px;
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .question-card.choice .question-type-badge { background: #1976d2; color: #fff; }
+        .question-card.case .question-type-badge { background: #ff9800; color: #fff; }
+
+        .question-difficulty {
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+        }
+        .difficulty.easy { background: rgba(56,142,60,0.2); color: #388e3c; }
+        .difficulty.medium { background: rgba(255,152,0,0.2); color: #ff9800; }
+        .difficulty.hard { background: rgba(211,47,47,0.2); color: #d32f2f; }
+
+        /* 题目内容 */
+        .question-content {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 15px;
+        }
+        .question-text {
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        .question-card.choice .question-text { border-left-color: #1976d2; }
+        .question-card.case .question-text { border-left-color: #ff9800; }
+
+        /* 选择题选项 */
+        .choice-options { margin-top: 15px; }
+        .choice-option {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            background: rgba(255,255,255,0.6);
+            border: 2px solid rgba(0,0,0,0.1);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 13px;
+        }
+        .choice-option:hover { border-color: #1976d2; background: rgba(25,118,210,0.1); }
+        .choice-option.selected { border-color: #1976d2; }
+        .choice-option.correct { border-color: #388e3c; background: rgba(56,142,60,0.15); }
+        .choice-option.wrong { border-color: #d32f2f; background: rgba(211,47,47,0.15); }
+        .option-label { font-weight: 700; color: #1976d2; margin-right: 10px; }
+
+        /* 案例分析场景 */
+        .case-scenario {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,152,0,0.1);
+            border-radius: 8px;
+            border: 2px solid rgba(255,152,0,0.3);
+        }
+        .case-scenario-title {
+            color: #ff9800;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+        .case-scenario-text { font-size: 13px; line-height: 1.6; }
+
+        /* 答案与解析区域 */
+        .answer-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .answer-section.expanded { max-height: 1000px; }
+
+        .answer-box {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(56,142,60,0.1);
+            border-radius: 8px;
+            border-left: 4px solid #388e3c;
+        }
+        .answer-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .answer-label { color: #388e3c; font-weight: 700; font-size: 14px; }
+        .answer-badge {
+            padding: 4px 10px;
+            background: #388e3c;
+            color: #fff;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+
+        .analysis-box {
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(123,31,162,0.1);
+            border-radius: 8px;
+            border-left: 4px solid #7b1fa2;
+        }
+        .analysis-title { color: #7b1fa2; font-weight: 700; font-size: 13px; margin-bottom: 8px; }
+        .analysis-text { font-size: 13px; line-height: 1.6; }
+
+        .related-points {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .related-link {
+            padding: 6px 12px;
+            background: rgba(0,121,107,0.1);
+            border: 1px solid #00796b;
+            border-radius: 5px;
+            color: #00796b;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        /* 展开按钮 */
+        .show-answer-btn {
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: #7b1fa2;
+            color: #fff;
+            border: 3px solid #7b1fa2;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .show-answer-btn:hover { background: #6a1b9a; }
+
+        /* 答题状态 */
+        .question-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .status-btn {
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            cursor: pointer;
+            border: 1px solid;
+        }
+        .status-btn.mark { color: #ff9800; border-color: #ff9800; }
+        .status-btn.collect { color: #1976d2; border-color: #1976d2; }
+        .status-btn.active { background: currentColor; color: #fff; }
+
+        /* 响应式 */
+        @media (max-width: 1024px) { .main-content { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .top-nav { flex-direction: column; gap: 15px; }
+            .stats-bar { flex-direction: column; gap: 10px; }
+            .question-header { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="whiteboard-container">
+        <!-- 顶部导航 -->
+        <div class="top-nav">
+            <button class="back-home" onclick="location.href='index.html'">🏠 返回首页</button>
+            <div class="breadcrumb">当前位置：<span>真题分析</span></div>
+        </div>
+
+        <!-- 模块标题 -->
+        <div class="module-header">
+            <div class="module-title">📝 历年真题分析与解析</div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 左侧筛选区 -->
+            <div class="filter-panel">
+                <div class="filter-title">🔍 真题筛选</div>
+
+                <!-- 年份筛选 -->
+                <div class="filter-section">
+                    <div class="filter-section-title">📅 考试年份</div>
+                    <div class="filter-options">
+                        <div class="filter-option active" onclick="filterYear('2025', this)">2025年 <span class="filter-count">(18题)</span></div>
+                        <div class="filter-option" onclick="filterYear('2024', this)">2024年 <span class="filter-count">(22题)</span></div>
+                        <div class="filter-option" onclick="filterYear('2023', this)">2023年 <span class="filter-count">(20题)</span></div>
+                        <div class="filter-option" onclick="filterYear('2022', this)">2022年 <span class="filter-count">(19题)</span></div>
+                        <div class="filter-option" onclick="filterYear('2021', this)">2021年 <span class="filter-count">(17题)</span></div>
+                    </div>
+                </div>
+
+                <!-- 考点筛选 -->
+                <div class="filter-section">
+                    <div class="filter-section-title">📚 考点分类</div>
+                    <div class="filter-options">
+                        <div class="filter-option" onclick="filterTopic('架构', this)">系统架构 <span class="filter-count">(15题)</span></div>
+                        <div class="filter-option" onclick="filterTopic('分布式', this)">分布式系统 <span class="filter-count">(12题)</span></div>
+                        <div class="filter-option" onclick="filterTopic('数据库', this)">数据库架构 <span class="filter-count">(10题)</span></div>
+                        <div class="filter-option" onclick="filterTopic('网络', this)">计算机网络 <span class="filter-count">(8题)</span></div>
+                        <div class="filter-option" onclick="filterTopic('安全', this)">信息安全 <span class="filter-count">(6题)</span></div>
+                    </div>
+                </div>
+
+                <!-- 难度筛选 -->
+                <div class="filter-section">
+                    <div class="filter-section-title">⭐ 难度等级</div>
+                    <div class="difficulty-tags">
+                        <div class="diff-tag easy active" onclick="filterDifficulty('easy', this)">简单</div>
+                        <div class="diff-tag medium active" onclick="filterDifficulty('medium', this)">中等</div>
+                        <div class="diff-tag hard active" onclick="filterDifficulty('hard', this)">困难</div>
+                    </div>
+                </div>
+
+                <!-- 题型筛选 -->
+                <div class="filter-section">
+                    <div class="filter-section-title">📋 题型分类</div>
+                    <div class="filter-options">
+                        <div class="filter-option active" onclick="filterType('choice', this)">选择题 <span class="filter-count">(75题/年)</span></div>
+                        <div class="filter-option" onclick="filterType('case', this)">案例分析 <span class="filter-count">(3题/年)</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧真题列表 -->
+            <div class="questions-area">
+                <!-- 统计栏 -->
+                <div class="stats-bar">
+                    <div class="stats-text">当前筛选：2025年选择题 · 共18题</div>
+                    <div class="stats-actions">
+                        <div class="action-btn" onclick="shuffleQuestions()">🔀 随机排序</div>
+                        <div class="action-btn" id="toggleAllBtn" onclick="toggleAllAnswers()">📖 显示全部答案</div>
+                    </div>
+                </div>
+
+                <!-- 真题卡片1 - 选择题 -->
+                <div class="question-card choice" data-year="2025" data-topic="架构" data-difficulty="medium" data-type="choice">
+                    <div class="question-header">
+                        <div class="question-meta">
+                            <div class="question-number">第15题</div>
+                            <div class="year-tag">2025上</div>
+                            <div class="topic-tag arch">系统架构</div>
+                            <div class="question-type-badge">选择题</div>
+                        </div>
+                        <div class="question-status">
+                            <div class="question-difficulty medium">中等</div>
+                            <div class="status-btn mark" onclick="toggleStatus(this)">📌 标记</div>
+                            <div class="status-btn collect" onclick="toggleStatus(this)">⭐ 收藏</div>
+                        </div>
+                    </div>
+                    <div class="question-content">
+                        <div class="question-text">
+                            在分层架构中，以下哪种约束是<strong>必须遵守</strong>的？
+                        </div>
+                        <div class="choice-options">
+                            <div class="choice-option" onclick="selectOption(this, 'A', 'correct')"><span class="option-label">A.</span>上层可以调用下层，下层不能调用上层</div>
+                            <div class="choice-option" onclick="selectOption(this, 'B', 'wrong')"><span class="option-label">B.</span>下层可以调用上层，上层不能调用下层</div>
+                            <div class="choice-option" onclick="selectOption(this, 'C', 'wrong')"><span class="option-label">C.</span>同层之间可以互相调用</div>
+                            <div class="choice-option" onclick="selectOption(this, 'D', 'wrong')"><span class="option-label">D.</span>所有层都可以互相调用</div>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 查看答案与解析</button>
+                    <div class="answer-section">
+                        <div class="answer-box">
+                            <div class="answer-header">
+                                <div class="answer-label">正确答案</div>
+                                <div class="answer-badge">A</div>
+                            </div>
+                            <div class="analysis-box">
+                                <div class="analysis-title">解析说明</div>
+                                <div class="analysis-text">
+                                    <p><strong>知识点：分层架构约束</strong></p>
+                                    <p style="margin-top:5px;">分层架构的核心约束是<strong>单向依赖</strong>，即上层可调用下层，下层不能调用上层。这种约束确保了：</p>
+                                    <p>1. 依赖关系清晰可控</p>
+                                    <p>2. 修改下层不会影响上层</p>
+                                    <p>3. 便于分层测试和维护</p>
+                                    <p style="margin-top:8px;"><strong>选项分析：</strong></p>
+                                    <p>• A正确：符合单向依赖原则</p>
+                                    <p>• B错误：违反单向依赖，造成循环依赖</p>
+                                    <p>• C错误：同层调用会增加耦合</p>
+                                    <p>• D错误：完全打破分层约束</p>
+                                </div>
+                            </div>
+                            <div class="related-points">
+                                <div class="related-link">→ 架构约束详解</div>
+                                <div class="related-link">→ 分层架构应用</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 真题卡片2 - 选择题 -->
+                <div class="question-card choice" data-year="2025" data-topic="分布式" data-difficulty="hard" data-type="choice">
+                    <div class="question-header">
+                        <div class="question-meta">
+                            <div class="question-number">第22题</div>
+                            <div class="year-tag">2025上</div>
+                            <div class="topic-tag dist">分布式系统</div>
+                            <div class="question-type-badge">选择题</div>
+                        </div>
+                        <div class="question-status">
+                            <div class="question-difficulty hard">困难</div>
+                            <div class="status-btn mark" onclick="toggleStatus(this)">📌 标记</div>
+                            <div class="status-btn collect" onclick="toggleStatus(this)">⭐ 收藏</div>
+                        </div>
+                    </div>
+                    <div class="question-content">
+                        <div class="question-text">
+                            在CAP定理中，当系统出现网络分区（P）时，需要在一致性（C）和可用性（A）之间做出选择。以下哪种场景<strong>更适合选择AP</strong>架构？
+                        </div>
+                        <div class="choice-options">
+                            <div class="choice-option" onclick="selectOption(this, 'A', 'wrong')"><span class="option-label">A.</span>银行转账系统</div>
+                            <div class="choice-option" onclick="selectOption(this, 'B', 'correct')"><span class="option-label">B.</span>社交平台点赞功能</div>
+                            <div class="choice-option" onclick="selectOption(this, 'C', 'wrong')"><span class="option-label">C.</span>库存管理系统</div>
+                            <div class="choice-option" onclick="selectOption(this, 'D', 'wrong')"><span class="option-label">D.</span>订单支付系统</div>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 查看答案与解析</button>
+                    <div class="answer-section">
+                        <div class="answer-box">
+                            <div class="answer-header">
+                                <div class="answer-label">正确答案</div>
+                                <div class="answer-badge">B</div>
+                            </div>
+                            <div class="analysis-box">
+                                <div class="analysis-title">解析说明</div>
+                                <div class="analysis-text">
+                                    <p><strong>知识点：CAP定理应用场景</strong></p>
+                                    <p style="margin-top:5px;">CAP定理指出分布式系统在网络分区时，只能在一致性（C）和可用性（A）之间二选一。</p>
+                                    <p style="margin-top:8px;"><strong>AP架构适用场景：</strong></p>
+                                    <p>• 对一致性要求不高，可以容忍短暂不一致</p>
+                                    <p>• 对可用性要求高，系统必须始终可访问</p>
+                                    <p>• 数据最终一致即可，不要求实时一致</p>
+                                    <p style="margin-top:8px;"><strong>选项分析：</strong></p>
+                                    <p>• A银行转账：必须强一致，选CP</p>
+                                    <p>• B社交点赞：点赞数短暂不一致可接受，选AP</p>
+                                    <p>• C库存管理：需要一致防止超卖，选CP</p>
+                                    <p>• D订单支付：必须一致，选CP</p>
+                                </div>
+                            </div>
+                            <div class="related-points">
+                                <div class="related-link">→ CAP定理详解</div>
+                                <div class="related-link">→ 分布式一致性</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 真题卡片3 - 案例分析题 -->
+                <div class="question-card case" data-year="2025" data-topic="架构" data-difficulty="hard" data-type="case">
+                    <div class="question-header">
+                        <div class="question-meta">
+                            <div class="question-number">案例分析题1</div>
+                            <div class="year-tag">2025上</div>
+                            <div class="topic-tag arch">系统架构</div>
+                            <div class="question-type-badge">案例分析</div>
+                        </div>
+                        <div class="question-status">
+                            <div class="question-difficulty hard">困难</div>
+                            <div class="status-btn mark" onclick="toggleStatus(this)">📌 标记</div>
+                        </div>
+                    </div>
+                    <div class="question-content">
+                        <div class="question-text">
+                            <strong>题目要求：</strong>某电商平台需要重构现有单体架构为微服务架构。请分析以下问题：
+                            <p style="margin-top:10px;">（1）简述微服务架构的优缺点（8分）</p>
+                            <p>（2）设计微服务拆分策略，至少拆分为5个服务（10分）</p>
+                            <p>（3）说明如何保证服务间数据一致性（7分）</p>
+                        </div>
+                        <div class="case-scenario">
+                            <div class="case-scenario-title">📋 场景背景</div>
+                            <div class="case-scenario-text">
+                                该电商平台日均订单量50万，现有单体架构存在：部署周期长（2周）、扩展困难、单点故障风险高等问题。
+                                业务模块包括：用户管理、商品管理、订单处理、支付处理、库存管理、物流配送、促销活动等。
+                            </div>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 查看答案与解析</button>
+                    <div class="answer-section">
+                        <div class="answer-box">
+                            <div class="answer-header">
+                                <div class="answer-label">参考答案</div>
+                            </div>
+                            <div class="analysis-box">
+                                <div class="analysis-title">问题（1）微服务优缺点</div>
+                                <div class="analysis-text">
+                                    <p><strong>优点：</strong></p>
+                                    <p>• 独立部署：每个服务可独立部署，缩短发布周期</p>
+                                    <p>• 技术异构：不同服务可采用不同技术栈</p>
+                                    <p>• 弹性扩展：可针对高负载服务单独扩展</p>
+                                    <p>• 容错隔离：单个服务故障不影响整体</p>
+                                    <p style="margin-top:8px;"><strong>缺点：</strong></p>
+                                    <p>• 分布式复杂性：需要处理服务发现、通信、容错等问题</p>
+                                    <p>• 数据一致性挑战：跨服务事务处理复杂</p>
+                                    <p>• 运维成本增加：需要监控更多服务实例</p>
+                                </div>
+                            </div>
+                            <div class="analysis-box">
+                                <div class="analysis-title">问题（2）微服务拆分策略</div>
+                                <div class="analysis-text">
+                                    <p><strong>拆分原则：按业务能力边界划分</strong></p>
+                                    <p style="margin-top:5px;">建议拆分为以下服务：</p>
+                                    <p>1. <strong>用户服务</strong>：用户注册、登录、权限管理</p>
+                                    <p>2. <strong>商品服务</strong>：商品展示、搜索、分类管理</p>
+                                    <p>3. <strong>订单服务</strong>：订单创建、状态管理、历史查询</p>
+                                    <p>4. <strong>支付服务</strong>：支付处理、退款、账单管理</p>
+                                    <p>5. <strong>库存服务</strong>：库存管理、预占、扣减</p>
+                                    <p style="margin-top:5px;">可选扩展服务：</p>
+                                    <p>6. <strong>物流服务</strong>：配送跟踪、物流商对接</p>
+                                    <p>7. <strong>促销服务</strong>：优惠券、活动规则</p>
+                                </div>
+                            </div>
+                            <div class="analysis-box">
+                                <div class="analysis-title">问题（3）数据一致性保证</div>
+                                <div class="analysis-text">
+                                    <p><strong>策略1：Saga模式</strong></p>
+                                    <p>• 将跨服务事务拆分为一系列本地事务</p>
+                                    <p>• 每步执行成功触发下一步，失败执行补偿操作</p>
+                                    <p style="margin-top:8px;"><strong>策略2：事件驱动</strong></p>
+                                    <p>• 使用消息队列实现异步解耦</p>
+                                    <p>• 服务发布事件，其他服务订阅并处理</p>
+                                    <p style="margin-top:8px;"><strong>策略3：最终一致性</strong></p>
+                                    <p>• 对于非关键数据，允许短暂不一致</p>
+                                    <p>• 通过定时同步或事件补偿达到最终一致</p>
+                                </div>
+                            </div>
+                            <div class="related-points">
+                                <div class="related-link">→ 微服务架构详解</div>
+                                <div class="related-link">→ 分布式事务处理</div>
+                                <div class="related-link">→ Saga模式原理</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 真题卡片4 - 选择题 -->
+                <div class="question-card choice" data-year="2025" data-topic="数据库" data-difficulty="medium" data-type="choice">
+                    <div class="question-header">
+                        <div class="question-meta">
+                            <div class="question-number">第28题</div>
+                            <div class="year-tag">2025上</div>
+                            <div class="topic-tag db">数据库架构</div>
+                            <div class="question-type-badge">选择题</div>
+                        </div>
+                        <div class="question-status">
+                            <div class="question-difficulty medium">中等</div>
+                            <div class="status-btn mark" onclick="toggleStatus(this)">📌 标记</div>
+                            <div class="status-btn collect" onclick="toggleStatus(this)">⭐ 收藏</div>
+                        </div>
+                    </div>
+                    <div class="question-content">
+                        <div class="question-text">
+                            关于数据库分库分表策略，以下说法<strong>错误</strong>的是？
+                        </div>
+                        <div class="choice-options">
+                            <div class="choice-option" onclick="selectOption(this, 'A', 'wrong')"><span class="option-label">A.</span>垂直分库按业务模块拆分数据库</div>
+                            <div class="choice-option" onclick="selectOption(this, 'B', 'correct')"><span class="option-label">B.</span>水平分表后查询性能一定会提升</div>
+                            <div class="choice-option" onclick="selectOption(this, 'C', 'wrong')"><span class="option-label">C.</span>分库分表会增加跨库查询复杂度</div>
+                            <div class="choice-option" onclick="selectOption(this, 'D', 'wrong')"><span class="option-label">D.</span>分表键选择应考虑查询热点</div>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 查看答案与解析</button>
+                    <div class="answer-section">
+                        <div class="answer-box">
+                            <div class="answer-header">
+                                <div class="answer-label">正确答案</div>
+                                <div class="answer-badge">B</div>
+                            </div>
+                            <div class="analysis-box">
+                                <div class="analysis-title">解析说明</div>
+                                <div class="analysis-text">
+                                    <p><strong>B选项错误原因：</strong></p>
+                                    <p>水平分表后查询性能不一定提升，取决于分表键与查询条件是否匹配。</p>
+                                    <p style="margin-top:5px;">• 若查询条件命中分表键，可定位单表，性能提升</p>
+                                    <p>• 若查询条件未命中分表键，需扫描所有分表，性能下降</p>
+                                    <p style="margin-top:8px;"><strong>正确认知：</strong></p>
+                                    <p>• A正确：垂直分库按业务拆分，如用户库、订单库</p>
+                                    <p>• C正确：跨库查询需要应用层聚合，复杂度增加</p>
+                                    <p>• D正确：分表键应选择高频查询字段，如用户ID</p>
+                                </div>
+                            </div>
+                            <div class="related-points">
+                                <div class="related-link">→ 分库分表详解</div>
+                                <div class="related-link">→ 分表键选择策略</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data-renderer.js"></script>
+    <script>
+        // 全局辅助函数在data-renderer.js中定义
+        // 以下为页面特定功能的补充
+
+        function shuffleQuestions() {
+            alert('题目顺序已随机打乱');
+        }
+
+        function toggleAllAnswers() {
+            const btn = document.getElementById('toggleAllBtn');
+            const isExpanded = btn.textContent.includes('收起');
+            if (isExpanded) {
+                document.querySelectorAll('.answer-section').forEach(section => {
+                    section.classList.remove('expanded');
+                });
+                document.querySelectorAll('.show-answer-btn').forEach(btn => {
+                    btn.textContent = '📖 查看答案与解析';
+                });
+                btn.textContent = '📖 显示全部答案';
+            } else {
+                document.querySelectorAll('.answer-section').forEach(section => {
+                    section.classList.add('expanded');
+                });
+                document.querySelectorAll('.show-answer-btn').forEach(btn => {
+                    btn.textContent = '📕 收起答案与解析';
+                });
+                btn.textContent = '📕 收起全部答案';
+            }
+        }
+    </script>
+</body>
+</html>

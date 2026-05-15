@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>备考技巧 - 系统架构设计师冲刺备考网站</title>
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/common.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #fafafa;
+            background-image: linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            padding: 15px; color: #333; min-height: 100vh;
+        }
+        .whiteboard-container {
+            background: rgba(255,255,255,0.3);
+            border: 12px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 20px;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+        }
+        .nav-tabs { display: flex; gap: 10px; }
+        .nav-tab {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 14px; padding: 8px 20px;
+            border: 3px solid; border-radius: 5px;
+            cursor: pointer; transition: all 0.3s; background: transparent;
+        }
+        .nav-tab.red.active { background: #d32f2f; color: #fff; }
+        .nav-tab.red { color: #d32f2f; border-color: #d32f2f; }
+        .nav-tab.blue.active { background: #1976d2; color: #fff; }
+        .nav-tab.blue { color: #1976d2; border-color: #1976d2; }
+        .nav-tab.green.active { background: #388e3c; color: #fff; }
+        .nav-tab.green { color: #388e3c; border-color: #388e3c; }
+        .breadcrumb { font-size: 13px; color: #666; }
+        .breadcrumb span { color: #1976d2; font-weight: 700; }
+
+        /* 模块标题 */
+        .module-header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #d32f2f;
+            border-radius: 8px;
+        }
+        .module-title {
+            color: #d32f2f;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .module-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+
+        /* 技巧分类标签 */
+        .skill-categories {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .category-btn {
+            padding: 12px 25px;
+            border: 3px solid;
+            border-radius: 8px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.5);
+        }
+        .category-btn:hover { transform: translateY(-3px); }
+        .category-btn.active { box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .category-btn.cat1 { color: #1976d2; border-color: #1976d2; }
+        .category-btn.cat1.active { background: #1976d2; color: #fff; }
+        .category-btn.cat2 { color: #ff9800; border-color: #ff9800; }
+        .category-btn.cat2.active { background: #ff9800; color: #fff; }
+        .category-btn.cat3 { color: #388e3c; border-color: #388e3c; }
+        .category-btn.cat3.active { background: #388e3c; color: #fff; }
+        .category-btn.cat4 { color: #7b1fa2; border-color: #7b1fa2; }
+        .category-btn.cat4.active { background: #7b1fa2; color: #fff; }
+        .category-btn.cat5 { color: #d32f2f; border-color: #d32f2f; }
+        .category-btn.cat5.active { background: #d32f2f; color: #fff; }
+
+        /* 技巧卡片网格 */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        /* 技巧卡片 */
+        .tip-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid;
+            border-radius: 8px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tip-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+        .tip-card.blue { border-color: #1976d2; }
+        .tip-card.orange { border-color: #ff9800; }
+        .tip-card.green { border-color: #388e3c; }
+        .tip-card.purple { border-color: #7b1fa2; }
+        .tip-card.red { border-color: #d32f2f; }
+
+        .tip-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+        }
+        .tip-card.blue .tip-header { border-color: rgba(25,118,210,0.3); }
+        .tip-card.orange .tip-header { border-color: rgba(255,152,0,0.3); }
+        .tip-card.green .tip-header { border-color: rgba(56,142,60,0.3); }
+        .tip-card.purple .tip-header { border-color: rgba(123,31,162,0.3); }
+        .tip-card.red .tip-header { border-color: rgba(211,47,47,0.3); }
+
+        .tip-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .tip-card.blue .tip-icon { background: rgba(25,118,210,0.15); }
+        .tip-card.orange .tip-icon { background: rgba(255,152,0,0.15); }
+        .tip-card.green .tip-icon { background: rgba(56,142,60,0.15); }
+        .tip-card.purple .tip-icon { background: rgba(123,31,162,0.15); }
+        .tip-card.red .tip-icon { background: rgba(211,47,47,0.15); }
+
+        .tip-title {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 18px;
+        }
+        .tip-card.blue .tip-title { color: #1976d2; }
+        .tip-card.orange .tip-title { color: #ff9800; }
+        .tip-card.green .tip-title { color: #388e3c; }
+        .tip-card.purple .tip-title { color: #7b1fa2; }
+        .tip-card.red .tip-title { color: #d32f2f; }
+
+        .tip-badge {
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: auto;
+        }
+        .tip-badge.hot { background: #d32f2f; color: #fff; }
+        .tip-badge.must { background: #ff9800; color: #fff; }
+
+        /* 技巧摘要 */
+        .tip-summary {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* 技巧要点列表 */
+        .tip-points {
+            list-style: none;
+            font-size: 13px;
+        }
+        .tip-point {
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 5px;
+            position: relative;
+            padding-left: 25px;
+        }
+        .tip-point::before {
+            content: '✓';
+            position: absolute;
+            left: 8px;
+            font-weight: 700;
+        }
+        .tip-card.blue .tip-point::before { color: #1976d2; }
+        .tip-card.orange .tip-point::before { color: #ff9800; }
+        .tip-card.green .tip-point::before { color: #388e3c; }
+        .tip-card.purple .tip-point::before { color: #7b1fa2; }
+        .tip-card.red .tip-point::before { color: #d32f2f; }
+
+        /* 展开详情区域 */
+        .tip-detail {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        .tip-card.expanded .tip-detail { max-height: 800px; }
+
+        .detail-section {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        .tip-card.blue .detail-section { border-color: #1976d2; }
+        .tip-card.orange .detail-section { border-color: #ff9800; }
+        .tip-card.green .detail-section { border-color: #388e3c; }
+        .tip-card.purple .detail-section { border-color: #7b1fa2; }
+        .tip-card.red .detail-section { border-color: #d32f2f; }
+
+        .detail-title {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .tip-card.blue .detail-title { color: #1976d2; }
+        .tip-card.orange .detail-title { color: #ff9800; }
+        .tip-card.green .detail-title { color: #388e3c; }
+        .tip-card.purple .detail-title { color: #7b1fa2; }
+        .tip-card.red .detail-title { color: #d32f2f; }
+
+        .detail-content {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #444;
+        }
+        .detail-example {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255,152,0,0.1);
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .detail-example-label {
+            color: #ff9800;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        /* 展开按钮 */
+        .expand-btn {
+            margin-top: 15px;
+            padding: 8px 20px;
+            border: 2px solid;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            background: transparent;
+        }
+        .tip-card.blue .expand-btn { color: #1976d2; border-color: #1976d2; }
+        .tip-card.orange .expand-btn { color: #ff9800; border-color: #ff9800; }
+        .tip-card.green .expand-btn { color: #388e3c; border-color: #388e3c; }
+        .tip-card.purple .expand-btn { color: #7b1fa2; border-color: #7b1fa2; }
+        .tip-card.red .expand-btn { color: #d32f2f; border-color: #d32f2f; }
+        .expand-btn:hover { background: rgba(0,0,0,0.1); }
+
+        /* 流程图示 */
+        .flow-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .flow-step {
+            padding: 10px 15px;
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #1976d2;
+            background: rgba(25,118,210,0.1);
+        }
+        .flow-arrow {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* 时间分配表格 */
+        .time-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: rgba(255,255,255,0.8);
+            margin-top: 10px;
+        }
+        .time-table th {
+            background: rgba(25,118,210,0.15);
+            color: #1976d2;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            padding: 10px;
+            text-align: center;
+            border-bottom: 3px solid #1976d2;
+        }
+        .time-table td {
+            padding: 10px;
+            border-bottom: 1px solid rgba(25,118,210,0.2);
+            text-align: center;
+        }
+        .time-table tr:hover td { background: rgba(25,118,210,0.1); }
+        .time-highlight {
+            background: rgba(211,47,47,0.15);
+            font-weight: 700;
+            color: #d32f2f;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .top-nav { flex-direction: column; gap: 15px; }
+            .tips-grid { grid-template-columns: 1fr; }
+            .skill-categories { flex-direction: column; }
+            .category-btn { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="whiteboard-container">
+        <!-- 顶部导航 -->
+        <div class="top-nav">
+            <button class="back-home" onclick="location.href='index.html'">🏠 返回首页</button>
+            <div class="breadcrumb">当前位置：<span>备考技巧</span></div>
+        </div>
+
+        <!-- 模块标题 -->
+        <div class="module-header">
+            <div class="module-title">💡 备考技巧与应试策略</div>
+            <div class="module-subtitle">掌握技巧，事半功倍 | 系统架构设计师冲刺必备</div>
+        </div>
+
+        <!-- 技巧分类标签 -->
+        <div class="skill-categories">
+            <div class="category-btn cat1 active" onclick="filterCategory('all', this)">📚 全部</div>
+            <div class="category-btn cat2" onclick="filterCategory('strategy', this)">🎯 应试策略</div>
+            <div class="category-btn cat3" onclick="filterCategory('time', this)">⏰ 时间管理</div>
+            <div class="category-btn cat4" onclick="filterCategory('answer', this)">📝 答题技巧</div>
+            <div class="category-btn cat5" onclick="filterCategory('memory', this)">🧠 记忆技巧</div>
+        </div>
+
+        <!-- 技巧卡片网格 -->
+        <div class="tips-grid">
+            <!-- 应试策略类 -->
+            <div class="tip-card blue" data-category="strategy" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">🎯</div>
+                    <div class="tip-title">选择题应试策略</div>
+                    <div class="tip-badge hot">热门</div>
+                </div>
+                <div class="tip-summary">选择题共75题，每题1分，考试时间150分钟。掌握正确的答题策略，可以有效提高得分率。</div>
+                <ul class="tip-points">
+                    <li class="tip-point">先易后难，确保基础分到手</li>
+                    <li class="tip-point">排除法优先，缩小选择范围</li>
+                    <li class="tip-point">标记不确定题目，最后回看</li>
+                </ul>
+                <div class="tip-detail">
+                    <div class="detail-section">
+                        <div class="detail-title">📌 详细策略说明</div>
+                        <div class="detail-content">
+                            <p><strong>1. 时间分配：</strong>每题平均2分钟，预留15分钟检查。难题不超过4分钟，超过则标记跳过。</p>
+                            <p style="margin-top:8px;"><strong>2. 答题顺序：</strong>先做熟悉考点（架构风格、数据库、网络），再做陌生考点，最后处理难题。</p>
+                            <p style="margin-top:8px;"><strong>3. 排除技巧：</strong>先排除明显错误选项（违反基本原则），再排除相似选项中的干扰项。</p>
+                        </div>
+                        <div class="detail-example">
+                            <div class="detail-example-label">💡 示例应用</div>
+                            题目问"分层架构的约束"，选项D说"下层可调用上层"→明显违反分层原则，直接排除。
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <div class="tip-card blue" data-category="strategy" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">📋</div>
+                    <div class="tip-title">案例分析应试策略</div>
+                    <div class="tip-badge must">必看</div>
+                </div>
+                <div class="tip-summary">案例分析共3题，每题25分，考试时间90分钟。侧重架构设计能力考查，需要系统性答题。</div>
+                <ul class="tip-points">
+                    <li class="tip-point">审题时圈出关键要求和约束</li>
+                    <li class="tip-point">先画架构图，再补充说明文字</li>
+                    <li class="tip-point">答案结构化：问题→方案→理由</li>
+                </ul>
+                <div class="tip-detail">
+                    <div class="detail-section">
+                        <div class="detail-title">📌 案例分析答题模板</div>
+                        <div class="detail-content">
+                            <p><strong>Step 1：审题分析（5分钟）</strong></p>
+                            <p>• 识别系统类型（电商、金融、物联网...）</p>
+                            <p>• 圈出质量属性要求（高可用、高性能、可扩展...）</p>
+                            <p style="margin-top:8px;"><strong>Step 2：架构设计（15分钟）</strong></p>
+                            <p>• 绘制架构图（分层/微服务/分布式）</p>
+                            <p>• 标注关键组件和交互关系</p>
+                            <p style="margin-top:8px;"><strong>Step 3：论证说明（10分钟）</strong></p>
+                            <p>• 解释架构选择依据</p>
+                            <p>• 说明如何满足质量属性要求</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <div class="tip-card red" data-category="strategy" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">✍️</div>
+                    <div class="tip-title">论文写作应试策略</div>
+                    <div class="tip-badge must">必看</div>
+                </div>
+                <div class="tip-summary">论文考试时间120分钟，要求2500字左右。需要有清晰的论文框架和足够的论据支撑。</div>
+                <ul class="tip-points">
+                    <li class="tip-point">提前准备3-5个项目素材</li>
+                    <li class="tip-point">论文框架固定：摘要→背景→分析→实践→总结</li>
+                    <li class="tip-point">开头结尾要呼应，中间段落要充实</li>
+                </ul>
+                <div class="tip-detail">
+                    <div class="detail-section">
+                        <div class="detail-title">📌 论文写作流程</div>
+                        <div class="flow-diagram">
+                            <div class="flow-step">审题选材</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">列提纲</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">写摘要</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">正文展开</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">总结收尾</div>
+                        </div>
+                        <div class="detail-content" style="margin-top:15px;">
+                            <p><strong>时间分配建议：</strong></p>
+                            <p>• 审题+选材：10分钟</p>
+                            <p>• 列提纲：10分钟</p>
+                            <p>• 写摘要：15分钟</p>
+                            <p>• 正文写作：70分钟</p>
+                            <p>• 检查修改：15分钟</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <!-- 时间管理类 -->
+            <div class="tip-card orange" data-category="time" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">⏰</div>
+                    <div class="tip-title">考试时间分配</div>
+                </div>
+                <div class="tip-summary">系统架构设计师考试分三个科目，合理分配时间是得分关键。</div>
+                <table class="time-table">
+                    <thead><tr><th>科目</th><th>题量</th><th>时间</th><th>建议策略</th></tr></thead>
+                    <tbody>
+                        <tr><td>综合知识</td><td>75题</td><td>150分钟</td><td>每题约2分钟</td></tr>
+                        <tr class="time-highlight"><td>案例分析</td><td>3题</td><td>90分钟</td><td>每题30分钟</td></tr>
+                        <tr class="time-highlight"><td>论文</td><td>1题</td><td>120分钟</td><td>写作+检查</td></tr>
+                    </tbody>
+                </table>
+                <div class="tip-detail">
+                    <div class="detail-section">
+                        <div class="detail-title">📌 时间管理要点</div>
+                        <div class="detail-content">
+                            <p><strong>⚠️ 常见时间陷阱：</strong></p>
+                            <p>• 选择题纠结难题超过5分钟 → 应标记跳过</p>
+                            <p>• 案例分析画图超时 → 先画框架图再细化</p>
+                            <p>• 论文写作时间不足 → 提前准备素材框架</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <div class="tip-card orange" data-category="time" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">📅</div>
+                    <div class="tip-title">7天冲刺复习规划</div>
+                </div>
+                <div class="tip-summary">考前7天是冲刺黄金期，需要高效覆盖核心考点。</div>
+                <table class="time-table">
+                    <thead><tr><th>天数</th><th>上午</th><th>下午</th><th>晚上</th></tr></thead>
+                    <tbody>
+                        <tr><td>Day 1</td><td>架构核心概念</td><td>架构风格</td><td>选择题练习</td></tr>
+                        <tr><td>Day 2</td><td>分布式系统</td><td>数据库架构</td><td>案例分析1</td></tr>
+                        <tr><td>Day 3</td><td>微服务架构</td><td>信息安全</td><td>案例分析2</td></tr>
+                        <tr><td>Day 4</td><td>网络协议</td><td>系统可靠性</td><td>真题模拟</td></tr>
+                        <tr><td>Day 5</td><td>项目管理</td><td>法律法规</td><td>论文框架</td></tr>
+                        <tr class="time-highlight"><td>Day 6</td><td>综合复习</td><td>错题回顾</td><td>论文写作</td></tr>
+                        <tr class="time-highlight"><td>Day 7</td><td>模拟考试</td><td>查漏补缺</td><td>放松调整</td></tr>
+                    </tbody>
+                </table>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <!-- 答题技巧类 -->
+            <div class="tip-card green" data-category="answer" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">🔍</div>
+                    <div class="tip-title">审题要点技巧</div>
+                    <div class="tip-badge hot">热门</div>
+                </div>
+                <div class="tip-summary">审题是答题的第一步，正确理解题目意图直接影响答案质量。</div>
+                <ul class="tip-points">
+                    <li class="tip-point">圈出关键词：系统类型、质量属性、约束条件</li>
+                    <li class="tip-point">识别题型：概念题、应用题、分析题、设计题</li>
+                    <li class="tip-point">注意限定词："必须"、"主要"、"不包括"</li>
+                </ul>
+                <div class="tip-detail">
+                    <div class="detail-section">
+                        <div class="detail-title">📌 审题三步法</div>
+                        <div class="flow-diagram">
+                            <div class="flow-step">读题干</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">圈关键词</div>
+                            <div class="flow-arrow">→</div>
+                            <div class="flow-step">判题型</div>
+                        </div>
+                        <div class="detail-example" style="margin-top:15px;">
+                            <div class="detail-example-label">💡 示例分析</div>
+                            题目："某电商系统需要<strong>高并发、高可用</strong>，采用<strong>微服务架构</strong>，<strong>不包括</strong>以下哪种组件？"<br>
+                            关键词：电商系统、高并发高可用、微服务架构、不包括<br>
+                            题型：概念应用题（考查微服务组件认知）
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <div class="tip-card green" data-category="answer" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">⚠️</div>
+                    <div class="tip-title">常见陷阱识别</div>
+                    <div class="tip-badge hot">热门</div>
+                </div>
+                <div class="tip-summary">考试中常见设置陷阱，识别陷阱可以避免失分。</div>
+                <ul class="tip-points">
+                    <li class="tip-point">概念混淆陷阱：架构风格 vs 设计模式</li>
+                    <li class="tip-point">范围限定陷阱："所有" vs "部分"</li>
+                    <li class="tip-point">反向陷阱："正确的是" vs "错误的是"</li>
+                    <li class="tip-point">时间陷阱：纠结难题耽误整体进度</li>
+                </ul>
+                <div class="tip-detail">
+                    <div class="detail-section">
+                        <div class="detail-title">📌 陷阱示例解析</div>
+                        <div class="detail-content">
+                            <p><strong>陷阱1：概念混淆</strong></p>
+                            <p>问"架构风格"时，选项混入"观察者模式"等设计模式 → 需区分宏观vs微观</p>
+                            <p style="margin-top:8px;"><strong>陷阱2：反向提问</strong></p>
+                            <p>题目问"以下<strong>不属于</strong>微服务组件的是"，选项A"API网关"看起来正确但实际<strong>属于</strong> → 粗心易错选</p>
+                            <p style="margin-top:8px;"><strong>陷阱3：绝对表述</strong></p>
+                            <p>选项说"<strong>必须</strong>使用分布式缓存"，实际场景可能用本地缓存 → 看清限定条件</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <div class="tip-card green" data-category="answer" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">📝</div>
+                    <div class="tip-title">案例分析答题模板</div>
+                    <div class="tip-badge must">必看</div>
+                </div>
+                <div class="tip-summary">案例分析需要结构化答题，使用固定模板可以提高答题效率和质量。</div>
+                <div class="tip-detail" style="max-height: 500px;">
+                    <div class="detail-section">
+                        <div class="detail-title">📌 案例分析答题模板</div>
+                        <div class="detail-content">
+                            <p><strong>【问题分析】</strong></p>
+                            <p>1. 系统背景：该系统是____，主要功能是____</p>
+                            <p>2. 质量要求：题目要求满足____（高可用/高性能/可扩展...）</p>
+                            <p>3. 约束条件：题目给出的约束有____</p>
+                            <p style="margin-top:12px;"><strong>【架构方案】</strong></p>
+                            <p>1. 整体架构：采用____架构（分层/微服务/分布式）</p>
+                            <p>2. 组件设计：____负责____，____负责____</p>
+                            <p>3. 关键技术：使用____解决____问题</p>
+                            <p style="margin-top:12px;"><strong>【方案论证】</strong></p>
+                            <p>1. 满足____质量属性的原因：____</p>
+                            <p>2. 架构选择依据：相比____方案，本方案的优势是____</p>
+                            <p>3. 可能风险与应对：____</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <!-- 记忆技巧类 -->
+            <div class="tip-card purple" data-category="memory" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">🧠</div>
+                    <div class="tip-title">关键知识点记忆法</div>
+                </div>
+                <div class="tip-summary">架构设计师考点多，掌握记忆技巧可以高效记住核心内容。</div>
+                <ul class="tip-points">
+                    <li class="tip-point">口诀记忆：如"构件连接约束三要素"</li>
+                    <li class="tip-point">对比记忆：分层vs微服务vs分布式</li>
+                    <li class="tip-point">场景记忆：结合实际案例理解概念</li>
+                </ul>
+                <div class="tip-detail">
+                    <div class="detail-section">
+                        <div class="detail-title">📌 记忆口诀示例</div>
+                        <div class="detail-content">
+                            <p><strong>架构三要素：</strong>"构件连约束" → 构件、连接件、约束</p>
+                            <p style="margin-top:8px;"><strong>CAP定理：</strong>"C一致A可用P分区" → 一致性、可用性、分区容错性</p>
+                            <p style="margin-top:8px;"><strong>架构风格四类：</strong>"分层微分事" → 分层、微服务、分布式、事件驱动</p>
+                            <p style="margin-top:8px;"><strong>质量属性：</strong>"能用可安扩维移" → 可用性、性能、可靠性、安全性、可扩展性、可维护性、可移植性</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+
+            <div class="tip-card purple" data-category="memory" onclick="toggleCard(this)">
+                <div class="tip-header">
+                    <div class="tip-icon">📊</div>
+                    <div class="tip-title">高频考点速记表</div>
+                    <div class="tip-badge hot">热门</div>
+                </div>
+                <div class="tip-summary">高频考点每年必考，需要重点记忆。</div>
+                <table class="time-table">
+                    <thead><tr><th>考点</th><th>考查频率</th><th>记忆要点</th></tr></thead>
+                    <tbody>
+                        <tr><td>架构风格选择</td><td>每年必考</td><td>适用场景+优缺点</td></tr>
+                        <tr><td>构件连接件</td><td>近5年考10次</td><td>概念识别+案例应用</td></tr>
+                        <tr><td>CAP定理</td><td>高频</td><td>三选二+应用场景</td></tr>
+                        <tr><td>数据库分库分表</td><td>高频</td><td>策略+条件</td></tr>
+                        <tr><td>分布式一致性</td><td>高频</td><td>算法对比</td></tr>
+                    </tbody>
+                </table>
+                <div class="expand-btn">展开详情 ↓</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data-renderer.js"></script>
+    <script>
+        // 页面特定功能 - 使用TipsRenderer中的方法
+        function filterCategory(category, element) {
+            TipsRenderer.filterCategory(category, element);
+        }
+
+        function toggleCard(card) {
+            TipsRenderer.toggleCard(card);
+        }
+    </script>
+</body>
+</html>

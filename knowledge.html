@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>必学必记 - 系统架构设计师冲刺备考网站</title>
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/common.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #fafafa;
+            background-image: linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            padding: 15px; color: #333; min-height: 100vh;
+        }
+        .whiteboard-container {
+            background: rgba(255,255,255,0.3);
+            border: 12px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 顶部导航 */
+        .top-nav {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+        }
+        .back-home {
+            padding: 8px 15px; background: rgba(25,118,210,0.1); border: 2px solid #1976d2;
+            border-radius: 5px; color: #1976d2; cursor: pointer; font-size: 13px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+        .back-home:hover { background: rgba(25,118,210,0.2); }
+        .module-header { margin-bottom: 12px; }
+        .module-title {
+            color: #d32f2f; font-family: 'Ma Shan Zheng', cursive;
+            font-size: 24px; border-bottom: 4px solid #d32f2f;
+            padding-bottom: 10px;
+        }
+        .nav-tabs { display: flex; gap: 10px; }
+        .nav-tab {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 14px; padding: 8px 20px;
+            border: 3px solid; border-radius: 5px;
+            cursor: pointer; transition: all 0.3s; background: transparent;
+        }
+        .nav-tab.red.active { background: #d32f2f; color: #fff; }
+        .nav-tab.red { color: #d32f2f; border-color: #d32f2f; }
+        .nav-tab.blue.active { background: #1976d2; color: #fff; }
+        .nav-tab.blue { color: #1976d2; border-color: #1976d2; }
+        .nav-tab.green.active { background: #388e3c; color: #fff; }
+        .nav-tab.green { color: #388e3c; border-color: #388e3c; }
+        .search-box { display: flex; gap: 8px; }
+        .search-input { padding: 8px 12px; border: 2px solid #1976d2; border-radius: 5px; width: 220px; font-size: 13px; }
+        .search-btn { padding: 8px 15px; background: #1976d2; color: #fff; border: 2px solid #1976d2; border-radius: 5px; cursor: pointer; font-family: 'ZCOOL KuaiLe', cursive; font-size: 13px; }
+
+        /* 主内容区 */
+        .main-content { display: grid; grid-template-columns: 280px 1fr; gap: 20px; min-height: calc(100vh - 150px); }
+
+        /* 左侧考点目录 */
+        .topic-directory {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            padding: 15px;
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+            position: sticky;
+            top: 15px;
+        }
+        .directory-title { color: #1976d2; font-family: 'Ma Shan Zheng', cursive; font-size: 18px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 3px solid #1976d2; text-align: center; }
+        .directory-list { list-style: none; }
+        .directory-item { margin-bottom: 6px; }
+        .directory-link {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 10px 12px;
+            background: rgba(255,255,255,0.6);
+            border: 2px solid rgba(25,118,210,0.3);
+            border-radius: 5px; cursor: pointer; transition: all 0.3s; font-size: 13px;
+        }
+        .directory-link:hover { background: rgba(25,118,210,0.15); border-color: #1976d2; transform: translateX(5px); }
+        .directory-link.active { background: rgba(211,47,47,0.15); border-color: #d32f2f; border-left: 3px solid #d32f2f; }
+        .topic-name { font-weight: 700; color: #333; }
+        .topic-count { font-size: 12px; color: #666; background: rgba(0,0,0,0.1); padding: 3px 8px; border-radius: 3px; }
+        .directory-link.active .topic-name { color: #d32f2f; }
+
+        /* 右侧内容区 */
+        .content-area { display: flex; flex-direction: column; gap: 15px; }
+
+        /* 默认总览区域 */
+        .trend-overview { display: block; }
+        .trend-overview.hidden { display: none; }
+
+        /* 考试趋势分析 */
+        .trend-analysis-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #ff9800;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .trend-title { color: #ff9800; font-family: 'Ma Shan Zheng', cursive; font-size: 20px; margin-bottom: 12px; border-bottom: 3px solid #ff9800; padding-bottom: 8px; }
+        .trend-content { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .trend-summary { background: rgba(255,255,255,0.6); padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800; }
+        .trend-summary h4 { color: #ff9800; font-size: 14px; margin-bottom: 10px; font-weight: 700; }
+        .trend-summary ul { list-style: none; font-size: 13px; }
+        .trend-summary li { padding: 5px 0; position: relative; padding-left: 15px; }
+        .trend-summary li::before { content: '•'; color: #ff9800; font-weight: 700; position: absolute; left: 0; }
+
+        /* 柱状图 */
+        .bar-chart { display: flex; align-items: flex-end; justify-content: space-around; height: 150px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; }
+        .bar-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+        .bar { width: 40px; border-radius: 3px 3px 0 0; background: linear-gradient(180deg, #ff9800, #ff6f00); }
+        .bar-label { font-size: 11px; color: #666; }
+        .bar-value { font-size: 10px; color: #ff9800; font-weight: 700; }
+
+        /* 考点分布表格 */
+        .distribution-table-card { background: rgba(255,255,255,0.7); border: 3px solid #1976d2; border-radius: 8px; padding: 15px; }
+        .distribution-title { color: #1976d2; font-family: 'Ma Shan Zheng', cursive; font-size: 20px; margin-bottom: 12px; border-bottom: 3px solid #1976d2; padding-bottom: 8px; }
+        .distribution-table { width: 100%; border-collapse: separate; border-spacing: 0; background: rgba(255,255,255,0.8); }
+        .distribution-table th { background: rgba(25,118,210,0.15); color: #1976d2; font-family: 'ZCOOL KuaiLe', cursive; padding: 8px 10px; text-align: left; border-bottom: 3px solid #1976d2; font-size: 13px; }
+        .distribution-table td { padding: 6px 10px; border-bottom: 1px solid rgba(25,118,210,0.2); font-size: 13px; }
+        .distribution-table tr:hover td { background: rgba(25,118,210,0.1); }
+        .year-badge { display: inline-block; padding: 4px 10px; background: #1976d2; color: #fff; border-radius: 3px; font-size: 11px; font-weight: 700; margin-right: 5px; }
+        .topic-badge { display: inline-block; padding: 4px 10px; background: rgba(25,118,210,0.15); color: #1976d2; border: 1px solid #1976d2; border-radius: 3px; font-size: 11px; margin-right: 3px; margin-bottom: 3px; }
+        .percent-badge { display: inline-block; padding: 4px 10px; background: rgba(211,47,47,0.15); color: #d32f2f; border: 1px solid #d32f2f; border-radius: 3px; font-size: 12px; font-weight: 700; }
+
+        /* 知识区域（点击考点后显示，覆盖原有内容） */
+        .knowledge-section { display: none; overflow-y: auto; max-height: calc(100vh - 150px); }
+        .knowledge-section.active { display: block; }
+
+        /* 知识图谱 */
+        .knowledge-graph-card { background: rgba(255,255,255,0.7); border: 3px solid #388e3c; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .graph-title { color: #388e3c; font-family: 'Ma Shan Zheng', cursive; font-size: 20px; margin-bottom: 12px; border-bottom: 3px solid #388e3c; padding-bottom: 8px; }
+        .knowledge-diagram { position: relative; min-height: 200px; padding: 15px; background: rgba(255,255,255,0.5); border-radius: 8px; }
+        .diagram-center {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 100px; height: 100px; background: #d32f2f; border: 4px solid #b71c1c; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-family: 'ZCOOL KuaiLe', cursive; font-size: 13px; text-align: center;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(211,47,47,0.4); z-index: 10;
+        }
+        .diagram-node {
+            position: absolute; width: 85px; height: 85px;
+            border: 3px solid; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'ZCOOL KuaiLe', cursive; font-size: 11px; text-align: center;
+            cursor: pointer; transition: all 0.3s; z-index: 5;
+        }
+        .diagram-node:hover, .diagram-node.active { transform: scale(1.15); z-index: 20; }
+        .node-status { position: absolute; top: -5px; right: -5px; width: 16px; height: 16px; border-radius: 50%; background: #388e3c; border: 2px solid #fff; font-size: 10px; color: #fff; }
+        .node-status.unlearned { background: #e0e0e0; color: #999; }
+        .node-status.star { background: #ff9800; }
+
+        /* 知识串讲 */
+        .knowledge-chain-card { background: rgba(255,255,255,0.7); border: 3px solid #ff9800; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .chain-title { color: #ff9800; font-family: 'Ma Shan Zheng', cursive; font-size: 20px; margin-bottom: 12px; border-bottom: 3px solid #ff9800; padding-bottom: 8px; }
+        .chain-flow { display: flex; align-items: center; gap: 15px; padding: 15px; background: rgba(255,255,255,0.5); border-radius: 8px; flex-wrap: wrap; }
+        .chain-node { display: flex; align-items: center; gap: 10px; }
+        .chain-box { padding: 10px 15px; background: rgba(255,255,255,0.8); border: 3px solid; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.3s; }
+        .chain-box:hover { transform: translateY(-3px); }
+        .chain-box.active { box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        .chain-box.node1 { border-color: #d32f2f; color: #d32f2f; }
+        .chain-box.node2 { border-color: #1976d2; color: #1976d2; }
+        .chain-box.node3 { border-color: #388e3c; color: #388e3c; }
+        .chain-box.node4 { border-color: #ff9800; color: #ff9800; }
+        .chain-box.node5 { border-color: #7b1fa2; color: #7b1fa2; }
+        .chain-arrow { color: #666; font-size: 14px; }
+
+        /* 常见考点分析表格 */
+        .exam-points-card { background: rgba(255,255,255,0.7); border: 3px solid #ff9800; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .exam-points-title { color: #ff9800; font-family: 'Ma Shan Zheng', cursive; font-size: 20px; margin-bottom: 12px; border-bottom: 3px solid #ff9800; padding-bottom: 8px; }
+        .exam-points-table { width: 100%; border-collapse: separate; border-spacing: 0; background: rgba(255,255,255,0.8); }
+        .exam-points-table th { background: rgba(255,152,0,0.15); color: #ff9800; font-family: 'ZCOOL KuaiLe', cursive; padding: 8px 10px; text-align: left; border-bottom: 3px solid #ff9800; }
+        .exam-points-table td { padding: 6px 10px; border-bottom: 1px solid rgba(255,152,0,0.3); font-size: 13px; }
+        .exam-points-table tr:hover td { background: rgba(255,152,0,0.1); }
+
+        /* 知识点精讲区域 */
+        .knowledge-detail-section { display: none; overflow-y: auto; max-height: calc(100vh - 150px); }
+        .knowledge-detail-section.active { display: block; }
+        .detail-card { background: rgba(255,255,255,0.7); border: 3px solid #d32f2f; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .detail-header { margin-bottom: 15px; padding-bottom: 12px; border-bottom: 4px solid #d32f2f; }
+        .detail-title { color: #d32f2f; font-family: 'Ma Shan Zheng', cursive; font-size: 24px; margin-bottom: 8px; }
+        .detail-tags { display: flex; gap: 8px; }
+        .detail-tag { padding: 4px 12px; border-radius: 5px; font-size: 12px; font-weight: 700; border: 2px solid; }
+        .detail-tag.red { background: rgba(211,47,47,0.15); color: #d32f2f; border-color: #d32f2f; }
+        .detail-tag.blue { background: rgba(25,118,210,0.15); color: #1976d2; border-color: #1976d2; }
+        .detail-tag.orange { background: rgba(255,152,0,0.15); color: #ff9800; border-color: #ff9800; }
+
+        .content-section { margin-bottom: 20px; }
+        .section-title { font-family: 'ZCOOL KuaiLe', cursive; font-size: 16px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 3px solid; }
+        .section-title.blue { color: #1976d2; border-color: #1976d2; }
+        .section-title.blue::before { content: '◆'; color: #1976d2; margin-right: 8px; }
+        .section-title.red { color: #d32f2f; border-color: #d32f2f; }
+        .section-title.red::before { content: '◆'; color: #d32f2f; margin-right: 8px; }
+        .section-title.orange { color: #ff9800; border-color: #ff9800; }
+        .section-title.orange::before { content: '◆'; color: #ff9800; margin-right: 8px; }
+        .section-title.green { color: #388e3c; border-color: #388e3c; }
+        .section-title.green::before { content: '◆'; color: #388e3c; margin-right: 8px; }
+        .section-content { font-size: 13px; line-height: 1.7; color: #333; }
+
+        /* 易错点卡片 */
+        .error-points-card { background: rgba(255,255,255,0.7); border: 3px solid #d32f2f; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .error-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .error-card { background: rgba(211,47,47,0.1); padding: 12px; border-radius: 8px; border-left: 4px solid #d32f2f; }
+        .error-icon { font-size: 18px; margin-bottom: 6px; }
+        .error-title { color: #d32f2f; font-weight: 700; margin-bottom: 4px; font-size: 13px; }
+        .error-correct { color: #388e3c; font-size: 11px; }
+
+        /* 真题示例 */
+        .example-card { background: rgba(255,255,255,0.7); border: 3px solid #7b1fa2; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .example-question { margin-bottom: 12px; }
+        .question-header { font-family: 'ZCOOL KuaiLe', cursive; font-size: 15px; color: #7b1fa2; margin-bottom: 12px; }
+        .question-header::before { content: '📝 '; }
+        .question-text { font-size: 13px; line-height: 1.6; margin-bottom: 12px; padding: 8px; background: rgba(123,31,162,0.05); border-radius: 5px; }
+        .question-options { margin-bottom: 12px; }
+        .option-item { padding: 8px 12px; margin-bottom: 6px; background: rgba(255,255,255,0.6); border: 2px solid rgba(0,0,0,0.1); border-radius: 5px; cursor: pointer; transition: all 0.3s; font-size: 13px; }
+        .option-item:hover { border-color: #1976d2; background: rgba(25,118,210,0.1); }
+        .option-item.selected { border-color: #7b1fa2; background: rgba(123,31,162,0.1); }
+        .option-item.correct { border-color: #388e3c; background: rgba(56,142,60,0.15); }
+        .option-item.wrong { border-color: #d32f2f; background: rgba(211,47,47,0.15); }
+        .option-label { font-weight: 700; color: #1976d2; margin-right: 8px; }
+        .show-answer-btn { padding: 8px 20px; background: #7b1fa2; color: #fff; border: 3px solid #7b1fa2; border-radius: 5px; cursor: pointer; font-family: 'ZCOOL KuaiLe', cursive; font-size: 13px; margin-bottom: 12px; }
+        .answer-section { max-height: 0; overflow: hidden; transition: max-height 0.5s; }
+        .answer-section.expanded { max-height: 500px; }
+        .answer-box { background: rgba(56,142,60,0.1); padding: 12px; border-radius: 5px; border-left: 4px solid #388e3c; }
+        .answer-label { color: #388e3c; font-weight: 700; margin-bottom: 6px; font-size: 13px; }
+        .answer-text { font-size: 12px; line-height: 1.6; }
+
+        /* 扩展知识 */
+        .related-card { background: rgba(255,255,255,0.7); border: 3px solid #1976d2; border-radius: 8px; padding: 15px; }
+        .related-links { display: flex; gap: 8px; flex-wrap: wrap; }
+        .related-link { padding: 6px 12px; background: rgba(0,121,107,0.1); border: 2px solid #00796b; border-radius: 5px; color: #00796b; font-size: 12px; cursor: pointer; }
+        .related-link:hover { background: rgba(0,121,107,0.2); transform: translateY(-2px); }
+
+        .back-btn { padding: 8px 15px; background: rgba(25,118,210,0.1); border: 2px solid #1976d2; border-radius: 5px; color: #1976d2; cursor: pointer; margin-top: 15px; font-size: 13px; }
+        .back-btn:hover { background: rgba(25,118,210,0.2); }
+
+        /* 响应式 */
+        @media (max-width: 1024px) { .main-content { grid-template-columns: 1fr; } .trend-content { grid-template-columns: 1fr; } .error-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .top-nav { flex-direction: column; gap: 15px; } .search-box { width: 100%; } .search-input { width: 100%; } }
+    </style>
+</head>
+<body>
+    <div class="whiteboard-container">
+        <!-- 顶部导航 -->
+        <div class="top-nav" style="justify-content: space-between;">
+            <button class="back-home" onclick="location.href='index.html'">🏠 返回首页</button>
+            <div class="search-box">
+                <input type="text" class="search-input" placeholder="搜索知识点...">
+                <button class="search-btn">🔍 搜索</button>
+            </div>
+        </div>
+
+        <!-- 模块标题 -->
+        <div class="module-header" style="margin-bottom: 15px;">
+            <div class="module-title">📚 必学必记 - 知识图谱</div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="main-content">
+            <!-- 左侧考点目录 -->
+            <div class="topic-directory">
+                <div class="directory-title">📚 考点目录</div>
+                <ul class="directory-list">
+                    <!-- 由JavaScript动态渲染 -->
+                </ul>
+            </div>
+
+            <!-- 右侧内容区 -->
+            <div class="content-area">
+                <!-- 默认总览区域 -->
+                <div class="trend-overview">
+                    <!-- 考试趋势分析 -->
+                    <div class="trend-analysis-card">
+                        <div class="trend-title">📊 系统架构设计师考试趋势分析（2021-2025）</div>
+                        <div class="trend-content">
+                            <div class="trend-summary">
+                                <h4>📈 考试趋势总结</h4>
+                                <ul>
+                                    <li><strong>高频考点持续稳定：</strong>架构风格、分布式系统、数据库架构每年必考</li>
+                                    <li><strong>新增考点明显：</strong>云原生、微服务、容器化技术占比逐年上升</li>
+                                    <li><strong>实操性增强：</strong>案例分析题更注重架构设计能力而非理论记忆</li>
+                                    <li><strong>综合性提升：</strong>多知识点融合考查</li>
+                                </ul>
+                            </div>
+                            <div class="trend-summary">
+                                <div style="text-align: center; font-weight: 700; color: #333; margin-bottom: 10px;">考点占比趋势</div>
+                                <div class="bar-chart">
+                                    <div class="bar-item"><div class="bar-value">18%</div><div class="bar" style="height: 90px;"></div><div class="bar-label">2021</div></div>
+                                    <div class="bar-item"><div class="bar-value">22%</div><div class="bar" style="height: 110px;"></div><div class="bar-label">2022</div></div>
+                                    <div class="bar-item"><div class="bar-value">25%</div><div class="bar" style="height: 125px;"></div><div class="bar-label">2023</div></div>
+                                    <div class="bar-item"><div class="bar-value">28%</div><div class="bar" style="height: 140px;"></div><div class="bar-label">2024</div></div>
+                                    <div class="bar-item"><div class="bar-value">30%</div><div class="bar" style="height: 150px;"></div><div class="bar-label">2025</div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 考点分布表格 -->
+                    <div class="distribution-table-card">
+                        <div class="distribution-title">📋 历年考点分布与占比（2021-2025）</div>
+                        <table class="distribution-table">
+                            <thead><tr><th style="width: 15%;">考试年份</th><th style="width: 55%;">考点分布</th><th style="width: 15%;">占比</th><th style="width: 15%;">题型</th></tr></thead>
+                            <tbody>
+                                <tr><td><span class="year-badge">2025上</span></td><td><span class="topic-badge">微服务架构</span><span class="topic-badge">分布式一致性</span><span class="topic-badge">云原生</span><span class="topic-badge">API网关</span></td><td><span class="percent-badge">32%</span></td><td>选择题12题</td></tr>
+                                <tr><td><span class="year-badge">2024下</span></td><td><span class="topic-badge">架构风格选择</span><span class="topic-badge">分布式系统</span><span class="topic-badge">数据库分库分表</span><span class="topic-badge">缓存策略</span></td><td><span class="percent-badge">30%</span></td><td>选择题11题</td></tr>
+                                <tr><td><span class="year-badge">2024上</span></td><td><span class="topic-badge">微服务拆分</span><span class="topic-badge">CAP定理</span><span class="topic-badge">消息队列</span><span class="topic-badge">负载均衡</span></td><td><span class="percent-badge">28%</span></td><td>选择题10题</td></tr>
+                                <tr><td><span class="year-badge">2023下</span></td><td><span class="topic-badge">架构核心概念</span><span class="topic-badge">分层架构</span><span class="topic-badge">事件驱动</span><span class="topic-badge">构件连接件</span></td><td><span class="percent-badge">25%</span></td><td>选择题9题</td></tr>
+                                <tr><td><span class="year-badge">2023上</span></td><td><span class="topic-badge">架构质量属性</span><span class="topic-badge">ATAM评估</span><span class="topic-badge">高可用设计</span><span class="topic-badge">安全架构</span></td><td><span class="percent-badge">24%</span></td><td>选择题9题</td></tr>
+                                <tr><td><span class="year-badge">2022下</span></td><td><span class="topic-badge">架构约束</span><span class="topic-badge">分布式锁</span><span class="topic-badge">读写分离</span><span class="topic-badge">容灾备份</span></td><td><span class="percent-badge">22%</span></td><td>选择题8题</td></tr>
+                                <tr><td><span class="year-badge">2022上</span></td><td><span class="topic-badge">软件架构定义</span><span class="topic-badge">设计模式</span><span class="topic-badge">需求工程</span><span class="topic-badge">软件测试</span></td><td><span class="percent-badge">20%</span></td><td>选择题8题</td></tr>
+                                <tr><td><span class="year-badge">2021下</span></td><td><span class="topic-badge">TCP/IP协议</span><span class="topic-badge">加密算法</span><span class="topic-badge">项目管理</span><span class="topic-badge">知识产权</span></td><td><span class="percent-badge">18%</span></td><td>选择题7题</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 知识区域（点击考点后显示，覆盖原有内容） -->
+                <div class="knowledge-section">
+                    <!-- 知识图谱 -->
+                    <div class="knowledge-graph-card">
+                        <div class="graph-title">🔗 系统架构知识图谱</div>
+                        <div class="knowledge-diagram" style="padding: 15px 10px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                            <!-- 树状层级结构 - 简洁清晰版 -->
+                            <div class="tree-container" style="display: flex; flex-direction: column; align-items: center; gap: 3px;">
+
+                                <!-- Level 0: 核心节点 -->
+                                <div class="tree-node root" onclick="selectKnowledgeNode('架构核心', this)"
+                                    style="padding: 10px 20px; background: #d32f2f; color: #fff; border: 3px solid #b71c1c; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; box-shadow: 2px 2px 0 rgba(211,47,47,0.3);">
+                                    架构核心概念 <span style="background: #ff9800; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 4px;">⭐ 高频</span>
+                                </div>
+
+                                <!-- 连接线: 根节点到Level 1 -->
+                                <div style="width: 3px; height: 15px; background: #d32f2f;"></div>
+                                <div style="width: 350px; height: 3px; background: #1976d2;"></div>
+
+                                <!-- Level 1分支连接 - 竖线与节点对齐 -->
+                                <div style="display: flex; width: 350px; justify-content: space-between;">
+                                    <div style="width: 140px; display: flex; justify-content: center;">
+                                        <div style="width: 3px; height: 15px; background: #1976d2;"></div>
+                                    </div>
+                                    <div style="width: 140px; display: flex; justify-content: center;">
+                                        <div style="width: 3px; height: 15px; background: #ff9800;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Level 1: 基础要素 -->
+                                <div style="display: flex; width: 350px; justify-content: space-between;">
+                                    <div class="tree-node level1" onclick="selectKnowledgeNode('构件', this)"
+                                        style="padding: 8px 15px; background: rgba(25,118,210,0.15); color: #1976d2; border: 2px solid #1976d2; border-radius: 6px; cursor: pointer; font-weight: 700; width: 140px; text-align: center; font-size: 13px; box-shadow: 2px 2px 0 rgba(25,118,210,0.2);">
+                                        构件与连接件
+                                    </div>
+                                    <div class="tree-node level1" onclick="selectKnowledgeNode('约束', this)"
+                                        style="padding: 8px 15px; background: rgba(255,152,0,0.15); color: #ff9800; border: 2px solid #ff9800; border-radius: 6px; cursor: pointer; font-weight: 700; width: 140px; text-align: center; font-size: 13px; box-shadow: 2px 2px 0 rgba(255,152,0,0.2);">
+                                        架构约束原则
+                                    </div>
+                                </div>
+
+                                <!-- Level 1汇聚到Level 2 - 竖线与节点对齐 -->
+                                <div style="display: flex; width: 350px; justify-content: space-between; position: relative;">
+                                    <div style="width: 140px; display: flex; justify-content: center;">
+                                        <div style="width: 3px; height: 18px; background: #1976d2;"></div>
+                                    </div>
+                                    <!-- 横向汇聚线 -->
+                                    <div style="position: absolute; top: 18px; width: 210px; height: 3px; background: #388e3c; left: 70px;"></div>
+                                    <div style="width: 140px; display: flex; justify-content: center;">
+                                        <div style="width: 3px; height: 18px; background: #ff9800;"></div>
+                                    </div>
+                                </div>
+                                <!-- 中竖线 -->
+                                <div style="width: 3px; height: 15px; background: #388e3c;"></div>
+
+                                <!-- Level 2: 架构风格 -->
+                                <div class="tree-node level2" onclick="selectKnowledgeNode('架构风格', this)"
+                                    style="padding: 8px 20px; background: rgba(56,142,60,0.15); color: #388e3c; border: 2px solid #388e3c; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; box-shadow: 2px 2px 0 rgba(56,142,60,0.2);">
+                                    架构风格分类 <span style="background: #ff9800; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 4px;">⭐ 高频</span>
+                                </div>
+
+                                <!-- Level 2到Level 3连接线 -->
+                                <div style="width: 3px; height: 15px; background: #388e3c;"></div>
+                                <div style="width: 440px; height: 3px; background: #00796b;"></div>
+
+                                <!-- Level 3分支连接 - 竖线与节点对齐 -->
+                                <div style="display: flex; width: 440px; justify-content: space-evenly;">
+                                    <div style="width: 95px; display: flex; justify-content: center;">
+                                        <div style="width: 3px; height: 15px; background: #00796b;"></div>
+                                    </div>
+                                    <div style="width: 95px; display: flex; justify-content: center;">
+                                        <div style="width: 3px; height: 15px; background: #7b1fa2;"></div>
+                                    </div>
+                                    <div style="width: 95px; display: flex; justify-content: center;">
+                                        <div style="width: 3px; height: 15px; background: #d32f2f;"></div>
+                                    </div>
+                                    <div style="width: 95px; display: flex; justify-content: center;">
+                                        <div style="width: 3px; height: 15px; background: #1976d2;"></div>
+                                    </div>
+                                </div>
+
+                                <!-- Level 3: 具体风格 -->
+                                <div style="display: flex; width: 440px; justify-content: space-evenly;">
+                                    <div class="tree-node level3" onclick="selectKnowledgeNode('分层', this)"
+                                        style="padding: 6px 10px; background: rgba(0,121,107,0.15); color: #00796b; border: 2px solid #00796b; border-radius: 6px; cursor: pointer; font-weight: 700; width: 95px; text-align: center; font-size: 12px;">
+                                        分层架构
+                                    </div>
+                                    <div class="tree-node level3" onclick="selectKnowledgeNode('微服务', this)"
+                                        style="padding: 6px 10px; background: rgba(123,31,162,0.15); color: #7b1fa2; border: 2px solid #7b1fa2; border-radius: 6px; cursor: pointer; font-weight: 700; width: 95px; text-align: center; font-size: 12px;">
+                                        微服务 <span style="background: #e0e0e0; color: #999; padding: 1px 4px; border-radius: 3px; font-size: 10px;">○</span>
+                                    </div>
+                                    <div class="tree-node level3" onclick="selectKnowledgeNode('分布式', this)"
+                                        style="padding: 6px 10px; background: rgba(211,47,47,0.15); color: #d32f2f; border: 2px solid #d32f2f; border-radius: 6px; cursor: pointer; font-weight: 700; width: 95px; text-align: center; font-size: 12px;">
+                                        分布式 <span style="background: #388e3c; color: #fff; padding: 1px 4px; border-radius: 3px; font-size: 10px;">✓</span>
+                                    </div>
+                                    <div class="tree-node level3" onclick="selectKnowledgeNode('事件驱动', this)"
+                                        style="padding: 6px 10px; background: rgba(25,118,210,0.15); color: #1976d2; border: 2px solid #1976d2; border-radius: 6px; cursor: pointer; font-weight: 700; width: 95px; text-align: center; font-size: 12px;">
+                                        事件驱动
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 图谱说明 -->
+                            <div style="text-align: center; margin-top: 12px; padding: 8px; background: rgba(255,255,255,0.8); border-radius: 5px; border: 2px solid rgba(0,0,0,0.1); font-size: 11px; color: #666;">
+                                <span style="margin-right: 15px;"><span style="background: #ff9800; color: #fff; padding: 2px 6px; border-radius: 4px;">⭐</span> 高频考点</span>
+                                <span style="margin-right: 15px;"><span style="background: #388e3c; color: #fff; padding: 2px 6px; border-radius: 4px;">✓</span> 已学习</span>
+                                <span style="margin-right: 15px;"><span style="background: #e0e0e0; color: #999; padding: 2px 6px; border-radius: 4px;">○</span> 未学习</span>
+                                <span style="color: #333; font-weight: 700;">点击节点查看知识点精讲 →</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 知识串讲（默认显示） -->
+                    <div class="knowledge-chain-card" id="chainSummary">
+                        <div class="chain-title">📖 系统架构知识串讲</div>
+                        <div style="background: rgba(255,255,255,0.5); padding: 12px; border-radius: 8px; line-height: 1.7; font-size: 13px;">
+                            <p><strong>一、系统架构定义</strong></p>
+                            <p>软件架构是系统的高层次结构，由<strong>构件</strong>、<strong>连接件</strong>、<strong>约束</strong>三要素构成。架构设计是软件生命周期中成本最高、影响最深远的关键决策阶段。</p>
+
+                            <p style="margin-top: 10px;"><strong>二、架构风格分类</strong></p>
+                            <p>常见架构风格包括：<span style="color: #00796b;">分层架构</span>（单向依赖，易维护）、<span style="color: #7b1fa2;">微服务架构</span>（独立部署，弹性扩展）、<span style="color: #d32f2f;">分布式系统</span>（CAP权衡，一致性挑战）、<span style="color: #1976d2;">事件驱动架构</span>（异步解耦，高响应）。选择架构风格需综合考虑<strong>业务需求、性能要求、团队能力、技术成熟度</strong>。</p>
+
+                            <p style="margin-top: 10px;"><strong>三、架构质量属性</strong></p>
+                            <p>核心质量属性包括：<span style="color: #d32f2f;">可用性</span>（故障恢复、冗余设计）、<span style="color: #1976d2;">性能</span>（响应时间、吞吐量）、<span style="color: #388e3c;">可扩展性</span>（水平扩展、模块化）、<span style="color: #ff9800;">安全性</span>（认证授权、数据加密）、<span style="color: #7b1fa2;">可维护性</span>（代码质量、文档完备）。质量属性之间存在<strong>权衡关系</strong>，如性能与安全、可用性与成本。</p>
+
+                            <p style="margin-top: 10px;"><strong>四、架构评估方法</strong></p>
+                            <p>主流评估方法：<strong>ATAM</strong>（架构权衡分析方法，评估质量属性冲突）、<strong>SAAM</strong>（软件架构分析方法，评估可维护性）。评估关注<strong>场景驱动</strong>，从业务场景出发分析架构决策的影响。</p>
+
+                            <p style="margin-top: 10px; padding: 8px; background: rgba(255,152,0,0.1); border-radius: 5px; border-left: 3px solid #ff9800; font-size: 12px;">
+                                <strong>💡 备考要点：</strong>①架构三要素识别→②架构风格选择依据→③质量属性权衡分析→④ATAM评估流程→⑤真题反复演练架构设计案例。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 常见考点分析（默认显示） -->
+                    <div class="exam-points-card" id="examPointsCard">
+                        <div class="exam-points-title">📊 系统架构常见考点分析（近5年真题分布）</div>
+                        <table class="exam-points-table">
+                            <thead><tr><th>考点类型</th><th>考查频率</th><th>最近考查年份</th><th>题型分布</th><th>难度</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>架构风格的选择依据</strong></td><td>高频（每年必考）</td><td>2025/2024/2023/2022/2021</td><td>选择题、案例分析</td><td>中等</td></tr>
+                                <tr><td><strong>构件与连接件的识别</strong></td><td>高频（近3年考4次）</td><td>2025/2024/2023/2022</td><td>选择题、案例分析</td><td>中等</td></tr>
+                                <tr><td><strong>架构约束的作用判断</strong></td><td>高频（近3年考3次）</td><td>2025/2024/2023</td><td>选择题</td><td>简单</td></tr>
+                                <tr><td><strong>架构质量属性分析</strong></td><td>高频（每年必考）</td><td>2025/2024/2023/2022/2021</td><td>选择题、案例分析、论文</td><td>中等</td></tr>
+                                <tr><td><strong>ATAM/SAAM评估方法</strong></td><td>中频（近2年考2次）</td><td>2024/2023</td><td>选择题</td><td>较难</td></tr>
+                                <tr><td><strong>分层架构约束与应用</strong></td><td>高频（近3年考3次）</td><td>2025/2024/2023</td><td>选择题、案例分析</td><td>简单</td></tr>
+                                <tr><td><strong>微服务架构设计原则</strong></td><td>高频（每年必考）</td><td>2025/2024/2023/2022/2021</td><td>案例分析、论文</td><td>较难</td></tr>
+                                <tr><td><strong>分布式系统CAP定理</strong></td><td>高频（每年必考）</td><td>2025/2024/2023/2022/2021</td><td>选择题、案例分析</td><td>中等</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- 知识点精讲区域（点击图谱节点后替换上面的串讲和考点分析） -->
+                    <div class="knowledge-detail-section" id="knowledgeDetailSection">
+                        <div class="detail-card">
+                            <div class="detail-header"><div class="detail-title">架构核心概念</div><div class="detail-tags"><span class="detail-tag red">⭐ 高频考点</span><span class="detail-tag blue">必学必记</span><span class="detail-tag orange">近5年考10次</span></div></div>
+                            <div class="content-section">
+                                <div class="section-title blue">核心定义与概念讲解</div>
+                                <div class="section-content">
+                                    <p><strong>软件架构</strong>是指系统的高层次结构，定义了系统的组成部分、关系及设计演化原则。架构是软件生命周期中<strong>成本最高、影响最深远</strong>的决策阶段，直接影响系统的可维护性、可扩展性、性能等质量属性。</p>
+                                    <p style="margin-top: 8px;"><strong>架构三要素：</strong></p>
+                                    <ul style="margin-top: 5px; margin-left: 20px;">
+                                        <li><span style="color: #d32f2f;">构件（Component）</span>：系统的模块化单元，承担特定功能职责，如服务、模块、数据库</li>
+                                        <li><span style="color: #1976d2;">连接件（Connector）</span>：构件之间的交互机制，如API调用、消息队列、共享内存</li>
+                                        <li><span style="color: #ff9800;">约束（Constraint）</span>：构件组合的规则和限制，确保架构质量和一致性</li>
+                                    </ul>
+                                    <p style="background: rgba(211,47,47,0.1); padding: 8px; border-radius: 5px; border-left: 3px solid #d32f2f; margin-top: 10px; font-size: 12px;">
+                                        <strong>⚠️ 关键认知：</strong>架构设计关注的是<strong>系统级</strong>的决策，而非实现细节；关注<strong>非功能性需求</strong>（质量属性），而非单纯的功能实现。
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="content-section">
+                                <div class="section-title blue">架构三要素图示</div>
+                                <div style="display: flex; justify-content: space-around; padding: 12px; background: rgba(255,255,255,0.5); border-radius: 8px;">
+                                    <div style="width: 70px; padding: 10px; border: 2px solid #d32f2f; border-radius: 6px; text-align: center; background: rgba(211,47,47,0.1);"><div style="font-size: 20px;">📦</div><div style="font-weight: 700; color: #d32f2f; margin-top: 4px; font-size: 13px;">构件</div><div style="font-size: 10px; color: #666; margin-top: 2px;">功能单元</div></div>
+                                    <div style="width: 70px; padding: 10px; border: 2px solid #1976d2; border-radius: 6px; text-align: center; background: rgba(25,118,210,0.1);"><div style="font-size: 20px;">🔗</div><div style="font-weight: 700; color: #1976d2; margin-top: 4px; font-size: 13px;">连接件</div><div style="font-size: 10px; color: #666; margin-top: 2px;">交互机制</div></div>
+                                    <div style="width: 70px; padding: 10px; border: 2px solid #ff9800; border-radius: 6px; text-align: center; background: rgba(255,152,0,0.1);"><div style="font-size: 20px;">📋</div><div style="font-weight: 700; color: #ff9800; margin-top: 4px; font-size: 13px;">约束</div><div style="font-size: 10px; color: #666; margin-top: 2px;">组合规则</div></div>
+                                </div>
+                            </div>
+                            <div class="content-section">
+                                <div class="section-title orange">常见构件与连接件实例</div>
+                                <div class="section-content">
+                                    <table style="width: 100%; border-collapse: collapse; margin-top: 8px;">
+                                        <tr><th style="padding: 6px; background: rgba(255,152,0,0.15); border: 1px solid #ff9800; text-align: left;">构件类型</th><th style="padding: 6px; background: rgba(255,152,0,0.15); border: 1px solid #ff9800; text-align: left;">实例</th></tr>
+                                        <tr><td style="padding: 6px; border: 1px solid rgba(255,152,0,0.3);">服务构件</td><td style="padding: 6px; border: 1px solid rgba(255,152,0,0.3);">微服务、API接口、业务模块</td></tr>
+                                        <tr><td style="padding: 6px; border: 1px solid rgba(255,152,0,0.3);">数据构件</td><td style="padding: 6px; border: 1px solid rgba(255,152,0,0.3);">数据库、缓存、文件存储</td></tr>
+                                        <tr><td style="padding: 6px; border: 1px solid rgba(255,152,0,0.3);">连接件类型</td><td style="padding: 6px; border: 1px solid rgba(255,152,0,0.3);">API网关、消息队列、RPC调用</td></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 易错点 -->
+                        <div class="error-points-card">
+                            <div class="section-title red">易错点与注意事项</div>
+                            <div class="error-grid">
+                                <div class="error-card"><div class="error-icon">❌</div><div class="error-title">混淆架构风格与设计模式</div><div class="error-correct">✓ 架构风格是宏观层面，设计模式是微观层面</div></div>
+                                <div class="error-card"><div class="error-icon">❌</div><div class="error-title">忽略架构约束的作用</div><div class="error-correct">✓ 约束是架构质量的关键保障</div></div>
+                                <div class="error-card"><div class="error-icon">❌</div><div class="error-title">构件 ≠ 模块</div><div class="error-correct">✓ 构件是架构层面概念，模块是设计层面概念</div></div>
+                                <div class="error-card"><div class="error-icon">❌</div><div class="error-title">架构只关注功能性需求</div><div class="error-correct">✓ 必须同时关注非功能性需求</div></div>
+                            </div>
+                        </div>
+
+                        <!-- 真题示例 -->
+                        <div class="example-card">
+                            <div class="section-title green">真题示例练习</div>
+                            <div class="example-question">
+                                <div class="question-header">2025年上半年真题 第15题</div>
+                                <div class="question-text">在分层架构中，以下哪种约束是<strong>必须遵守</strong>的？</div>
+                                <div class="question-options">
+                                    <div class="option-item" onclick="selectOption(this, 'A', 'correct')"><span class="option-label">A.</span>上层可以调用下层，下层不能调用上层</div>
+                                    <div class="option-item" onclick="selectOption(this, 'B', 'wrong')"><span class="option-label">B.</span>下层可以调用上层，上层不能调用下层</div>
+                                    <div class="option-item" onclick="selectOption(this, 'C', 'wrong')"><span class="option-label">C.</span>同层之间可以互相调用</div>
+                                    <div class="option-item" onclick="selectOption(this, 'D', 'wrong')"><span class="option-label">D.</span>所有层都可以互相调用</div>
+                                </div>
+                                <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 查看答案与解析</button>
+                                <div class="answer-section"><div class="answer-box"><div class="answer-label">✓ 正确答案：A</div><div class="answer-text"><strong>解析：</strong>分层架构的核心约束是<strong>单向依赖</strong>，上层可调用下层，下层不能调用上层，确保依赖清晰可控。</div></div></div>
+                            </div>
+                            <div class="example-question">
+                                <div class="question-header">2024年下半年真题 第22题</div>
+                                <div class="question-text">API网关作为连接件的主要作用不包括？</div>
+                                <div class="question-options">
+                                    <div class="option-item" onclick="selectOption(this, 'A', 'wrong')"><span class="option-label">A.</span>路由请求</div>
+                                    <div class="option-item" onclick="selectOption(this, 'B', 'wrong')"><span class="option-label">B.</span>统一认证</div>
+                                    <div class="option-item" onclick="selectOption(this, 'C', 'correct')"><span class="option-label">C.</span>直接访问数据库执行业务逻辑</div>
+                                    <div class="option-item" onclick="selectOption(this, 'D', 'wrong')"><span class="option-label">D.</span>限流熔断</div>
+                                </div>
+                                <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 查看答案与解析</button>
+                                <div class="answer-section"><div class="answer-box"><div class="answer-label">✓ 正确答案：C</div><div class="answer-text"><strong>解析：</strong>API网关是连接件，负责通信协调；直接访问数据库是构件（微服务）的职责。</div></div></div>
+                            </div>
+                        </div>
+
+                        <!-- 扩展知识 -->
+                        <div class="related-card">
+                            <div class="section-title blue">扩展知识与关联链接</div>
+                            <div class="related-links">
+                                <div class="related-link" onclick="alert('跳转到：架构风格详解')">→ 系统架构风格详解</div>
+                                <div class="related-link" onclick="alert('跳转到：构件与连接件')">→ 构件与连接件识别</div>
+                                <div class="related-link" onclick="alert('跳转到：微服务架构')">→ 微服务架构设计</div>
+                            </div>
+                        </div>
+
+                        <button class="back-btn" onclick="backToOverview()">← 返回考点总览</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data-renderer.js"></script>
+    <script>
+        // 原有交互函数保留（用于选项点击和答案展开）
+        function selectOption(element, label, result) {
+            element.parentElement.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected', 'correct', 'wrong'));
+            element.classList.add('selected', result);
+        }
+        function toggleAnswer(btn) {
+            const answerSection = btn.nextElementSibling;
+            if (answerSection.classList.contains('expanded')) {
+                answerSection.classList.remove('expanded');
+                btn.textContent = '📖 查看答案与解析';
+            } else {
+                answerSection.classList.add('expanded');
+                btn.textContent = '📕 收起答案与解析';
+            }
+        }
+        function backToOverview() {
+            KnowledgeRenderer.backToCategory();
+            document.querySelector('.knowledge-section').classList.remove('active');
+            document.querySelector('.trend-overview').classList.remove('hidden');
+            document.querySelectorAll('.directory-link').forEach(l => l.classList.remove('active'));
+        }
+    </script>
+</body>
+</html>

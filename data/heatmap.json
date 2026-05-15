@@ -1,0 +1,90 @@
+{
+  "yearRanges": [
+    { "id": "2025", "name": "2025年" },
+    { "id": "2024", "name": "2024年" },
+    { "id": "2023", "name": "2023年" },
+    { "id": "2022", "name": "2022年" },
+    { "id": "2021", "name": "2021年" },
+    { "id": "all", "name": "近5年汇总" }
+  ],
+  "heatLevels": [
+    { "level": 5, "label": "高频考点", "criteria": "每年必考", "countRange": "5次+", "color": "#d32f2f" },
+    { "level": 4, "label": "较高频", "criteria": "近3年考3次+", "countRange": "3-4次", "color": "#ff9800" },
+    { "level": 3, "label": "中频", "criteria": "近3年考2次", "countRange": "2次", "color": "#1976d2" },
+    { "level": 2, "label": "低频", "criteria": "近3年考1次", "countRange": "1次", "color": "#388e3c" },
+    { "level": 1, "label": "冷门考点", "criteria": "近5年考0-1次", "countRange": "0-1次", "color": "#9e9e9e" }
+  ],
+  "heatmapPoints": [
+    { "name": "架构风格选择", "level": 5, "count": 5, "years": "2025/2024/2023/2022/2021", "isHot": true },
+    { "name": "构件连接件识别", "level": 5, "count": 5, "years": "2025/2024/2023/2022/2021", "isHot": true },
+    { "name": "CAP定理", "level": 5, "count": 5, "years": "2025/2024/2023/2022/2021", "isHot": true },
+    { "name": "微服务架构", "level": 5, "count": 5, "years": "2025/2024/2023/2022/2021", "isHot": true },
+    { "name": "分层架构约束", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "架构质量属性", "level": 5, "count": 5, "years": "2025/2024/2023/2022/2021", "isHot": true },
+    { "name": "分布式一致性", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "分库分表", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "缓存穿透/击穿", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "读写分离", "level": 3, "count": 3, "years": "2024/2023/2022" },
+    { "name": "分布式事务", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "分布式锁", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "API网关设计", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "服务发现", "level": 3, "count": 3, "years": "2024/2023/2022" },
+    { "name": "TCP/IP协议", "level": 3, "count": 3, "years": "2023/2022/2021" },
+    { "name": "负载均衡", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "加密算法", "level": 4, "count": 4, "years": "2024/2023/2022/2021" },
+    { "name": "HTTPS机制", "level": 3, "count": 3, "years": "2024/2023/2022" },
+    { "name": "认证授权", "level": 3, "count": 3, "years": "2024/2023/2022" },
+    { "name": "零信任架构", "level": 2, "count": 2, "years": "2024/2023" },
+    { "name": "高可用设计", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "容灾备份", "level": 3, "count": 3, "years": "2024/2023/2022" },
+    { "name": "可用性计算", "level": 3, "count": 3, "years": "2023/2022/2021" },
+    { "name": "ATAM评估", "level": 3, "count": 3, "years": "2024/2023/2022" },
+    { "name": "设计模式", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "需求工程", "level": 2, "count": 2, "years": "2023/2022" },
+    { "name": "软件测试", "level": 2, "count": 2, "years": "2022/2021" },
+    { "name": "项目进度管理", "level": 3, "count": 3, "years": "2023/2022/2021" },
+    { "name": "知识产权", "level": 3, "count": 3, "years": "2023/2022/2021" },
+    { "name": "云原生架构", "level": 3, "count": 3, "years": "2025/2024/2023" },
+    { "name": "消息队列", "level": 4, "count": 4, "years": "2025/2024/2023/2022" },
+    { "name": "事件驱动架构", "level": 3, "count": 3, "years": "2024/2023/2022" }
+  ],
+  "distributionChart": [
+    { "category": "系统架构", "count": 18, "color": "#d32f2f" },
+    { "category": "分布式系统", "count": 15, "color": "#ff9800" },
+    { "category": "数据库架构", "count": 12, "color": "#1976d2" },
+    { "category": "计算机网络", "count": 10, "color": "#388e3c" },
+    { "category": "信息安全", "count": 8, "color": "#7b1fa2" },
+    { "category": "其他", "count": 12, "color": "#00796b" }
+  ],
+  "ranking": [
+    { "rank": 1, "name": "架构风格的选择依据", "count": 5, "frequency": "高频", "years": "2025/2024/2023/2022/2021", "difficulty": "中等" },
+    { "rank": 2, "name": "构件与连接件的识别", "count": 5, "frequency": "高频", "years": "2025/2024/2023/2022/2021", "difficulty": "中等" },
+    { "rank": 3, "name": "CAP定理与BASE理论", "count": 5, "frequency": "高频", "years": "2025/2024/2023/2022/2021", "difficulty": "中等" },
+    { "rank": 4, "name": "微服务架构设计", "count": 5, "frequency": "高频", "years": "2025/2024/2023/2022/2021", "difficulty": "较难" },
+    { "rank": 5, "name": "架构质量属性分析", "count": 5, "frequency": "高频", "years": "2025/2024/2023/2022/2021", "difficulty": "中等" },
+    { "rank": 6, "name": "分库分表策略", "count": 4, "frequency": "较高频", "years": "2025/2024/2023/2022", "difficulty": "中等" },
+    { "rank": 7, "name": "分布式事务处理", "count": 4, "frequency": "较高频", "years": "2025/2024/2023/2022", "difficulty": "较难" },
+    { "rank": 8, "name": "缓存架构设计", "count": 4, "frequency": "较高频", "years": "2025/2024/2023/2022", "difficulty": "中等" }
+  ],
+  "difficultyStats": [
+    { "level": "简单", "count": 22, "percent": 29 },
+    { "level": "中等", "count": 38, "percent": 51 },
+    { "level": "困难", "count": 15, "percent": 20 }
+  ],
+  "newTrends": [
+    { "name": "云原生架构", "desc": "容器化、K8s编排、DevOps流水线", "icon": "☁️", "firstYear": "2022", "count": 3 },
+    { "name": "AI/ML架构", "desc": "模型训练、推理服务、数据流水线", "icon": "🤖", "firstYear": "2024", "count": 2 },
+    { "name": "边缘计算架构", "desc": "边缘节点、数据预处理、边缘云协同", "icon": "🌐", "firstYear": "2023", "count": 2 },
+    { "name": "零信任架构", "desc": "持续验证、最小权限、微隔离", "icon": "🔒", "firstYear": "2023", "count": 2 },
+    { "name": "数据中台架构", "desc": "数据采集、数据治理、数据服务", "icon": "📊", "firstYear": "2022", "count": 2 },
+    { "name": "区块链架构", "desc": "分布式账本、智能合约、共识机制", "icon": "🔗", "firstYear": "2021", "count": 1 }
+  ],
+  "trendLines": [
+    { "name": "系统架构", "trend": "持续高频", "color": "#d32f2f" },
+    { "name": "分布式系统", "trend": "显著上升", "color": "#ff9800" },
+    { "name": "数据库架构", "trend": "稳定高频", "color": "#1976d2" },
+    { "name": "微服务", "trend": "快速上升", "color": "#7b1fa2" },
+    { "name": "云原生", "trend": "新兴热点", "color": "#00796b" },
+    { "name": "网络/安全", "trend": "相对稳定", "color": "#388e3c" }
+  ]
+}

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>考试模拟 - 系统架构设计师冲刺备考网站</title>
+    <link rel="stylesheet" href="css/common.css">
+    <script src="js/common.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #fafafa;
+            background-image: linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            padding: 15px; color: #333; min-height: 100vh;
+        }
+        .whiteboard-container {
+            background: rgba(255,255,255,0.3);
+            border: 12px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 考试头部信息 */
+        .exam-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .exam-info { display: flex; gap: 30px; align-items: center; }
+        .exam-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 24px;
+            color: #d32f2f;
+        }
+        .exam-subject {
+            padding: 8px 15px;
+            background: #1976d2;
+            color: #fff;
+            border-radius: 5px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+        }
+
+        /* 倒计时 */
+        .timer-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .timer-label { font-size: 14px; color: #666; }
+        .timer-display {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 32px;
+            color: #d32f2f;
+            padding: 10px 20px;
+            border: 3px solid #d32f2f;
+            border-radius: 8px;
+            background: rgba(211,47,47,0.1);
+        }
+        .timer-display.warning { color: #ff9800; border-color: #ff9800; background: rgba(255,152,0,0.1); }
+        .timer-display.danger { color: #d32f2f; border-color: #d32f2f; background: rgba(211,47,47,0.2); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+
+        /* 进度条 */
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .progress-track {
+            width: 200px;
+            height: 20px;
+            background: rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #1976d2;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #388e3c;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+        .progress-text { font-size: 14px; color: #388e3c; font-weight: 700; }
+
+        /* 考试主区域 */
+        .exam-main {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 20px;
+        }
+
+        /* 题目展示区 */
+        .question-display {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            padding: 25px;
+        }
+        .question-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid rgba(25,118,210,0.3);
+        }
+        .nav-btn {
+            padding: 10px 25px;
+            border: 3px solid #1976d2;
+            border-radius: 5px;
+            color: #1976d2;
+            cursor: pointer;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            background: transparent;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover { background: rgba(25,118,210,0.15); }
+        .nav-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .question-position { font-size: 14px; color: #666; }
+
+        /* 题目内容 */
+        .question-content-box {
+            padding: 20px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 8px;
+            border-left: 4px solid #1976d2;
+        }
+        .question-number {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 18px;
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+        .question-text {
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* 选项 */
+        .options-list { display: flex; flex-direction: column; gap: 12px; }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: rgba(255,255,255,0.6);
+            border: 3px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .option-item:hover { border-color: #1976d2; background: rgba(25,118,210,0.1); }
+        .option-item.selected { border-color: #1976d2; background: rgba(25,118,210,0.15); }
+        .option-radio {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #1976d2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .option-item.selected .option-radio::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #1976d2;
+            border-radius: 50%;
+        }
+        .option-label { font-weight: 700; color: #1976d2; font-size: 16px; }
+        .option-text { font-size: 14px; }
+
+        /* 标记按钮 */
+        .mark-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 2px solid #ff9800;
+            border-radius: 5px;
+            color: #ff9800;
+            cursor: pointer;
+            background: transparent;
+            font-size: 13px;
+        }
+        .mark-btn:hover { background: rgba(255,152,0,0.1); }
+        .mark-btn.active { background: #ff9800; color: #fff; }
+
+        /* 右侧答题卡 */
+        .answer-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .card-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 20px;
+            color: #1976d2;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 3px solid #1976d2;
+            padding-bottom: 10px;
+        }
+
+        /* 答题状态统计 */
+        .status-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .stat-item.answered { background: rgba(56,142,60,0.15); color: #388e3c; }
+        .stat-item.marked { background: rgba(255,152,0,0.15); color: #ff9800; }
+        .stat-item.unanswered { background: rgba(0,0,0,0.1); color: #666; }
+        .stat-count { font-size: 24px; font-weight: 700; }
+        .stat-label { font-size: 11px; }
+
+        /* 题目网格 */
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+        .grid-item {
+            padding: 10px;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        .grid-item:hover { border-color: #1976d2; }
+        .grid-item.current { border-color: #1976d2; background: rgba(25,118,210,0.2); }
+        .grid-item.answered { background: #388e3c; color: #fff; border-color: #388e3c; }
+        .grid-item.marked { background: #ff9800; color: #fff; border-color: #ff9800; }
+
+        /* 交卷按钮 */
+        .submit-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(0,0,0,0.1);
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #d32f2f;
+            color: #fff;
+            border: 3px solid #d32f2f;
+            border-radius: 8px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .submit-btn:hover { background: #b71c1c; }
+
+        /* 成绩结果页面 */
+        .result-page { display: none; }
+        .result-page.active { display: block; }
+        .result-header {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #388e3c;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .result-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 36px;
+            color: #388e3c;
+            margin-bottom: 15px;
+        }
+        .score-display {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 48px;
+            color: #d32f2f;
+        }
+        .score-detail { font-size: 14px; color: #666; margin-top: 10px; }
+
+        /* 成绩分析 */
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .result-stat-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+        .result-stat-card.correct { border-color: #388e3c; }
+        .result-stat-card.wrong { border-color: #d32f2f; }
+        .result-stat-card.time { border-color: #1976d2; }
+        .result-stat-card.rank { border-color: #ff9800; }
+        .stat-icon { font-size: 24px; margin-bottom: 10px; }
+        .stat-value { font-size: 28px; font-weight: 700; }
+        .result-stat-card.correct .stat-value { color: #388e3c; }
+        .result-stat-card.wrong .stat-value { color: #d32f2f; }
+        .result-stat-card.time .stat-value { color: #1976d2; }
+        .result-stat-card.rank .stat-value { color: #ff9800; }
+        .stat-desc { font-size: 12px; color: #666; }
+
+        /* 题目回顾 */
+        .review-section {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .review-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 22px;
+            color: #1976d2;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #1976d2;
+            padding-bottom: 10px;
+        }
+        .review-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .review-tab {
+            padding: 10px 20px;
+            border: 2px solid;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .review-tab.all { color: #1976d2; border-color: #1976d2; }
+        .review-tab.correct { color: #388e3c; border-color: #388e3c; }
+        .review-tab.wrong { color: #d32f2f; border-color: #d32f2f; }
+        .review-tab.active { background: currentColor; color: #fff; }
+
+        .review-list { display: flex; flex-direction: column; gap: 15px; }
+        .review-item {
+            padding: 15px;
+            border: 2px solid;
+            border-radius: 8px;
+        }
+        .review-item.correct { border-color: #388e3c; background: rgba(56,142,60,0.1); }
+        .review-item.wrong { border-color: #d32f2f; background: rgba(211,47,47,0.1); }
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .review-number { font-weight: 700; }
+        .review-item.correct .review-number { color: #388e3c; }
+        .review-item.wrong .review-number { color: #d32f2f; }
+        .review-result { font-size: 13px; font-weight: 700; }
+        .review-answer { font-size: 13px; color: #666; }
+
+        /* 重新考试按钮 */
+        .retry-btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: #1976d2;
+            color: #fff;
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        .retry-btn:hover { background: #1565c0; }
+
+        /* 响应式 */
+        @media (max-width: 1024px) { .exam-main { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .exam-header { flex-direction: column; gap: 15px; }
+            .exam-info { flex-direction: column; }
+            .question-grid { grid-template-columns: repeat(4, 1fr); }
+            .result-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="whiteboard-container">
+        <!-- 考试页面 -->
+        <div class="exam-page" id="examPage">
+            <!-- 考试头部 -->
+            <div class="exam-header">
+                <div class="exam-info">
+                    <div class="exam-title">🎯 模拟考试</div>
+                    <div class="exam-subject">综合知识 - 选择题</div>
+                </div>
+                <button class="back-home" onclick="location.href='index.html'">🏠 返回首页</button>
+                <div class="timer-box">
+                    <div class="timer-label">剩余时间</div>
+                    <div class="timer-display" id="timerDisplay">02:30:00</div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">0/75 已答</div>
+                </div>
+            </div>
+
+            <!-- 考试主区域 -->
+            <div class="exam-main">
+                <!-- 题目展示区 -->
+                <div class="question-display">
+                    <div class="question-nav">
+                        <button class="nav-btn" id="prevBtn" onclick="prevQuestion()">← 上一题</button>
+                        <div class="question-position">题目 <span id="currentNum">1</span> / 75</div>
+                        <button class="nav-btn" id="nextBtn" onclick="nextQuestion()">下一题 →</button>
+                    </div>
+
+                    <div class="question-content-box">
+                        <div class="question-number">第 <span id="qNum">1</span> 题</div>
+                        <div class="question-text" id="questionText">
+                            在分层架构中，以下哪种约束是<strong>必须遵守</strong>的？
+                        </div>
+                        <div class="options-list" id="optionsList">
+                            <div class="option-item" onclick="selectOption(this, 'A')">
+                                <div class="option-radio"></div>
+                                <div class="option-label">A</div>
+                                <div class="option-text">上层可以调用下层，下层不能调用上层</div>
+                            </div>
+                            <div class="option-item" onclick="selectOption(this, 'B')">
+                                <div class="option-radio"></div>
+                                <div class="option-label">B</div>
+                                <div class="option-text">下层可以调用上层，上层不能调用下层</div>
+                            </div>
+                            <div class="option-item" onclick="selectOption(this, 'C')">
+                                <div class="option-radio"></div>
+                                <div class="option-label">C</div>
+                                <div class="option-text">同层之间可以互相调用</div>
+                            </div>
+                            <div class="option-item" onclick="selectOption(this, 'D')">
+                                <div class="option-radio"></div>
+                                <div class="option-label">D</div>
+                                <div class="option-text">所有层都可以互相调用</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="mark-btn" id="markBtn" onclick="toggleMark()">📌 标记此题</button>
+                </div>
+
+                <!-- 答题卡 -->
+                <div class="answer-card">
+                    <div class="card-title">📋 答题卡</div>
+                    <div class="status-stats">
+                        <div class="stat-item answered">
+                            <div class="stat-count" id="answeredCount">0</div>
+                            <div class="stat-label">已答</div>
+                        </div>
+                        <div class="stat-item marked">
+                            <div class="stat-count" id="markedCount">0</div>
+                            <div class="stat-label">标记</div>
+                        </div>
+                        <div class="stat-item unanswered">
+                            <div class="stat-count" id="unansweredCount">75</div>
+                            <div class="stat-label">未答</div>
+                        </div>
+                    </div>
+                    <div class="question-grid" id="questionGrid">
+                        <!-- 生成75个题目格子 -->
+                    </div>
+                    <div class="submit-section">
+                        <button class="submit-btn" onclick="submitExam()">📝 交卷</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成绩结果页面 -->
+        <div class="result-page" id="resultPage">
+            <div class="result-header">
+                <div class="result-title">🎉 考试完成</div>
+                <div class="score-display" id="scoreDisplay">68</div>
+                <div class="score-detail">满分 75 分 | 正确率 90.7%</div>
+            </div>
+
+            <div class="result-stats">
+                <div class="result-stat-card correct">
+                    <div class="stat-icon">✓</div>
+                    <div class="stat-value" id="correctCount">68</div>
+                    <div class="stat-desc">正确题数</div>
+                </div>
+                <div class="result-stat-card wrong">
+                    <div class="stat-icon">✗</div>
+                    <div class="stat-value" id="wrongCount">7</div>
+                    <div class="stat-desc">错误题数</div>
+                </div>
+                <div class="result-stat-card time">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-value" id="usedTime">01:45:30</div>
+                    <div class="stat-desc">用时</div>
+                </div>
+                <div class="result-stat-card rank">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-value">A</div>
+                    <div class="stat-desc">成绩等级</div>
+                </div>
+            </div>
+
+            <div class="review-section">
+                <div class="review-title">📝 题目回顾</div>
+                <div class="review-tabs">
+                    <div class="review-tab all active" onclick="filterReview('all', this)">全部 (75)</div>
+                    <div class="review-tab correct" onclick="filterReview('correct', this)">正确 (68)</div>
+                    <div class="review-tab wrong" onclick="filterReview('wrong', this)">错误 (7)</div>
+                </div>
+                <div class="review-list" id="reviewList">
+                    <div class="review-item correct">
+                        <div class="review-header">
+                            <div class="review-number">第1题</div>
+                            <div class="review-result">✓ 正确</div>
+                        </div>
+                        <div class="review-answer">你的答案：A | 正确答案：A</div>
+                    </div>
+                    <div class="review-item wrong">
+                        <div class="review-header">
+                            <div class="review-number">第15题</div>
+                            <div class="review-result">✗ 错误</div>
+                        </div>
+                        <div class="review-answer">你的答案：B | 正确答案：A</div>
+                    </div>
+                    <div class="review-item correct">
+                        <div class="review-header">
+                            <div class="review-number">第22题</div>
+                            <div class="review-result">✓ 正确</div>
+                        </div>
+                        <div class="review-answer">你的答案：B | 正确答案：B</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <button class="retry-btn" onclick="restartExam()">🔄 重新考试</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data-renderer.js"></script>
+    <script>
+        // 页面特定功能 - 使用ExamRenderer中的方法
+        function prevQuestion() {
+            ExamRenderer.prevQuestion();
+        }
+
+        function nextQuestion() {
+            ExamRenderer.nextQuestion();
+        }
+
+        function goToQuestion(qNum) {
+            ExamRenderer.goToQuestion(qNum);
+        }
+
+        function selectOption(element, option) {
+            ExamRenderer.selectOption(element, option);
+        }
+
+        function toggleMark() {
+            ExamRenderer.toggleMark();
+        }
+
+        function submitExam() {
+            ExamRenderer.submitExam();
+        }
+
+        function filterReview(type, element) {
+            ExamRenderer.filterReview(type, element);
+        }
+
+        function restartExam() {
+            ExamRenderer.restartExam();
+        }
+    </script>
+</body>
+</html>

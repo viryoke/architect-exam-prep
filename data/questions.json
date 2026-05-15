@@ -1,0 +1,352 @@
+{
+  "years": [
+    { "id": "2025", "name": "2025年", "count": 75, "semesters": [{ "id": "2025s", "name": "上半年", "count": 75 }] },
+    { "id": "2024", "name": "2024年", "count": 150, "semesters": [{ "id": "2024s", "name": "上半年", "count": 75 }, { "id": "2024x", "name": "下半年", "count": 75 }] },
+    { "id": "2023", "name": "2023年", "count": 150, "semesters": [{ "id": "2023s", "name": "上半年", "count": 75 }, { "id": "2023x", "name": "下半年", "count": 75 }] },
+    { "id": "2022", "name": "2022年", "count": 150, "semesters": [{ "id": "2022s", "name": "上半年", "count": 75 }, { "id": "2022x", "name": "下半年", "count": 75 }] },
+    { "id": "2021", "name": "2021年", "count": 150, "semesters": [{ "id": "2021s", "name": "上半年", "count": 75 }, { "id": "2021x", "name": "下半年", "count": 75 }] }
+  ],
+  "topics": [
+    { "id": "arch", "name": "系统架构", "count": 18 },
+    { "id": "dist", "name": "分布式系统", "count": 15 },
+    { "id": "db", "name": "数据库架构", "count": 12 },
+    { "id": "network", "name": "计算机网络", "count": 10 },
+    { "id": "security", "name": "信息安全", "count": 8 },
+    { "id": "other", "name": "其他", "count": 30 }
+  ],
+  "difficulties": [
+    { "id": "easy", "name": "简单", "count": 22 },
+    { "id": "medium", "name": "中等", "count": 38 },
+    { "id": "hard", "name": "困难", "count": 15 }
+  ],
+  "types": [
+    { "id": "choice", "name": "选择题", "count": 75 },
+    { "id": "case", "name": "案例分析", "count": 3 }
+  ],
+  "questions": [
+    {
+      "id": "q2025s-15",
+      "year": "2025",
+      "semester": "上",
+      "number": 15,
+      "topic": "arch",
+      "subTopic": "分层架构",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "在分层架构中，以下哪种约束是必须遵守的？",
+      "options": [
+        { "label": "A", "text": "上层可以调用下层，下层不能调用上层" },
+        { "label": "B", "text": "下层可以调用上层，上层不能调用下层" },
+        { "label": "C", "text": "同层之间可以互相调用" },
+        { "label": "D", "text": "所有层都可以互相调用" }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "分层架构约束",
+        "explanation": "分层架构的核心约束是单向依赖，上层可调用下层，下层不能调用上层，确保依赖清晰可控。",
+        "optionAnalysis": ["A正确：符合单向依赖原则", "B错误：违反单向依赖，造成循环依赖", "C错误：同层调用增加耦合", "D错误：全层调用破坏架构约束"]
+      },
+      "relatedKnowledge": ["架构核心概念", "架构约束原则"]
+    },
+    {
+      "id": "q2025s-22",
+      "year": "2025",
+      "semester": "上",
+      "number": 22,
+      "topic": "dist",
+      "subTopic": "CAP定理",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "在分布式系统中，当网络发生分区时，选择CP架构意味着？",
+      "options": [
+        { "label": "A", "text": "系统继续提供服务，数据可能不一致" },
+        { "label": "B", "text": "为保证数据一致，分区节点暂停服务" },
+        { "label": "C", "text": "所有节点继续服务，忽略分区" },
+        { "label": "D", "text": "系统完全不可用" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "CAP定理",
+        "explanation": "CP架构优先保证一致性，在网络分区时，分区节点为保证数据一致会暂停服务。",
+        "optionAnalysis": ["A是AP架构特征", "B正确：CP牺牲可用性保一致性", "C错误：不可能同时满足C、A、P", "D错误：只是分区节点不可用"]
+      },
+      "relatedKnowledge": ["CAP定理与BASE理论", "分布式一致性算法"]
+    },
+    {
+      "id": "q2025s-30",
+      "year": "2025",
+      "semester": "上",
+      "number": 30,
+      "topic": "dist",
+      "subTopic": "微服务架构",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "微服务架构中，API网关的主要职责不包括？",
+      "options": [
+        { "label": "A", "text": "请求路由转发" },
+        { "label": "B", "text": "统一认证授权" },
+        { "label": "C", "text": "直接执行业务逻辑" },
+        { "label": "D", "text": "限流熔断保护" }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "微服务架构",
+        "explanation": "API网关是连接件，负责通信协调和流量控制；业务逻辑由微服务（构件）执行。",
+        "optionAnalysis": ["A是网关核心功能", "B是网关安全功能", "C正确：业务逻辑不应由网关执行", "D是网关流量控制功能"]
+      },
+      "relatedKnowledge": ["微服务架构", "API网关设计"]
+    },
+    {
+      "id": "q2025s-35",
+      "year": "2025",
+      "semester": "上",
+      "number": 35,
+      "topic": "db",
+      "subTopic": "分库分表",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下哪种场景最适合采用水平分表策略？",
+      "options": [
+        { "label": "A", "text": "用户表中字段访问频率差异大" },
+        { "label": "B", "text": "订单表数据量达千万级，查询性能下降" },
+        { "label": "C", "text": "表中字段多但数据量小" },
+        { "label": "D", "text": "需要按业务模块拆分数据库" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "分库分表策略",
+        "explanation": "水平分表适合数据量大、单表性能瓶颈的场景，订单表千万级数据是典型场景。",
+        "optionAnalysis": ["A适合垂直分表", "B正确：水平分表解决数据量问题", "C不需要分表", "D是垂直分库场景"]
+      },
+      "relatedKnowledge": ["分库分表策略", "数据库架构"]
+    },
+    {
+      "id": "q2024x-18",
+      "year": "2024",
+      "semester": "下",
+      "number": 18,
+      "topic": "arch",
+      "subTopic": "架构风格",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下哪种场景最适合采用事件驱动架构？",
+      "options": [
+        { "label": "A", "text": "银行核心账务系统" },
+        { "label": "B", "text": "物联网传感器数据处理平台" },
+        { "label": "C", "text": "传统ERP管理系统" },
+        { "label": "D", "text": "静态网站内容管理" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "架构风格选择",
+        "explanation": "事件驱动架构适合高并发、异步处理场景，物联网传感器数据实时处理是典型应用。",
+        "optionAnalysis": ["A需要强一致，不适合异步", "B正确：实时数据流处理", "C传统系统，分层架构更合适", "D无实时性要求"]
+      },
+      "relatedKnowledge": ["架构风格分类", "事件驱动架构"]
+    },
+    {
+      "id": "q2024x-28",
+      "year": "2024",
+      "semester": "下",
+      "number": 28,
+      "topic": "dist",
+      "subTopic": "分布式锁",
+      "difficulty": "hard",
+      "type": "choice",
+      "text": "关于Redis分布式锁的Redlock算法，以下说法正确的是？",
+      "options": [
+        { "label": "A", "text": "只需要在主节点加锁即可" },
+        { "label": "B", "text": "需要在多个独立Redis节点同时加锁，超过半数成功才算获取锁" },
+        { "label": "C", "text": "Redlock算法100%保证锁不丢失" },
+        { "label": "D", "text": "Redlock比Zookeeper锁性能更高" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "分布式锁",
+        "explanation": "Redlock算法通过在多个独立Redis节点同时加锁，超过半数成功才算获取锁，解决主从切换时锁丢失问题。",
+        "optionAnalysis": ["A错误：主节点故障会丢失锁", "B正确：Redlock核心机制", "C错误：分布式锁无法100%保证", "D错误：Zookeeper锁更可靠"]
+      },
+      "relatedKnowledge": ["分布式锁", "Redis架构"]
+    },
+    {
+      "id": "q2024s-42",
+      "year": "2024",
+      "semester": "上",
+      "number": 42,
+      "topic": "security",
+      "subTopic": "加密算法",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下关于HTTPS加密过程的说法，正确的是？",
+      "options": [
+        { "label": "A", "text": "HTTPS全程使用非对称加密传输数据" },
+        { "label": "B", "text": "HTTPS使用非对称加密交换密钥，对称加密传输数据" },
+        { "label": "C", "text": "HTTPS使用RSA加密所有请求内容" },
+        { "label": "D", "text": "HTTPS不需要证书验证" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "HTTPS加密",
+        "explanation": "HTTPS用非对称加密交换对称密钥，然后用对称加密传输数据，兼顾安全和效率。",
+        "optionAnalysis": ["A错误：非对称加密效率低", "B正确：HTTPS加密机制", "C错误：RSA只用于密钥交换", "D错误：证书验证是HTTPS关键"]
+      },
+      "relatedKnowledge": ["加密算法", "网络安全"]
+    },
+    {
+      "id": "q2023x-25",
+      "year": "2023",
+      "semester": "下",
+      "number": 25,
+      "topic": "arch",
+      "subTopic": "架构质量属性",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下哪个不属于系统的核心质量属性？",
+      "options": [
+        { "label": "A", "text": "可用性" },
+        { "label": "B", "text": "代码风格" },
+        { "label": "C", "text": "性能" },
+        { "label": "D", "text": "安全性" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "架构质量属性",
+        "explanation": "核心质量属性包括可用性、性能、安全性、可扩展性、可维护性等，代码风格是实现细节而非架构级质量属性。",
+        "optionAnalysis": ["A是核心质量属性", "B正确：代码风格是开发规范", "C是核心质量属性", "D是核心质量属性"]
+      },
+      "relatedKnowledge": ["架构质量属性", "ATAM评估"]
+    },
+    {
+      "id": "q2023x-32",
+      "year": "2023",
+      "semester": "下",
+      "number": 32,
+      "topic": "db",
+      "subTopic": "缓存架构",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "缓存穿透是指？",
+      "options": [
+        { "label": "A", "text": "大量热点key同时过期，请求直达数据库" },
+        { "label": "B", "text": "查询不存在的数据，请求绕过缓存直达数据库" },
+        { "label": "C", "text": "单个热点key过期，大量请求直达数据库" },
+        { "label": "D", "text": "缓存服务器故障，无法响应请求" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "缓存穿透",
+        "explanation": "缓存穿透是指查询不存在的数据，由于缓存中没有，请求绕过缓存直接访问数据库。",
+        "optionAnalysis": ["A是缓存雪崩", "B正确：穿透定义", "C是缓存击穿", "D是缓存故障"]
+      },
+      "relatedKnowledge": ["缓存架构", "Redis应用"]
+    },
+    {
+      "id": "q2022s-20",
+      "year": "2022",
+      "semester": "上",
+      "number": 20,
+      "topic": "network",
+      "subTopic": "负载均衡",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "L4负载均衡和L7负载均衡的主要区别是？",
+      "options": [
+        { "label": "A", "text": "L4基于HTTP内容分发，L7基于IP端口分发" },
+        { "label": "B", "text": "L4基于IP端口分发，L7基于HTTP内容分发" },
+        { "label": "C", "text": "L4性能比L7低" },
+        { "label": "D", "text": "L4和L7分发方式相同" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "负载均衡",
+        "explanation": "L4负载均衡基于IP+端口分发，性能高但无应用层信息；L7负载均衡基于HTTP内容分发，灵活但性能稍低。",
+        "optionAnalysis": ["A错误：说反了", "B正确：L4网络层，L7应用层", "C错误：L4性能更高", "D错误：分发层级不同"]
+      },
+      "relatedKnowledge": ["负载均衡", "TCP/IP协议栈"]
+    },
+    {
+      "id": "q2021x-15",
+      "year": "2021",
+      "semester": "下",
+      "number": 15,
+      "topic": "arch",
+      "subTopic": "架构评估",
+      "difficulty": "hard",
+      "type": "choice",
+      "text": "ATAM架构评估方法的主要目的是？",
+      "options": [
+        { "label": "A", "text": "评估软件代码质量" },
+        { "label": "B", "text": "评估架构决策对质量属性的影响，识别权衡点" },
+        { "label": "C", "text": "验证系统功能完整性" },
+        { "label": "D", "text": "评估项目进度和成本" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "ATAM评估方法",
+        "explanation": "ATAM（架构权衡分析方法）用于评估架构决策对质量属性的影响，识别质量属性之间的冲突和权衡点。",
+        "optionAnalysis": ["A错误：ATAM不评估代码", "B正确：ATAM核心目的", "C错误：ATAM不验证功能", "D错误：ATAM不评估进度成本"]
+      },
+      "relatedKnowledge": ["ATAM评估方法", "架构质量属性"]
+    },
+    {
+      "id": "q2021x-28",
+      "year": "2021",
+      "semester": "下",
+      "number": 28,
+      "topic": "reliability",
+      "subTopic": "高可用设计",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "系统可用性99.99%意味着每年允许的最大停机时间是？",
+      "options": [
+        { "label": "A", "text": "约5分钟" },
+        { "label": "B", "text": "约52分钟" },
+        { "label": "C", "text": "约8.7小时" },
+        { "label": "D", "text": "约3.65天" }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "可用性指标",
+        "explanation": "可用性99.99% = 1 - 0.0001，年停机时间 = 365 * 24 * 60 * 0.0001 ≈ 52分钟。",
+        "optionAnalysis": ["A是99.999%的停机时间", "B正确：99.99%年停机52分钟", "C是99%的停机时间", "D是90%的停机时间"]
+      },
+      "relatedKnowledge": ["高可用设计", "系统可靠性"]
+    }
+  ],
+  "caseQuestions": [
+    {
+      "id": "case2025s-1",
+      "year": "2025",
+      "semester": "上",
+      "number": 1,
+      "topic": "dist",
+      "difficulty": "hard",
+      "type": "case",
+      "scenario": {
+        "title": "电商平台微服务架构改造",
+        "background": "某电商平台日均订单量50万，原有单体架构部署周期长、扩展困难、存在单点故障风险。公司决定进行微服务架构改造。",
+        "constraints": ["需要保证数据一致性", "服务间调用延迟要求<50ms", "系统可用性要求99.99%"]
+      },
+      "questions": [
+        { "number": 1, "text": "简述微服务架构的优缺点（8分）", "score": 8 },
+        { "number": 2, "text": "设计用户服务、订单服务、商品服务的拆分方案（10分）", "score": 10 },
+        { "number": 3, "text": "如何解决跨服务的分布式事务问题（7分）", "score": 7 }
+      ],
+      "referenceAnswers": [
+        {
+          "number": 1,
+          "answer": "优点：①独立部署，部署周期短；②技术异构，各服务可选不同技术栈；③弹性扩展，按需扩展单个服务；④故障隔离，单服务故障不影响整体。缺点：①服务间调用复杂，运维难度大；②分布式事务处理困难；③服务拆分粒度需要权衡；④团队协作成本增加。"
+        },
+        {
+          "number": 2,
+          "answer": "用户服务：用户注册、登录、个人信息管理，独立用户库。订单服务：订单创建、查询、状态管理，订单库按用户ID分片。商品服务：商品信息、库存管理，商品库独立。服务间通过API网关协调，订单服务调用用户服务获取用户信息，调用商品服务检查库存。"
+        },
+        {
+          "number": 3,
+          "answer": "采用Saga模式处理分布式事务：①订单创建时，依次调用库存扣减、用户积分更新等操作；②每步操作定义补偿逻辑（如库存扣减失败则订单取消）；③使用消息队列实现异步编排；④关键操作可采用TCC模式保证强一致。"
+        }
+      ],
+      "keyPoints": ["微服务架构", "服务拆分", "分布式事务", "高可用设计"]
+    }
+  ]
+}

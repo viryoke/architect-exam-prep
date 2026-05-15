@@ -1,0 +1,643 @@
+{
+  "categories": [
+    {
+      "id": "arch",
+      "name": "系统架构基础",
+      "count": 25,
+      "topics": [
+        {
+          "id": "arch-core",
+          "name": "架构核心概念",
+          "tags": ["高频考点", "必学必记", "近5年考10次"],
+          "summary": "软件架构是系统的高层次结构，由构件、连接件、约束三要素构成。架构设计是软件生命周期中成本最高、影响最深远的关键决策阶段。",
+          "coreDefinition": "软件架构是指系统的高层次结构，定义了系统的组成部分、关系及设计演化原则。架构是软件生命周期中成本最高、影响最深远的关键决策阶段，直接影响系统的可维护性、可扩展性、性能等质量属性。",
+          "keyPoints": [
+            {"name": "构件", "desc": "系统的模块化单元，承担特定功能职责", "color": "#d32f2f", "examples": ["微服务", "API接口", "业务模块", "数据库", "缓存"]},
+            {"name": "连接件", "desc": "构件之间的交互机制", "color": "#1976d2", "examples": ["API调用", "消息队列", "RPC调用", "共享内存", "API网关"]},
+            {"name": "约束", "desc": "构件组合的规则和限制", "color": "#ff9800", "examples": ["分层架构单向依赖", "微服务独立部署", "分布式CAP权衡"]}
+          ],
+          "errorPoints": [
+            {"wrong": "混淆架构风格与设计模式", "correct": "架构风格是宏观层面，设计模式是微观层面"},
+            {"wrong": "忽略架构约束的作用", "correct": "约束是架构质量的关键保障"},
+            {"wrong": "构件 ≠ 模块", "correct": "构件是架构层面概念，模块是设计层面概念"},
+            {"wrong": "架构只关注功能性需求", "correct": "必须同时关注非功能性需求（质量属性）"}
+          ],
+          "questions": [
+            {
+              "year": "2025", "semester": "上", "number": 15,
+              "text": "在分层架构中，以下哪种约束是必须遵守的？",
+              "options": [
+                {"label": "A", "text": "上层可以调用下层，下层不能调用上层", "correct": true},
+                {"label": "B", "text": "下层可以调用上层，上层不能调用下层", "correct": false},
+                {"label": "C", "text": "同层之间可以互相调用", "correct": false},
+                {"label": "D", "text": "所有层都可以互相调用", "correct": false}
+              ],
+              "analysis": "分层架构的核心约束是单向依赖，上层可调用下层，下层不能调用上层，确保依赖清晰可控。"
+            },
+            {
+              "year": "2024", "semester": "下", "number": 22,
+              "text": "API网关作为连接件的主要作用不包括？",
+              "options": [
+                {"label": "A", "text": "路由请求", "correct": false},
+                {"label": "B", "text": "统一认证", "correct": false},
+                {"label": "C", "text": "直接访问数据库执行业务逻辑", "correct": true},
+                {"label": "D", "text": "限流熔断", "correct": false}
+              ],
+              "analysis": "API网关是连接件，负责通信协调；直接访问数据库是构件（微服务）的职责。"
+            }
+          ],
+          "relatedLinks": ["架构风格详解", "构件与连接件识别", "微服务架构设计"]
+        },
+        {
+          "id": "arch-style",
+          "name": "架构风格分类",
+          "tags": ["高频考点", "近5年考8次"],
+          "summary": "常见架构风格包括分层架构、微服务架构、分布式系统、事件驱动等。选择架构风格需综合考虑业务需求、性能要求、团队能力、技术成熟度。",
+          "styles": [
+            {"name": "分层架构", "color": "#00796b", "desc": "单向依赖，易于维护和测试", "constraint": "上层调用下层，下层不能调用上层"},
+            {"name": "微服务架构", "color": "#7b1fa2", "desc": "服务独立部署，弹性扩展", "constraint": "服务松耦合，独立数据存储"},
+            {"name": "分布式系统", "color": "#d32f2f", "desc": "CAP权衡，一致性挑战", "constraint": "CAP定理约束，BASE理论"},
+            {"name": "事件驱动架构", "color": "#1976d2", "desc": "异步解耦，高响应性", "constraint": "事件发布订阅模式"},
+            {"name": "管道-过滤器", "color": "#ff9800", "desc": "数据流处理，可组合", "constraint": "过滤器独立，管道连接"},
+            {"name": "黑板架构", "color": "#388e3c", "desc": "知识共享，专家协作", "constraint": "中央黑板协调"},
+            {"name": "C/S架构", "color": "#00796b", "desc": "客户端服务器分离", "constraint": "客户端主动请求"},
+            {"name": "B/S架构", "color": "#1976d2", "desc": "浏览器服务器架构", "constraint": "通过HTTP协议交互"}
+          ],
+          "errorPoints": [
+            {"wrong": "认为微服务一定优于分层架构", "correct": "根据业务规模和团队能力选择"},
+            {"wrong": "忽略架构风格的约束条件", "correct": "每种风格都有特定约束"},
+            {"wrong": "分布式系统就是微服务", "correct": "分布式是部署模式，微服务是架构风格"}
+          ],
+          "questions": [
+            {
+              "year": "2025", "semester": "上", "number": 18,
+              "text": "以下哪种场景最适合采用事件驱动架构？",
+              "options": [
+                {"label": "A", "text": "银行核心账务系统", "correct": false},
+                {"label": "B", "text": "物联网传感器数据处理平台", "correct": true},
+                {"label": "C", "text": "传统ERP管理系统", "correct": false},
+                {"label": "D", "text": "静态网站内容管理", "correct": false}
+              ],
+              "analysis": "事件驱动架构适合高并发、异步处理场景，物联网传感器数据实时处理是典型应用。"
+            }
+          ],
+          "relatedLinks": ["架构核心概念", "微服务架构", "分布式系统"]
+        },
+        {
+          "id": "arch-quality",
+          "name": "架构质量属性",
+          "tags": ["高频考点", "每年必考"],
+          "summary": "核心质量属性包括可用性、性能、可扩展性、安全性、可维护性。质量属性之间存在权衡关系。",
+          "qualities": [
+            {"name": "可用性", "color": "#d32f2f", "desc": "故障恢复时间、冗余设计", "metrics": ["MTBF", "MTTR"], "tactics": ["冗余备份", "故障检测", "故障恢复"]},
+            {"name": "性能", "color": "#1976d2", "desc": "响应时间、吞吐量", "metrics": ["响应时间", "吞吐量", "并发数"], "tactics": ["缓存", "并发处理", "负载均衡"]},
+            {"name": "可扩展性", "color": "#388e3c", "desc": "水平扩展、模块化", "metrics": ["扩展成本", "扩展时间"], "tactics": ["模块化", "无状态设计", "水平分割"]},
+            {"name": "安全性", "color": "#ff9800", "desc": "认证授权、数据加密", "metrics": ["攻击抵御率", "数据泄露风险"], "tactics": ["认证授权", "加密", "审计日志"]},
+            {"name": "可维护性", "color": "#7b1fa2", "desc": "代码质量、文档完备", "metrics": ["修改成本", "测试覆盖率"], "tactics": ["模块化", "文档化", "标准化"]}
+          ],
+          "errorPoints": [
+            {"wrong": "只关注单一质量属性", "correct": "质量属性需要权衡，如性能vs安全"},
+            {"wrong": "可用性=可靠性", "correct": "可用性关注服务可访问，可靠性关注正确运行"},
+            {"wrong": "性能优化就是加缓存", "correct": "需综合考虑数据库优化、算法优化等"}
+          ],
+          "relatedLinks": ["ATAM评估方法", "分层架构", "高可用设计"]
+        },
+        {
+          "id": "arch-atam",
+          "name": "ATAM架构评估方法",
+          "tags": ["中频考点", "近2年考2次"],
+          "summary": "ATAM（架构权衡分析方法）用于评估架构决策对质量属性的影响，识别质量属性之间的冲突和权衡点。",
+          "steps": [
+            {"step": 1, "name": "介绍ATAM方法", "desc": "向利益相关者介绍评估流程"},
+            {"step": 2, "name": "描述业务驱动", "desc": "说明业务目标和约束"},
+            {"step": 3, "name": "描述架构", "desc": "展示架构视图和决策"},
+            {"step": 4, "name": "识别架构方法", "desc": "列出架构决策和模式"},
+            {"step": 5, "name": "生成质量属性场景", "desc": "定义具体业务场景"},
+            {"step": 6, "name": "分析架构方法", "desc": "评估场景对架构的影响"},
+            {"step": 7, "name": "识别敏感点和权衡点", "desc": "发现质量属性冲突"},
+            {"step": 8, "name": "形成评估报告", "desc": "总结评估结果和建议"}
+          ],
+          "errorPoints": [
+            {"wrong": "ATAM只评估功能性需求", "correct": "ATAM主要评估质量属性"},
+            {"wrong": "SAAM与ATAM相同", "correct": "SAAM侧重可维护性，ATAM侧重权衡分析"}
+          ],
+          "relatedLinks": ["架构质量属性", "架构决策"]
+        }
+      ]
+    },
+    {
+      "id": "software",
+      "name": "软件工程",
+      "count": 18,
+      "topics": [
+        {
+          "id": "sw-dev-method",
+          "name": "软件开发方法",
+          "tags": ["中频考点", "近3年考3次"],
+          "summary": "常见开发方法包括瀑布模型、迭代模型、敏捷开发。瀑布模型强调阶段顺序，敏捷强调快速响应变化。",
+          "methods": [
+            {"name": "瀑布模型", "desc": "线性顺序，阶段清晰", "suitable": "需求明确、技术成熟的项目", "phases": ["需求", "设计", "编码", "测试", "维护"]},
+            {"name": "迭代模型", "desc": "增量开发，逐步完善", "suitable": "需求不完全明确的项目", "phases": ["迭代规划", "迭代开发", "迭代评审"]},
+            {"name": "敏捷开发", "desc": "快速响应，持续交付", "suitable": "需求变化频繁的项目", "practices": ["Scrum", "看板", "持续集成"]}
+          ],
+          "errorPoints": [
+            {"wrong": "敏捷就是没有文档", "correct": "敏捷强调必要文档，不是无文档"},
+            {"wrong": "瀑布模型已过时", "correct": "瀑布适合需求明确、风险可控的项目"}
+          ],
+          "relatedLinks": ["需求工程", "软件测试"]
+        },
+        {
+          "id": "sw-requirement",
+          "name": "需求工程",
+          "tags": ["中频考点", "近2年考2次"],
+          "summary": "需求工程包括需求获取、需求分析、需求规格说明、需求验证四个阶段。",
+          "phases": [
+            {"name": "需求获取", "methods": ["访谈", "问卷", "观察", "原型"], "output": "原始需求"},
+            {"name": "需求分析", "methods": ["结构化分析", "面向对象分析", "用例建模"], "output": "需求模型"},
+            {"name": "需求规格", "methods": ["SRS文档编写"], "output": "需求规格说明书"},
+            {"name": "需求验证", "methods": ["评审", "原型验证", "测试用例"], "output": "验证通过的SRS"}
+          ],
+          "errorPoints": [
+            {"wrong": "需求规格就是功能列表", "correct": "需包含功能、性能、约束、接口等"},
+            {"wrong": "需求获取一次完成", "correct": "需求是迭代演化的过程"}
+          ],
+          "relatedLinks": ["软件开发方法", "设计模式"]
+        },
+        {
+          "id": "sw-design-pattern",
+          "name": "设计模式",
+          "tags": ["高频考点", "每年必考"],
+          "summary": "设计模式分为创建型、结构型、行为型三大类。常用模式包括单例、工厂、观察者、策略等。",
+          "categories": [
+            {
+              "type": "创建型",
+              "patterns": [
+                {"name": "单例模式", "desc": "确保类只有一个实例", "example": "配置管理器、日志记录器"},
+                {"name": "工厂模式", "desc": "封装对象创建逻辑", "example": "数据库连接工厂"},
+                {"name": "建造者模式", "desc": "分步构建复杂对象", "example": "SQL查询构建器"}
+              ]
+            },
+            {
+              "type": "结构型",
+              "patterns": [
+                {"name": "适配器模式", "desc": "接口转换适配", "example": "API适配器"},
+                {"name": "装饰器模式", "desc": "动态添加功能", "example": "日志装饰器"},
+                {"name": "代理模式", "desc": "控制对象访问", "example": "缓存代理、安全代理"}
+              ]
+            },
+            {
+              "type": "行为型",
+              "patterns": [
+                {"name": "观察者模式", "desc": "事件通知订阅", "example": "消息推送"},
+                {"name": "策略模式", "desc": "算法可替换", "example": "支付策略"},
+                {"name": "命令模式", "desc": "请求封装为对象", "example": "任务队列"}
+              ]
+            }
+          ],
+          "errorPoints": [
+            {"wrong": "设计模式越多越好", "correct": "根据实际需要选择，避免过度设计"},
+            {"wrong": "架构风格=设计模式", "correct": "架构风格是宏观结构，设计模式是微观实现"}
+          ],
+          "questions": [
+            {
+              "year": "2024", "semester": "上", "number": 35,
+              "text": "以下哪种设计模式最适合实现不同数据库连接的切换？",
+              "options": [
+                {"label": "A", "text": "单例模式", "correct": false},
+                {"label": "B", "text": "策略模式", "correct": true},
+                {"label": "C", "text": "观察者模式", "correct": false},
+                {"label": "D", "text": "装饰器模式", "correct": false}
+              ],
+              "analysis": "策略模式允许算法可替换，数据库连接策略可根据配置动态切换。"
+            }
+          ],
+          "relatedLinks": ["软件架构", "面向对象设计"]
+        }
+      ]
+    },
+    {
+      "id": "distributed",
+      "name": "分布式系统",
+      "count": 15,
+      "topics": [
+        {
+          "id": "dist-cap",
+          "name": "CAP定理与BASE理论",
+          "tags": ["高频考点", "每年必考"],
+          "summary": "CAP定理指出分布式系统最多同时满足一致性(C)、可用性(A)、分区容错性(P)三者中的两个。BASE理论是CAP的补充，强调基本可用、软状态、最终一致。",
+          "cap": [
+            {"name": "一致性(C)", "desc": "所有节点数据同一时刻一致", "color": "#d32f2f"},
+            {"name": "可用性(A)", "desc": "每个请求都能得到响应", "color": "#1976d2"},
+            {"name": "分区容错性(P)", "desc": "网络分区时系统仍能运行", "color": "#388e3c"}
+          ],
+          "capChoices": [
+            {"choice": "CP", "desc": "强一致性，牺牲可用性", "example": "Zookeeper、HBase"},
+            {"choice": "AP", "desc": "高可用，牺牲强一致性", "example": "Cassandra、DynamoDB"},
+            {"choice": "CA", "desc": "无分区场景，单机系统", "example": "传统数据库"}
+          ],
+          "base": [
+            {"name": "基本可用(BA)", "desc": "允许部分降级"},
+            {"name": "软状态(S)", "desc": "允许中间状态"},
+            {"name": "最终一致(E)", "desc": "最终达到一致状态"}
+          ],
+          "errorPoints": [
+            {"wrong": "CAP可以三者兼得", "correct": "分布式系统必须牺牲其一"},
+            {"wrong": "最终一致就是不一致", "correct": "最终一致是延迟达到一致，不是放弃一致"},
+            {"wrong": "CP系统完全不可用", "correct": "CP牺牲的是网络分区时的可用性"}
+          ],
+          "questions": [
+            {
+              "year": "2025", "semester": "上", "number": 28,
+              "text": "在分布式系统中，当网络发生分区时，选择CP架构意味着？",
+              "options": [
+                {"label": "A", "text": "系统继续提供服务，数据可能不一致", "correct": false},
+                {"label": "B", "text": "为保证数据一致，分区节点暂停服务", "correct": true},
+                {"label": "C", "text": "所有节点继续服务，忽略分区", "correct": false},
+                {"label": "D", "text": "系统完全不可用", "correct": false}
+              ],
+              "analysis": "CP架构优先保证一致性，在网络分区时，分区节点为保证数据一致会暂停服务。"
+            }
+          ],
+          "relatedLinks": ["分布式一致性算法", "分布式事务"]
+        },
+        {
+          "id": "dist-consistency",
+          "name": "分布式一致性算法",
+          "tags": ["高频考点", "近3年考4次"],
+          "summary": "常见一致性算法包括2PC、3PC、Paxos、Raft。2PC是强一致但阻塞，Paxos/Raft是共识算法，适用于分布式决策。",
+          "algorithms": [
+            {"name": "2PC", "desc": "两阶段提交，强一致", "phases": ["准备阶段", "提交阶段"], "issues": ["阻塞", "单点故障"], "suitable": "数据库事务"},
+            {"name": "3PC", "desc": "三阶段提交，减少阻塞", "phases": ["CanCommit", "PreCommit", "DoCommit"], "suitable": "分布式事务"},
+            {"name": "Paxos", "desc": "共识算法，容错性强", "roles": ["Proposer", "Acceptor", "Learner"], "suitable": "分布式决策"},
+            {"name": "Raft", "desc": "简化版Paxos，易于理解", "roles": ["Leader", "Follower", "Candidate"], "suitable": "分布式日志复制"}
+          ],
+          "errorPoints": [
+            {"wrong": "2PC能解决所有分布式事务", "correct": "2PC有阻塞和单点故障问题"},
+            {"wrong": "Paxos和Raft完全相同", "correct": "Raft是Paxos的简化实现，更易理解"},
+            {"wrong": "强一致比最终一致更好", "correct": "根据业务场景选择，强一致成本更高"}
+          ],
+          "relatedLinks": ["CAP定理", "分布式事务", "微服务架构"]
+        },
+        {
+          "id": "dist-lock",
+          "name": "分布式锁",
+          "tags": ["高频考点", "近3年考3次"],
+          "summary": "分布式锁用于分布式环境下保证资源互斥访问。常见实现方式包括Redis锁、Zookeeper锁。",
+          "implementations": [
+            {"name": "Redis分布式锁", "desc": "SETNX实现，简单高效", "key": "SETNX + EXPIRE", "issues": ["锁过期", "主从切换丢失锁"], "solution": "Redlock算法"},
+            {"name": "Zookeeper分布式锁", "desc": "临时顺序节点，可靠性高", "key": "临时顺序节点+监听", "issues": ["性能较低"], "solution": "Curator封装"}
+          ],
+          "errorPoints": [
+            {"wrong": "Redis锁绝对可靠", "correct": "Redis锁在主从切换时可能丢失，需用Redlock"},
+            {"wrong": "分布式锁随便用就行", "correct": "需考虑锁续期、锁释放、死锁处理"}
+          ],
+          "relatedLinks": ["分布式一致性算法", "缓存架构"]
+        },
+        {
+          "id": "dist-microservice",
+          "name": "微服务架构",
+          "tags": ["高频考点", "每年必考"],
+          "summary": "微服务架构将单体应用拆分为独立服务，每个服务独立部署、独立扩展。核心要素包括服务拆分、服务发现、API网关、服务治理。",
+          "components": [
+            {"name": "服务拆分", "desc": "按业务能力或子域拆分", "strategies": ["业务能力拆分", "DDD子域拆分"], "considerations": ["服务粒度", "服务边界", "数据边界"]},
+            {"name": "服务发现", "desc": "服务注册与发现", "solutions": ["Eureka", "Nacos", "Consul"], "pattern": "客户端发现 / 服务端发现"},
+            {"name": "API网关", "desc": "统一入口、路由、认证", "functions": ["路由", "认证", "限流", "熔断"], "solutions": ["Spring Cloud Gateway", "Kong", "Nginx"]},
+            {"name": "服务治理", "desc": "配置、监控、链路追踪", "functions": ["配置中心", "服务监控", "链路追踪"], "solutions": ["Skywalking", "Prometheus", "Zipkin"]}
+          ],
+          "errorPoints": [
+            {"wrong": "微服务拆分越细越好", "correct": "过细拆分增加通信成本和管理复杂度"},
+            {"wrong": "微服务不需要API网关", "correct": "网关是统一入口，简化客户端调用"},
+            {"wrong": "每个服务必须有独立数据库", "correct": "根据业务需要，部分服务可共享数据库"}
+          ],
+          "questions": [
+            {
+              "year": "2025", "semester": "上", "number": 30,
+              "text": "微服务架构中，API网关的主要职责不包括？",
+              "options": [
+                {"label": "A", "text": "请求路由转发", "correct": false},
+                {"label": "B", "text": "统一认证授权", "correct": false},
+                {"label": "C", "text": "直接执行业务逻辑", "correct": true},
+                {"label": "D", "text": "限流熔断保护", "correct": false}
+              ],
+              "analysis": "API网关是连接件，负责通信协调和流量控制；业务逻辑由微服务（构件）执行。"
+            }
+          ],
+          "relatedLinks": ["架构风格分类", "分布式一致性算法", "服务发现"]
+        }
+      ]
+    },
+    {
+      "id": "database",
+      "name": "数据库架构",
+      "count": 20,
+      "topics": [
+        {
+          "id": "db-sharding",
+          "name": "分库分表策略",
+          "tags": ["高频考点", "每年必考"],
+          "summary": "分库分表是解决单库性能瓶颈的重要手段。分表分为垂直分表和水平分表，分库分为垂直分库和水平分库。",
+          "strategies": [
+            {"name": "垂直分表", "desc": "按字段拆分，大表拆小表", "example": "用户基本信息表+用户详情表", "suitable": "字段多、字段访问频率差异大"},
+            {"name": "水平分表", "desc": "按数据行拆分，同结构多表", "example": "订单表按月份拆分", "suitable": "数据量大、单表性能瓶颈"},
+            {"name": "垂直分库", "desc": "按业务拆分，专库专用", "example": "用户库+订单库+商品库", "suitable": "业务独立、耦合度低"},
+            {"name": "水平分库", "desc": "按数据量拆分，多库多表", "example": "订单库按用户ID分库", "suitable": "数据量极大、单库瓶颈"}
+          ],
+          "shardingKeys": [
+            {"key": "用户ID", "desc": "用户维度分片，查询集中"},
+            {"key": "时间", "desc": "时间维度分片，历史数据隔离"},
+            {"key": "哈希值", "desc": "均匀分布，查询分散"}
+          ],
+          "errorPoints": [
+            {"wrong": "分表就能解决所有性能问题", "correct": "还需考虑分片键选择、跨分片查询"},
+            {"wrong": "水平分表比垂直分表更好", "correct": "根据场景选择，字段访问差异大用垂直分表"},
+            {"wrong": "分库后不用考虑事务", "correct": "跨库事务需要分布式事务方案"}
+          ],
+          "relatedLinks": ["分布式事务", "读写分离", "缓存架构"]
+        },
+        {
+          "id": "db-cache",
+          "name": "缓存架构",
+          "tags": ["高频考点", "近3年考4次"],
+          "summary": "缓存是提升性能的关键手段，分为本地缓存和分布式缓存。常见问题包括缓存穿透、缓存击穿、缓存雪崩。",
+          "cacheTypes": [
+            {"name": "本地缓存", "desc": "进程内缓存，速度快", "examples": ["Guava Cache", "Caffeine"], "issues": ["容量有限", "数据不一致"], "suitable": "高频访问、数据量小"},
+            {"name": "分布式缓存", "desc": "跨进程共享缓存", "examples": ["Redis", "Memcached"], "issues": ["网络延迟", "序列化成本"], "suitable": "大容量、集群共享"}
+          ],
+          "cacheProblems": [
+            {"name": "缓存穿透", "desc": "查询不存在的数据，绕过缓存", "solution": "布隆过滤器 / 空值缓存"},
+            {"name": "缓存击穿", "desc": "热点key过期，大量请求直达DB", "solution": "互斥锁 / 永不过期 + 异步更新"},
+            {"name": "缓存雪崩", "desc": "大量key同时过期", "solution": "过期时间随机 / 高可用集群"}
+          ],
+          "errorPoints": [
+            {"wrong": "缓存越多越好", "correct": "缓存有维护成本，需权衡"},
+            {"wrong": "Redis只用于缓存", "correct": "Redis还支持分布式锁、消息队列、计数器"},
+            {"wrong": "缓存穿透和击穿相同", "correct": "穿透是查不存在数据，击穿是热点key过期"}
+          ],
+          "relatedLinks": ["分库分表", "数据库读写分离"]
+        },
+        {
+          "id": "db-readwrite",
+          "name": "读写分离",
+          "tags": ["高频考点", "近3年考3次"],
+          "summary": "读写分离将数据库读操作和写操作分离到不同服务器，主库写、从库读，提升读性能。",
+          "architecture": [
+            {"role": "主库", "desc": "处理写操作，数据同步到从库", "number": "1台或集群"},
+            {"role": "从库", "desc": "处理读操作，复制主库数据", "number": "多台"},
+            {"role": "路由中间件", "desc": "读写请求分发", "examples": ["ShardingSphere", "MyCat"]}
+          ],
+          "replicationTypes": [
+            {"type": "异步复制", "desc": "主库写后异步同步从库", "pros": "性能高", "cons": "可能数据不一致"},
+            {"type": "半同步复制", "desc": "主库写后等待至少一个从库确认", "pros": "数据较一致", "cons": "性能稍低"},
+            {"type": "同步复制", "desc": "主库写后等待所有从库确认", "pros": "数据一致", "cons": "性能低"}
+          ],
+          "errorPoints": [
+            {"wrong": "读写分离完美解决性能问题", "correct": "需考虑主从延迟、路由逻辑"},
+            {"wrong": "从库越多读性能越好", "correct": "从库维护成本增加，主库同步压力"},
+            {"wrong": "读写分离后事务简单", "correct": "写操作仍需事务，读操作可简化"}
+          ],
+          "relatedLinks": ["分库分表", "缓存架构", "高可用设计"]
+        },
+        {
+          "id": "db-dist-tx",
+          "name": "分布式事务",
+          "tags": ["高频考点", "近3年考4次"],
+          "summary": "分布式事务保证跨库、跨服务的数据一致性。常见方案包括2PC/3PC、TCC、Saga、本地消息表。",
+          "solutions": [
+            {"name": "2PC/3PC", "desc": "强一致，阻塞型", "suitable": "数据库分布式事务", "pros": "强一致", "cons": "阻塞、单点故障"},
+            {"name": "TCC", "desc": "Try-Confirm-Cancel，补偿型", "suitable": "业务层分布式事务", "pros": "无阻塞", "cons": "业务侵入"},
+            {"name": "Saga", "desc": "长事务编排，补偿型", "suitable": "跨服务长事务", "pros": "无阻塞、可编排", "cons": "需定义补偿逻辑"},
+            {"name": "本地消息表", "desc": "异步确保型", "suitable": "最终一致性场景", "pros": "简单可靠", "cons": "最终一致"}
+          ],
+          "errorPoints": [
+            {"wrong": "分布式事务必须强一致", "correct": "根据业务选择强一致或最终一致"},
+            {"wrong": "TCC和2PC相同", "correct": "TCC是补偿型，2PC是阻塞型"},
+            {"wrong": "Saga自动处理失败", "correct": "Saga需要预先定义补偿逻辑"}
+          ],
+          "relatedLinks": ["CAP定理", "分库分表", "微服务架构"]
+        }
+      ]
+    },
+    {
+      "id": "network",
+      "name": "计算机网络",
+      "count": 12,
+      "topics": [
+        {
+          "id": "net-tcpip",
+          "name": "TCP/IP协议栈",
+          "tags": ["中频考点", "近3年考3次"],
+          "summary": "TCP/IP四层模型包括应用层、传输层、网络层、链路层。TCP提供可靠传输，UDP提供快速传输。",
+          "layers": [
+            {"layer": "应用层", "desc": "HTTP/FTP/SMTP/DNS", "protocols": ["HTTP", "HTTPS", "FTP", "SMTP", "DNS"]},
+            {"layer": "传输层", "desc": "TCP/UDP端到端传输", "protocols": ["TCP", "UDP"]},
+            {"layer": "网络层", "desc": "IP路由寻址", "protocols": ["IP", "ICMP", "ARP"]},
+            {"layer": "链路层", "desc": "以太网帧传输", "protocols": ["Ethernet", "WiFi"]}
+          ],
+          "tcpFeatures": [
+            {"feature": "三次握手", "desc": "建立连接：SYN→SYN+ACK→ACK"},
+            {"feature": "四次挥手", "desc": "断开连接：FIN→ACK→FIN→ACK"},
+            {"feature": "可靠传输", "desc": "确认重传、流量控制、拥塞控制"},
+            {"feature": "滑动窗口", "desc": "流量控制和拥塞控制机制"}
+          ],
+          "errorPoints": [
+            {"wrong": "TCP比UDP更好", "correct": "根据场景选择，实时性要求高用UDP"},
+            {"wrong": "三次握手多余", "correct": "防止旧连接请求干扰新连接"},
+            {"wrong": "TCP一定是长连接", "correct": "TCP可以是短连接或长连接"}
+          ],
+          "relatedLinks": ["负载均衡", "网络安全"]
+        },
+        {
+          "id": "net-loadbalance",
+          "name": "负载均衡",
+          "tags": ["高频考点", "每年必考"],
+          "summary": "负载均衡将请求分发到多个服务器，提升系统处理能力和可用性。分为硬件负载均衡和软件负载均衡。",
+          "types": [
+            {"type": "DNS负载均衡", "desc": "域名解析级分发", "pros": "简单", "cons": "分发粒度粗"},
+            {"type": "L4负载均衡", "desc": "基于IP+端口分发", "examples": ["LVS"], "pros": "性能高", "cons": "无应用层信息"},
+            {"type": "L7负载均衡", "desc": "基于HTTP内容分发", "examples": ["Nginx", "HAProxy"], "pros": "灵活", "cons": "性能稍低"}
+          ],
+          "algorithms": [
+            {"algorithm": "轮询(RR)", "desc": "依次分发"},
+            {"algorithm": "加权轮询(WRR)", "desc": "按权重分发"},
+            {"algorithm": "最少连接(LC)", "desc": "分发到连接最少的服务器"},
+            {"algorithm": "源地址哈希(SH)", "desc": "同一IP分发到同一服务器"}
+          ],
+          "errorPoints": [
+            {"wrong": "负载均衡只需一台", "correct": "负载均衡器本身需要高可用部署"},
+            {"wrong": "L7负载均衡一定比L4好", "correct": "L4性能更高，L7更灵活"},
+            {"wrong": "负载均衡解决所有性能问题", "correct": "需配合缓存、数据库优化等"}
+          ],
+          "relatedLinks": ["高可用设计", "TCP/IP协议栈"]
+        }
+      ]
+    },
+    {
+      "id": "security",
+      "name": "信息安全",
+      "count": 10,
+      "topics": [
+        {
+          "id": "sec-encryption",
+          "name": "加密算法",
+          "tags": ["高频考点", "近3年考4次"],
+          "summary": "加密算法分为对称加密、非对称加密、哈希算法。对称加密速度快，非对称加密安全性高。",
+          "types": [
+            {"type": "对称加密", "desc": "密钥相同，速度快", "algorithms": ["AES", "DES", "3DES"], "usage": "数据加密传输"},
+            {"type": "非对称加密", "desc": "公钥加密私钥解密", "algorithms": ["RSA", "ECC", "DSA"], "usage": "密钥交换、数字签名"},
+            {"type": "哈希算法", "desc": "单向不可逆", "algorithms": ["SHA-256", "MD5"], "usage": "数据完整性校验、密码存储"}
+          ],
+          "errorPoints": [
+            {"wrong": "MD5用于加密", "correct": "MD5是哈希算法，不是加密算法"},
+            {"wrong": "非对称加密比对称加密更安全", "correct": "各有场景，对称加密效率高"},
+            {"wrong": "HTTPS只用非对称加密", "correct": "HTTPS用非对称交换密钥，对称加密数据"}
+          ],
+          "relatedLinks": ["认证授权", "网络安全"]
+        },
+        {
+          "id": "sec-auth",
+          "name": "认证授权",
+          "tags": ["高频考点", "近3年考3次"],
+          "summary": "认证(Authentication)验证用户身份，授权(Authorization)控制用户权限。常见方案包括OAuth、JWT、Session。",
+          "solutions": [
+            {"name": "Session", "desc": "服务器存储会话状态", "pros": "安全", "cons": "服务器压力大"},
+            {"name": "JWT", "desc": "无状态令牌", "pros": "无服务器存储", "cons": "令牌无法主动失效"},
+            {"name": "OAuth2.0", "desc": "授权框架", "pros": "标准化授权流程", "usage": "第三方登录"},
+            {"name": "OIDC", "desc": "OpenID Connect", "pros": "OAuth+身份认证", "usage": "统一身份认证"}
+          ],
+          "errorPoints": [
+            {"wrong": "JWT比Session更安全", "correct": "JWT需考虑令牌泄露风险"},
+            {"wrong": "认证和授权相同", "correct": "认证是你是谁，授权是你能做什么"},
+            {"wrong": "OAuth就是登录", "correct": "OAuth是授权框架，OIDC才是认证"}
+          ],
+          "relatedLinks": ["加密算法", "零信任架构"]
+        },
+        {
+          "id": "sec-zero-trust",
+          "name": "零信任架构",
+          "tags": ["新兴考点", "近2年考2次"],
+          "summary": "零信任架构假设网络内外的所有用户、设备都不可信，需要持续验证。核心原则包括持续验证、最小权限、微隔离。",
+          "principles": [
+            {"principle": "持续验证", "desc": "每次访问都验证身份和权限"},
+            {"principle": "最小权限", "desc": "仅授予必要权限"},
+            {"principle": "微隔离", "desc": "网络分段，限制横向访问"},
+            {"principle": "假设被攻破", "desc": "设计时假设网络已被入侵"}
+          ],
+          "components": [
+            {"component": "身份认证系统", "desc": "统一身份管理"},
+            {"component": "访问控制引擎", "desc": "动态权限决策"},
+            {"component": "微隔离网关", "desc": "网络分段控制"}
+          ],
+          "relatedLinks": ["认证授权", "安全架构"]
+        }
+      ]
+    },
+    {
+      "id": "reliability",
+      "name": "系统可靠性",
+      "count": 8,
+      "topics": [
+        {
+          "id": "rel-ha",
+          "name": "高可用设计",
+          "tags": ["高频考点", "每年必考"],
+          "summary": "高可用设计通过冗余和故障转移保证服务持续可用。常用指标包括可用性百分比、MTBF、MTTR。",
+          "metrics": [
+            {"metric": "可用性", "desc": "服务正常运行时间占比", "levels": ["99%", "99.9%", "99.99%", "99.999%"]},
+            {"metric": "MTBF", "desc": "平均故障间隔时间", "higher": "越高越好"},
+            {"metric": "MTTR", "desc": "平均故障恢复时间", "lower": "越低越好"}
+          ],
+          "tactics": [
+            {"tactic": "冗余备份", "desc": "主备、双活、多活部署"},
+            {"tactic": "故障检测", "desc": "心跳检测、健康检查"},
+            {"tactic": "故障转移", "desc": "主备切换、负载均衡剔除"},
+            {"tactic": "降级限流", "desc": "服务降级保护核心功能"}
+          ],
+          "errorPoints": [
+            {"wrong": "99.99%和99.999%差别不大", "correct": "99.99%允许年停机52分钟，99.999%仅5分钟"},
+            {"wrong": "高可用就是多部署几台", "correct": "需配套故障检测和转移机制"},
+            {"wrong": "可用性=可靠性", "correct": "可用性关注服务可访问，可靠性关注正确运行"}
+          ],
+          "relatedLinks": ["容灾备份", "负载均衡"]
+        },
+        {
+          "id": "rel-disaster",
+          "name": "容灾备份",
+          "tags": ["高频考点", "近3年考3次"],
+          "summary": "容灾备份保证在灾难发生时数据不丢失、服务可恢复。分为冷备、温备、热备，RPO和RTO是关键指标。",
+          "types": [
+            {"type": "冷备", "desc": "备份存储，手动恢复", "RTO": "小时级", "cost": "低"},
+            {"type": "温备", "desc": "备份+部分在线，半自动恢复", "RTO": "分钟级", "cost": "中"},
+            {"type": "热备", "desc": "实时同步，自动切换", "RTO": "秒级", "cost": "高"}
+          ],
+          "metrics": [
+            {"metric": "RPO", "desc": "恢复点目标，数据丢失量", "lower": "越小越好"},
+            {"metric": "RTO", "desc": "恢复时间目标，服务恢复时间", "lower": "越小越好"}
+          ],
+          "levels": [
+            {"level": 1, "desc": "本地备份，无异地"},
+            {"level": 2, "desc": "异地冷备"},
+            {"level": 3, "desc": "异地热备"},
+            {"level": 4, "desc": "异地双活"},
+            {"level": 5, "desc": "多地双活"}
+          ],
+          "errorPoints": [
+            {"wrong": "备份就是容灾", "correct": "容灾包含备份+恢复流程"},
+            {"wrong": "RPO越小越好", "correct": "需权衡成本和业务需求"},
+            {"wrong": "热备一定比冷备好", "correct": "热备成本高，根据业务选择"}
+          ],
+          "relatedLinks": ["高可用设计", "数据库架构"]
+        }
+      ]
+    },
+    {
+      "id": "project",
+      "name": "项目管理与法规",
+      "count": 6,
+      "topics": [
+        {
+          "id": "pm-schedule",
+          "name": "项目进度管理",
+          "tags": ["中频考点", "近3年考3次"],
+          "summary": "项目进度管理包括活动定义、活动排序、资源估算、工期估算、进度计划制定、进度控制。关键路径法是核心工具。",
+          "methods": [
+            {"name": "关键路径法(CPM)", "desc": "找出最长路径，确定最短工期"},
+            {"name": "甘特图", "desc": "可视化进度展示"},
+            {"name": "PERT", "desc": "三点估算，考虑不确定性"}
+          ],
+          "terms": [
+            {"term": "关键路径", "desc": "工期最长的路径，决定项目最短工期"},
+            {"term": "浮动时间", "desc": "非关键路径可延迟的时间"},
+            {"term": "里程碑", "desc": "关键节点完成标志"}
+          ],
+          "errorPoints": [
+            {"wrong": "关键路径上任务可以延迟", "correct": "关键路径延迟直接影响项目工期"},
+            {"wrong": "甘特图就是进度计划", "correct": "甘特图是展示工具，进度计划需更多分析"}
+          ],
+          "relatedLinks": ["项目成本管理", "项目质量管理"]
+        },
+        {
+          "id": "pm-ip",
+          "name": "知识产权",
+          "tags": ["中频考点", "每年考1题"],
+          "summary": "知识产权包括著作权、专利权、商标权。软件著作权保护软件作品，专利权保护技术创新。",
+          "types": [
+            {"type": "著作权", "desc": "自动取得，保护表达形式", "duration": "作者终生+50年"},
+            {"type": "专利权", "desc": "需申请授权，保护技术创新", "duration": "发明20年/实用新型10年"},
+            {"type": "商标权", "desc": "需注册，保护品牌标识", "duration": "10年可续展"}
+          ],
+          "softwareCopyright": [
+            {"item": "保护对象", "desc": "软件程序、文档"},
+            {"item": "取得方式", "desc": "自动取得，可自愿登记"},
+            {"item": "权利内容", "desc": "发表权、署名权、修改权、复制权等"}
+          ],
+          "errorPoints": [
+            {"wrong": "软件需要专利保护", "correct": "软件一般用著作权，算法方法可用专利"},
+            {"wrong": "著作权需要注册", "correct": "著作权自动取得，登记是自愿"},
+            {"wrong": "职务作品著作权归个人", "correct": "职务作品著作权一般归单位"}
+          ],
+          "relatedLinks": ["合同法", "招投标法规"]
+        }
+      ]
+    }
+  ]
+}
