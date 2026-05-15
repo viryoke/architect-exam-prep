@@ -120,8 +120,15 @@
         .diff-tag.active { opacity: 1; }
         .diff-tag:not(.active) { opacity: 0.5; }
 
-        /* 右侧真题列表 */
-        .questions-area { display: flex; flex-direction: column; gap: 15px; }
+        /* 右侧真题列表 - 可滚动 */
+        .questions-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: calc(100vh - 200px);
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
 
         /* 真题统计 */
         .stats-bar {
@@ -420,8 +427,8 @@
             <!-- 右侧真题列表 -->
             <div class="questions-area">
                 <!-- 统计栏 -->
-                <div class="stats-bar">
-                    <div class="stats-text">当前筛选：2025年选择题 · 共18题</div>
+                <div class="stats-bar" id="statsBar">
+                    <div class="stats-text" id="statsText">当前筛选：全部年份 · 共4题</div>
                     <div class="stats-actions">
                         <div class="action-btn" onclick="shuffleQuestions()">🔀 随机排序</div>
                         <div class="action-btn" id="toggleAllBtn" onclick="toggleAllAnswers()">📖 显示全部答案</div>

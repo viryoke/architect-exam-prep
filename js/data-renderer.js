@@ -21,7 +21,14 @@ const KnowledgeRenderer = {
         this.data = await loadJSON('data/knowledge.json');
         if (!this.data) return;
         this.renderDirectory();
-        this.renderDefaultView();
+
+        // 默认选中第一个分类
+        if (this.data.categories.length > 0) {
+            const firstLink = document.querySelector('.directory-link');
+            if (firstLink) {
+                this.selectCategory(this.data.categories[0].id, firstLink);
+            }
+        }
     },
 
     // 渲染左侧考点目录
@@ -39,43 +46,6 @@ const KnowledgeRenderer = {
         `).join('');
     },
 
-    // 渲染默认总览视图
-    renderDefaultView() {
-        this.renderTrendAnalysis();
-        this.renderDistributionTable();
-    },
-
-    // 渲染考试趋势分析
-    renderTrendAnalysis() {
-        // 使用默认数据，已存在于HTML中
-    },
-
-    // 渲染考点分布表格
-    renderDistributionTable() {
-        const tbody = document.querySelector('.distribution-table tbody');
-        if (!tbody) return;
-
-        const distributionData = [
-            { year: '2025上', topics: ['微服务架构', '分布式一致性', '云原生', 'API网关'], percent: '32%', questions: '选择题12题' },
-            { year: '2024下', topics: ['架构风格选择', '分布式系统', '数据库分库分表', '缓存策略'], percent: '30%', questions: '选择题11题' },
-            { year: '2024上', topics: ['微服务拆分', 'CAP定理', '消息队列', '负载均衡'], percent: '28%', questions: '选择题10题' },
-            { year: '2023下', topics: ['架构核心概念', '分层架构', '事件驱动', '构件连接件'], percent: '25%', questions: '选择题9题' },
-            { year: '2023上', topics: ['架构质量属性', 'ATAM评估', '高可用设计', '安全架构'], percent: '24%', questions: '选择题9题' },
-            { year: '2022下', topics: ['架构约束', '分布式锁', '读写分离', '容灾备份'], percent: '22%', questions: '选择题8题' },
-            { year: '2022上', topics: ['软件架构定义', '设计模式', '需求工程', '软件测试'], percent: '20%', questions: '选择题8题' },
-            { year: '2021下', topics: ['TCP/IP协议', '加密算法', '项目管理', '知识产权'], percent: '18%', questions: '选择题7题' }
-        ];
-
-        tbody.innerHTML = distributionData.map(row => `
-            <tr>
-                <td><span class="year-badge">${row.year}</span></td>
-                <td>${row.topics.map(t => `<span class="topic-badge">${t}</span>`).join('')}</td>
-                <td><span class="percent-badge">${row.percent}</span></td>
-                <td>${row.questions}</td>
-            </tr>
-        `).join('');
-    },
-
     // 选择考点分类
     selectCategory(categoryId, element) {
         document.querySelectorAll('.directory-link').forEach(l => l.classList.remove('active'));
@@ -90,8 +60,15 @@ const KnowledgeRenderer = {
 
     // 显示知识区域
     showKnowledgeSection(category) {
-        document.querySelector('.trend-overview').classList.add('hidden');
+        const trendOverview = document.querySelector('.trend-overview');
+        if (trendOverview) trendOverview.style.display = 'none';
         document.querySelector('.knowledge-section').classList.add('active');
+
+        // 重置串讲和分析区块显示状态（修复切换考点后不显示的bug）
+        const chainSummary = document.getElementById('chainSummary');
+        const examPointsCard = document.getElementById('examPointsCard');
+        if (chainSummary) chainSummary.style.display = 'block';
+        if (examPointsCard) examPointsCard.style.display = 'block';
 
         // 渲染知识图谱
         this.renderKnowledgeGraph(category);
@@ -106,53 +83,42 @@ const KnowledgeRenderer = {
         document.getElementById('knowledgeDetailSection').style.display = 'none';
     },
 
-    // 渲染知识图谱（树状结构）
+    // 渲染知识图谱（网格布局，显示所有知识点）
     renderKnowledgeGraph(category) {
         const diagramContainer = document.querySelector('.knowledge-diagram');
         if (!diagramContainer) return;
 
-        document.querySelector('.graph-title').textContent = `🔗 ${category.name}知识图谱`;
+        document.querySelector('.graph-title').textContent = `🔗 ${category.name}知识图谱（共${category.topics.length}个知识点）`;
 
-        // 构建树状结构HTML
         const topics = category.topics;
-        let treeHTML = '<div class="tree-container" style="display: flex; flex-direction: column; align-items: center; gap: 3px;">';
+        const colors = ['#d32f2f', '#1976d2', '#388e3c', '#ff9800', '#7b1fa2', '#00796b', '#c62828', '#1565c0'];
 
-        // 根节点（第一个知识点或分类名称）
-        const rootTopic = topics[0] || { id: 'root', name: category.name };
-        treeHTML += `
-            <div class="tree-node root" onclick="KnowledgeRenderer.selectTopic('${rootTopic.id}', this)"
-                style="padding: 10px 20px; background: #d32f2f; color: #fff; border: 3px solid #b71c1c; border-radius: 8px; cursor: pointer; font-weight: 700; font-size: 14px; box-shadow: 2px 2px 0 rgba(211,47,47,0.3);">
-                ${rootTopic.name} ${rootTopic.tags?.includes('高频考点') ? '<span style="background: #ff9800; color: #fff; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-left: 4px;">⭐ 高频</span>' : ''}
+        // 根节点标题
+        let treeHTML = `
+            <div style="text-align: center; margin-bottom: 15px;">
+                <div style="padding: 12px 25px; background: #d32f2f; color: #fff; border: 3px solid #b71c1c; border-radius: 8px; font-weight: 700; font-size: 16px; display: inline-block; box-shadow: 2px 2px 0 rgba(211,47,47,0.3);">
+                    ${category.name}
+                </div>
             </div>
+            <div style="width: 100%; height: 2px; background: #1976d2; margin-bottom: 12px;"></div>
         `;
 
-        // 子节点
-        if (topics.length > 1) {
-            treeHTML += '<div style="width: 3px; height: 15px; background: #d32f2f;"></div>';
-            const subTopics = topics.slice(1, 5); // 显示最多4个子节点
-            const width = subTopics.length * 100;
-
-            treeHTML += `<div style="width: ${width}px; height: 3px; background: #1976d2;"></div>`;
-            treeHTML += `<div style="display: flex; width: ${width}px; justify-content: space-evenly;">`;
-            subTopics.forEach((_, i) => {
-                treeHTML += '<div style="width: 95px; display: flex; justify-content: center;"><div style="width: 3px; height: 15px; background: #1976d2;"></div></div>';
-            });
-            treeHTML += '</div>';
-
-            treeHTML += `<div style="display: flex; width: ${width}px; justify-content: space-evenly;">`;
-            const colors = ['#00796b', '#7b1fa2', '#d32f2f', '#1976d2'];
-            subTopics.forEach((topic, i) => {
-                treeHTML += `
-                    <div class="tree-node level3" onclick="KnowledgeRenderer.selectTopic('${topic.id}', this)"
-                        style="padding: 6px 10px; background: rgba(${this.colorToRgba(colors[i])},0.15); color: ${colors[i]}; border: 2px solid ${colors[i]}; border-radius: 6px; cursor: pointer; font-weight: 700; width: 95px; text-align: center; font-size: 12px;">
-                        ${topic.name.substring(0, 8)}
-                    </div>
-                `;
-            });
-            treeHTML += '</div>';
-        }
-
+        // 所有知识点网格布局
+        treeHTML += '<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 8px; padding: 10px;">';
+        topics.forEach((topic, i) => {
+            const color = colors[i % colors.length];
+            const isHighFreq = topic.tags?.includes('高频考点');
+            treeHTML += `
+                <div class="tree-node" onclick="KnowledgeRenderer.selectTopic('${topic.id}', this)"
+                    style="padding: 8px 12px; background: rgba(${this.colorToRgba(color)},0.15); color: ${color}; border: 2px solid ${color}; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 12px; text-align: center; transition: all 0.3s;">
+                    ${topic.name.length > 10 ? topic.name.substring(0, 10) + '...' : topic.name}
+                    ${isHighFreq ? '<span style="background: #ff9800; color: #fff; padding: 1px 4px; border-radius: 3px; font-size: 10px; margin-left: 2px;">⭐</span>' : ''}
+                </div>
+            `;
+        });
         treeHTML += '</div>';
+
+        // 图谱说明
         treeHTML += `
             <div style="text-align: center; margin-top: 12px; padding: 8px; background: rgba(255,255,255,0.8); border-radius: 5px; border: 2px solid rgba(0,0,0,0.1); font-size: 11px; color: #666;">
                 <span style="margin-right: 15px;"><span style="background: #ff9800; color: #fff; padding: 2px 6px; border-radius: 4px;">⭐</span> 高频考点</span>
@@ -276,13 +242,19 @@ const KnowledgeRenderer = {
             <div class="error-points-card">
                 <div class="section-title red">易错点与注意事项</div>
                 <div class="error-grid">
-                    ${topic.errorPoints?.map(err => `
+                    ${(topic.errorPoints && topic.errorPoints.length > 0) ? topic.errorPoints.map(err => `
                         <div class="error-card">
                             <div class="error-icon">❌</div>
-                            <div class="error-title">${err.wrong}</div>
-                            <div class="error-correct">✓ ${err.correct}</div>
+                            <div class="error-title">${err.wrong || '错误认知'}</div>
+                            <div class="error-correct">✓ ${err.correct || '正确认知'}</div>
                         </div>
-                    `).join('') || ''}
+                    `).join('') : `
+                        <div class="error-card">
+                            <div class="error-icon">💡</div>
+                            <div class="error-title">暂无易错点记录</div>
+                            <div class="error-correct">建议结合真题练习总结易错点</div>
+                        </div>
+                    `}
                 </div>
             </div>
 
@@ -313,13 +285,19 @@ const KnowledgeRenderer = {
                 </div>
             ` : ''}
 
+            <!-- 替代字段渲染 -->
+            ${this.renderAlternativeFields(topic)}
+
             <!-- 扩展知识 -->
             <div class="related-card">
                 <div class="section-title blue">扩展知识与关联链接</div>
                 <div class="related-links">
-                    ${topic.relatedLinks?.map(link => `
-                        <div class="related-link" onclick="alert('跳转到：${link}')">→ ${link}</div>
-                    `).join('') || ''}
+                    ${(topic.relatedLinks && topic.relatedLinks.length > 0) ? topic.relatedLinks.map(link => `
+                        <div class="related-link" onclick="KnowledgeRenderer.navigateToRelated('${link}')">→ ${link}</div>
+                    `).join('') : `
+                        <div class="related-link">→ 建议查阅相关教材章节</div>
+                        <div class="related-link">→ 结合真题练习加深理解</div>
+                    `}
                 </div>
             </div>
 
@@ -337,11 +315,424 @@ const KnowledgeRenderer = {
         return 'blue';
     },
 
+    // 渲染替代字段（支持styles、qualities、steps等）
+    renderAlternativeFields(topic) {
+        let html = '';
+
+        // 架构风格分类
+        if (topic.styles && topic.styles.length > 0) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title blue">架构风格分类</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        ${topic.styles.map(s => `
+                            <div style="padding: 12px; background: rgba(25,118,210,0.1); border-radius: 8px; border-left: 3px solid #1976d2;">
+                                <strong style="color: #1976d2;">${s.name || '风格名称'}</strong>
+                                <p style="font-size: 14px; margin-top: 5px;">${s.desc || '风格描述'}</p>
+                                ${s.constraint ? `<p style="font-size: 13px; color: #ff9800;">约束：${s.constraint}</p>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 质量属性
+        if (topic.qualities && topic.qualities.length > 0) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title orange">架构质量属性</div>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <thead>
+                            <tr style="background: rgba(255,152,0,0.1);">
+                                <th style="padding: 10px; border-bottom: 2px solid #ff9800; text-align: left;">属性</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #ff9800; text-align: left;">定义</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #ff9800; text-align: left;">提升策略</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${topic.qualities.map(q => `
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>${q.name || '质量属性'}</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${q.desc || '属性描述'}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${(q.tactics && q.tactics.length > 0) ? q.tactics.join(', ') : '详见专业资料'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // 步骤流程
+        if (topic.steps && topic.steps.length > 0) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title green">方法步骤</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                        ${topic.steps.map((s, i) => `
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div style="width: 30px; height: 30px; background: #388e3c; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">${s.step || (i + 1)}</div>
+                                <div style="padding: 10px 15px; background: rgba(56,142,60,0.1); border-radius: 8px; flex: 1;">
+                                    <strong style="color: #388e3c;">${s.name || '步骤名称'}</strong>
+                                    <p style="font-size: 14px; margin-top: 3px;">${s.desc || '步骤描述'}</p>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 方法列表
+        if (topic.methods && topic.methods.length > 0) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title blue">方法对比</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        ${topic.methods.map(m => `
+                            <div style="padding: 12px; background: rgba(25,118,210,0.1); border-radius: 8px; border-left: 3px solid #1976d2;">
+                                <strong style="color: #1976d2;">${m.name || '方法名称'}</strong>
+                                <p style="font-size: 14px; margin-top: 5px;">${m.desc || '方法描述'}</p>
+                                ${m.pros ? `<p style="font-size: 13px; color: #388e3c;">优点：${m.pros}</p>` : ''}
+                                ${m.cons ? `<p style="font-size: 13px; color: #d32f2f;">缺点：${m.cons}</p>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 阶段列表
+        if (topic.phases) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title orange">阶段划分</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                        ${topic.phases.map((p, i) => `
+                            <div style="padding: 10px 15px; background: rgba(255,152,0,${0.1 + i * 0.05}); border-radius: 8px; border-left: 3px solid #ff9800;">
+                                <strong style="color: #ff9800;">阶段${i + 1}：${p.name}</strong>
+                                <p style="font-size: 13px; margin-top: 3px;">${p.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 分类列表
+        if (topic.categories) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title purple">分类体系</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+                        ${topic.categories.map(c => `
+                            <div style="padding: 10px; background: rgba(123,31,162,0.1); border-radius: 8px; text-align: center; border: 2px solid rgba(123,31,162,0.3);">
+                                <strong style="color: #7b1fa2;">${c.name}</strong>
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">${c.desc || c.count + '种'}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // CAP定理
+        if (topic.cap && topic.base) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title red">CAP与BASE定理</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px;">
+                        <div style="padding: 15px; background: rgba(211,47,47,0.1); border-radius: 8px;">
+                            <h4 style="color: #d32f2f; margin-bottom: 10px;">CAP定理</h4>
+                            <p><strong>C（一致性）</strong>：${topic.cap.consistency}</p>
+                            <p><strong>A（可用性）</strong>：${topic.cap.availability}</p>
+                            <p><strong>P（分区容错）</strong>：${topic.cap.partition}</p>
+                            <p style="margin-top: 10px; font-size: 12px; background: rgba(255,255,255,0.5); padding: 8px; border-radius: 5px;">${topic.cap.conclusion}</p>
+                        </div>
+                        <div style="padding: 15px; background: rgba(56,142,60,0.1); border-radius: 8px;">
+                            <h4 style="color: #388e3c; margin-bottom: 10px;">BASE理论</h4>
+                            <p><strong>B（基本可用）</strong>：${topic.base.basicallyAvailable}</p>
+                            <p><strong>S（软状态）</strong>：${topic.base.softState}</p>
+                            <p><strong>E（最终一致）</strong>：${topic.base.eventuallyConsistent}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // 算法对比
+        if (topic.algorithms && topic.algorithms.length > 0) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title blue">算法对比</div>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <thead>
+                            <tr style="background: rgba(25,118,210,0.1);">
+                                <th style="padding: 10px; border-bottom: 2px solid #1976d2;">算法</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #1976d2;">类型</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #1976d2;">特点</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #1976d2;">适用场景</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${topic.algorithms.map(a => `
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>${a.name || '算法名称'}</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${a.type || '类型'}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${a.feature || '特点'}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${a.scene || '场景'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // 实现方案
+        if (topic.implementations) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title green">实现方案</div>
+                    <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                        ${topic.implementations.map(impl => `
+                            <div style="padding: 12px; background: rgba(56,142,60,0.1); border-radius: 8px; border-left: 3px solid #388e3c;">
+                                <strong style="color: #388e3c;">${impl.name}</strong>
+                                <p style="font-size: 13px; margin-top: 5px;">${impl.desc}</p>
+                                ${impl.pros ? `<p style="font-size: 12px; color: #388e3c;">优点：${impl.pros}</p>` : ''}
+                                ${impl.cons ? `<p style="font-size: 12px; color: #d32f2f;">缺点：${impl.cons}</p>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 组件架构
+        if (topic.components) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title orange">核心组件</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        ${topic.components.map(c => `
+                            <div style="padding: 12px; background: rgba(255,152,0,0.1); border-radius: 8px; border-left: 3px solid #ff9800;">
+                                <strong style="color: #ff9800;">${c.name}</strong>
+                                <p style="font-size: 13px; margin-top: 5px;">${c.desc}</p>
+                                ${c.responsibilities ? `<p style="font-size: 12px; color: #666;">职责：${c.responsibilities.join(', ')}</p>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 策略方案
+        if (topic.strategies) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title blue">策略方案</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                        ${topic.strategies.map(s => `
+                            <div style="padding: 10px 15px; background: rgba(25,118,210,0.1); border-radius: 8px; border-left: 3px solid #1976d2;">
+                                <strong style="color: #1976d2;">${s.name}</strong>
+                                <p style="font-size: 13px; margin-top: 3px;">${s.desc}</p>
+                                ${s.when ? `<p style="font-size: 12px; color: #666;">适用：${s.when}</p>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 分片键
+        if (topic.shardingKeys) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title green">分片键选择</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                        ${topic.shardingKeys.map(k => `
+                            <div style="padding: 10px 20px; background: rgba(56,142,60,0.1); border-radius: 8px; border: 2px solid rgba(56,142,60,0.3);">
+                                <strong style="color: #388e3c;">${k}</strong>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 缓存类型
+        if (topic.cacheTypes) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title purple">缓存类型</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
+                        ${topic.cacheTypes.map(c => `
+                            <div style="padding: 10px; background: rgba(123,31,162,0.1); border-radius: 8px; text-align: center; border: 2px solid rgba(123,31,162,0.3);">
+                                <strong style="color: #7b1fa2;">${c.name}</strong>
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">${c.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 缓存问题
+        if (topic.cacheProblems) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title red">缓存问题与解决方案</div>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <thead>
+                            <tr style="background: rgba(211,47,47,0.1);">
+                                <th style="padding: 10px; border-bottom: 2px solid #d32f2f;">问题</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #d32f2f;">原因</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #d32f2f;">解决方案</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${topic.cacheProblems.map(p => `
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>${p.name}</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${p.reason}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${p.solution?.join(', ') || p.solution}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // 协议层
+        if (topic.layers) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title blue">协议层级</div>
+                    <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 10px;">
+                        ${topic.layers.map((l, i) => `
+                            <div style="padding: 10px; background: rgba(25,118,210,${0.2 - i * 0.03}); border-radius: 8px; display: flex; justify-content: space-between;">
+                                <strong style="color: #1976d2;">${l.name}</strong>
+                                <span style="font-size: 13px;">${l.desc}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 类型列表
+        if (topic.types) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title orange">类型分类</div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
+                        ${topic.types.map(t => `
+                            <div style="padding: 12px; background: rgba(255,152,0,0.1); border-radius: 8px; border-left: 3px solid #ff9800;">
+                                <strong style="color: #ff9800;">${t.name}</strong>
+                                <p style="font-size: 13px; margin-top: 5px;">${t.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 高可用策略
+        if (topic.tactics) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title green">高可用策略</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                        ${topic.tactics.map(t => `
+                            <div style="padding: 10px 15px; background: rgba(56,142,60,0.1); border-radius: 8px; border-left: 3px solid #388e3c;">
+                                <strong style="color: #388e3c;">${t.name}</strong>
+                                <p style="font-size: 13px; margin-top: 3px;">${t.desc}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 指标体系
+        if (topic.metrics) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title purple">指标体系</div>
+                    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                        <thead>
+                            <tr style="background: rgba(123,31,162,0.1);">
+                                <th style="padding: 10px; border-bottom: 2px solid #7b1fa2;">指标</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #7b1fa2;">含义</th>
+                                <th style="padding: 10px; border-bottom: 2px solid #7b1fa2;">计算</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${topic.metrics.map(m => `
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>${m.name}</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${m.desc}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${m.formula || '-'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        return html;
+    },
+
     // 返回考点总览
     backToCategory() {
         document.getElementById('chainSummary').style.display = 'block';
         document.getElementById('examPointsCard').style.display = 'block';
         document.getElementById('knowledgeDetailSection').style.display = 'none';
+    },
+
+    // 从URL参数选择知识点（用于首页跳转）
+    selectTopicFromUrl(topicId) {
+        if (!this.data) return;
+
+        // 查找知识点所属分类
+        for (const cat of this.data.categories) {
+            const topic = cat.topics.find(t => t.id === topicId);
+            if (topic) {
+                // 先选中分类
+                const catLink = document.querySelector('.directory-link');
+                if (catLink) {
+                    this.selectCategory(cat.id, catLink);
+                }
+                // 然后选中知识点
+                setTimeout(() => {
+                    this.selectTopic(topicId, null);
+                }, 200);
+                return;
+            }
+        }
+        // 如果找不到指定知识点，默认选中第一个分类
+        const firstLink = document.querySelector('.directory-link');
+        if (firstLink && this.data.categories.length > 0) {
+            this.selectCategory(this.data.categories[0].id, firstLink);
+        }
+    },
+
+    // 导航到关联知识点
+    navigateToRelated(linkName) {
+        if (!this.data) return;
+        // 尝试根据名称匹配知识点
+        for (const cat of this.data.categories) {
+            const topic = cat.topics.find(t => t.name.includes(linkName) || linkName.includes(t.name));
+            if (topic) {
+                this.selectTopic(topic.id, null);
+                return;
+            }
+        }
+        // 未找到则提示
+        alert('相关知识点：' + linkName + '\n请在左侧目录中查找对应考点');
     }
 };
 
@@ -588,9 +979,65 @@ const ExamRenderer = {
     timeRemaining: 150 * 60, // 150分钟（秒）
     timerInterval: null,
 
+    // 随机抽取算法（Fisher-Yates洗牌）
+    selectQuestionsByDistribution() {
+        const allQuestions = this.data.questions;
+        const examQuestions = this.data.config.examQuestions || 75;
+
+        // 按主题分组
+        const topicGroups = {};
+        allQuestions.forEach(q => {
+            const topic = q.topic || '其他';
+            if (!topicGroups[topic]) topicGroups[topic] = [];
+            topicGroups[topic].push(q);
+        });
+
+        // 定义主题抽取比例
+        const distribution = {
+            '系统架构': 18, '分布式系统': 15, '数据库架构': 12,
+            '计算机网络': 10, '信息安全': 8, '软件工程': 6,
+            '系统可靠性': 4, '项目管理': 2
+        };
+
+        const selected = [];
+        const topics = Object.keys(distribution);
+
+        // 按比例抽取
+        topics.forEach(topic => {
+            const pool = topicGroups[topic] || [];
+            const count = Math.min(distribution[topic], pool.length);
+
+            // Fisher-Yates部分洗牌
+            for (let i = pool.length - 1; i > 0 && selected.length < count; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [pool[i], pool[j]] = [pool[j], pool[i]];
+            }
+            selected.push(...pool.slice(0, count));
+        });
+
+        // 如果不够，从剩余题目补充
+        if (selected.length < examQuestions) {
+            const remaining = allQuestions.filter(q => !selected.includes(q));
+            const need = examQuestions - selected.length;
+            for (let i = remaining.length - 1; i > 0 && need > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+            }
+            selected.push(...remaining.slice(0, need));
+        }
+
+        // 重新编号为1-75
+        selected.forEach((q, i) => q.id = i + 1);
+        this.data.questions = selected;
+        this.data.config.totalQuestions = selected.length;
+    },
+
     async init() {
         this.data = await loadJSON('data/exam.json');
         if (!this.data) return;
+
+        // 随机抽取75题
+        this.selectQuestionsByDistribution();
 
         // 初始化考试状态
         this.currentQuestion = 1;

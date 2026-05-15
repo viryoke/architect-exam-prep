@@ -3,7 +3,7 @@
 /* 字体引入 */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=ZCOOL+KuaiLe&family=Ma+Shan+Zheng&display=swap');
 
-/* 基础重置 */
+/* 基础重置 - 增大字体 */
 * {
     margin: 0;
     padding: 0;
@@ -18,26 +18,27 @@ body {
         linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
     background-size: 40px 40px;
-    padding: 15px;
+    padding: 10px;
     color: #333;
     min-height: 100vh;
+    font-size: 15px;
 }
 
-/* 白板容器 */
+/* 白板容器 - 减少padding */
 .whiteboard-container {
     background: rgba(255,255,255,0.3);
-    border: 12px solid #1976d2;
+    border: 10px solid #1976d2;
     border-radius: 8px;
-    padding: 20px;
+    padding: 15px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-/* 模块标题 */
+/* 模块标题 - 减少间距 */
 .module-header {
     text-align: center;
-    margin-bottom: 20px;
-    padding: 15px;
+    margin-bottom: 15px;
+    padding: 12px;
     background: rgba(255,255,255,0.7);
     border: 3px solid #d32f2f;
     border-radius: 8px;
@@ -46,7 +47,7 @@ body {
 .module-title {
     color: #d32f2f;
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 32px;
+    font-size: 28px;
 }
 
 .module-subtitle {
@@ -58,13 +59,13 @@ body {
 /* 导航标签 */
 .nav-tabs {
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
 .nav-tab {
     font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 14px;
-    padding: 8px 20px;
+    font-size: 15px;
+    padding: 10px 20px;
     border: 3px solid;
     border-radius: 5px;
     cursor: pointer;
@@ -79,20 +80,20 @@ body {
 .nav-tab.green.active { background: #388e3c; color: #fff; }
 .nav-tab.green { color: #388e3c; border-color: #388e3c; }
 
-/* 顶部导航栏 */
+/* 顶部导航栏 - 减少间距 */
 .top-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
-    padding: 12px 15px;
+    margin-bottom: 12px;
+    padding: 10px 12px;
     background: rgba(255,255,255,0.7);
     border: 3px solid #1976d2;
     border-radius: 8px;
 }
 
 .breadcrumb {
-    font-size: 13px;
+    font-size: 14px;
     color: #666;
 }
 
@@ -109,7 +110,7 @@ body {
     border-radius: 5px;
     color: #1976d2;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
     transition: all 0.3s;
 }
 
@@ -122,7 +123,7 @@ body {
     display: inline-block;
     padding: 4px 12px;
     border-radius: 5px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
     margin-right: 5px;
 }
@@ -158,7 +159,7 @@ body {
     background: #1976d2;
     color: #fff;
     border-radius: 3px;
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 700;
     margin-right: 5px;
 }
@@ -171,7 +172,7 @@ body {
     color: #1976d2;
     border: 1px solid #1976d2;
     border-radius: 3px;
-    font-size: 11px;
+    font-size: 12px;
     margin-right: 3px;
     margin-bottom: 3px;
 }
@@ -184,7 +185,7 @@ body {
     color: #d32f2f;
     border: 1px solid #d32f2f;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: 700;
 }
 
@@ -199,6 +200,7 @@ body {
     border: 3px solid #1976d2;
     border-radius: 5px;
     width: 250px;
+    font-size: 14px;
 }
 
 .search-btn {
@@ -209,14 +211,15 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 14px;
 }
 
 /* 卡片标题 */
 .card-title {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 22px;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
+    font-size: 24px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
     border-bottom: 3px solid;
 }
 
@@ -228,9 +231,9 @@ body {
 /* 内容区域标题 */
 .section-title {
     font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 18px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
+    font-size: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
     border-bottom: 3px solid;
 }
 
@@ -259,14 +262,16 @@ body {
 
 .data-table th {
     font-family: 'ZCOOL KuaiLe', cursive;
-    padding: 10px;
+    padding: 12px;
     text-align: center;
+    font-size: 15px;
 }
 
 .data-table td {
-    padding: 10px;
+    padding: 12px;
     text-align: center;
     border-bottom: 1px solid rgba(0,0,0,0.1);
+    font-size: 14px;
 }
 
 .data-table tr:hover td {
@@ -275,12 +280,12 @@ body {
 
 /* 按钮基础样式 */
 .btn {
-    padding: 10px 25px;
+    padding: 12px 25px;
     border: 3px solid;
     border-radius: 5px;
     cursor: pointer;
     font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 14px;
+    font-size: 16px;
     transition: all 0.3s;
 }
 
