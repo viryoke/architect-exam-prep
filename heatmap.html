@@ -176,6 +176,8 @@
         .bar.blue { background: linear-gradient(180deg, #1976d2, #0d47a1); }
         .bar.green { background: linear-gradient(180deg, #388e3c, #1b5e20); }
         .bar.purple { background: linear-gradient(180deg, #7b1fa2, #4a148c); }
+        .bar.teal { background: linear-gradient(180deg, #00796b, #004d40); }
+        .bar.gray { background: linear-gradient(180deg, #78909c, #546e7a); }
 
         /* 趋势图 */
         .trend-chart {
@@ -444,33 +446,10 @@
 
             <!-- 考点分布柱状图 -->
             <div class="heatmap-card blue">
-                <div class="card-title">📊 考点分布柱状图（2025年）</div>
+                <div class="card-title" id="barChartTitle">📊 考点分布柱状图</div>
                 <div class="bar-chart-container">
                     <div class="bar-chart">
-                        <div class="bar-item">
-                            <div class="bar red" style="height: 140px;"><div class="bar-value" style="color:#d32f2f;">18题</div></div>
-                            <div class="bar-label">系统架构</div>
-                        </div>
-                        <div class="bar-item">
-                            <div class="bar orange" style="height: 120px;"><div class="bar-value" style="color:#ff9800;">15题</div></div>
-                            <div class="bar-label">分布式</div>
-                        </div>
-                        <div class="bar-item">
-                            <div class="bar blue" style="height: 100px;"><div class="bar-value" style="color:#1976d2;">12题</div></div>
-                            <div class="bar-label">数据库</div>
-                        </div>
-                        <div class="bar-item">
-                            <div class="bar green" style="height: 80px;"><div class="bar-value" style="color:#388e3c;">10题</div></div>
-                            <div class="bar-label">网络</div>
-                        </div>
-                        <div class="bar-item">
-                            <div class="bar purple" style="height: 60px;"><div class="bar-value" style="color:#7b1fa2;">8题</div></div>
-                            <div class="bar-label">安全</div>
-                        </div>
-                        <div class="bar-item">
-                            <div class="bar" style="height: 50px; background:#999;"><div class="bar-value" style="color:#666;">12题</div></div>
-                            <div class="bar-label">其他</div>
-                        </div>
+                        <!-- 由 HeatmapRenderer.renderBarChart() 动态渲染 -->
                     </div>
                 </div>
             </div>

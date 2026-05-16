@@ -114,6 +114,7 @@
             border: 3px solid #1976d2;
             border-radius: 8px;
             padding: 20px;
+            margin-bottom: 25px;
         }
         .card-title {
             font-family: 'Ma Shan Zheng', cursive;
@@ -134,7 +135,7 @@
             gap: 15px;
         }
         .structure-item {
-            padding: 15px 20px;
+            padding: 25px 20px 15px 20px;
             border: 3px solid;
             border-radius: 8px;
             position: relative;
@@ -147,12 +148,13 @@
 
         .structure-number {
             position: absolute;
-            top: -10px;
+            top: -12px;
             left: 20px;
-            padding: 5px 15px;
-            border-radius: 5px;
+            padding: 4px 12px;
+            border-radius: 4px;
             font-family: 'ZCOOL KuaiLe', cursive;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 700;
         }
         .structure-item.abstract .structure-number { background: #d32f2f; color: #fff; }
         .structure-item.background .structure-number { background: #1976d2; color: #fff; }
@@ -176,6 +178,7 @@
             border: 3px solid #ff9800;
             border-radius: 8px;
             padding: 20px;
+            margin-bottom: 25px;
         }
         .tips-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .tip-item {
@@ -194,6 +197,7 @@
             border: 3px solid #d32f2f;
             border-radius: 8px;
             padding: 20px;
+            margin-bottom: 20px;
         }
         .scoring-table {
             width: 100%;
@@ -236,7 +240,7 @@
         /* 范文卡片 */
         .essay-card {
             background: rgba(255,255,255,0.7);
-            border: 3px solid;
+            border: 3px solid #388e3c;
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 15px;
@@ -244,8 +248,6 @@
             transition: all 0.3s;
         }
         .essay-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.15); transform: translateY(-3px); }
-        .essay-card.high { border-color: #388e3c; }
-        .essay-card.medium { border-color: #ff9800; }
 
         .essay-header {
             display: flex;
@@ -256,18 +258,17 @@
         .essay-title {
             font-family: 'ZCOOL KuaiLe', cursive;
             font-size: 18px;
+            color: #388e3c;
         }
-        .essay-card.high .essay-title { color: #388e3c; }
-        .essay-card.medium .essay-title { color: #ff9800; }
 
         .essay-badge {
             padding: 6px 12px;
             border-radius: 5px;
             font-size: 12px;
             font-weight: 700;
+            background: #388e3c;
+            color: #fff;
         }
-        .essay-card.high .essay-badge { background: #388e3c; color: #fff; }
-        .essay-card.medium .essay-badge { background: #ff9800; color: #fff; }
 
         .essay-meta {
             display: flex;
@@ -291,10 +292,8 @@
             padding: 20px;
             background: rgba(255,255,255,0.5);
             border-radius: 8px;
-            border-left: 4px solid;
+            border-left: 4px solid #388e3c;
         }
-        .essay-card.high .essay-content-box { border-left-color: #388e3c; }
-        .essay-card.medium .essay-content-box { border-left-color: #ff9800; }
 
         .essay-section-title {
             font-weight: 700;
@@ -366,42 +365,7 @@
             <div class="topic-directory">
                 <div class="directory-title">📚 论文专区导航</div>
                 <ul class="topic-list">
-                    <li class="topic-item">
-                        <div class="topic-link active" onclick="selectTopic('写作指南', this)" style="border-color: #1976d2;">
-                            <span class="topic-name" style="color: #1976d2;">✍️ 写作指南</span>
-                            <span class="topic-count">框架·技巧</span>
-                        </div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-link" onclick="selectTopic('架构风格', this)">
-                            <span class="topic-name">架构风格类</span>
-                            <span class="topic-count">5篇范文</span>
-                        </div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-link" onclick="selectTopic('分布式', this)">
-                            <span class="topic-name">分布式系统类</span>
-                            <span class="topic-count">4篇范文</span>
-                        </div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-link" onclick="selectTopic('数据库', this)">
-                            <span class="topic-name">数据库架构类</span>
-                            <span class="topic-count">3篇范文</span>
-                        </div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-link" onclick="selectTopic('新技术', this)">
-                            <span class="topic-name">新技术应用类</span>
-                            <span class="topic-count">3篇范文</span>
-                        </div>
-                    </li>
-                    <li class="topic-item">
-                        <div class="topic-link" onclick="selectTopic('安全', this)">
-                            <span class="topic-name">安全架构类</span>
-                            <span class="topic-count">2篇范文</span>
-                        </div>
-                    </li>
+                    <!-- 由EssayRenderer动态渲染 -->
                 </ul>
             </div>
 
@@ -555,91 +519,10 @@
                 <!-- 范文列表区域 -->
                 <div class="essay-section">
                     <div class="essay-list-header">
-                        <div class="card-title green" id="essaySectionTitle">📚 架构风格类范文</div>
-                        <div class="essay-count">共5篇范文</div>
+                        <div class="card-title green" id="essaySectionTitle">📚 范文列表</div>
+                        <div class="essay-count">由EssayRenderer动态渲染</div>
                     </div>
-
-                    <!-- 范文卡片 -->
-                    <div class="essay-card high" onclick="toggleEssay(this)">
-                        <div class="essay-header">
-                            <div class="essay-title">论分层架构在大型电商系统中的应用</div>
-                            <div class="essay-badge">高分范文 ⭐</div>
-                        </div>
-                        <div class="essay-meta">
-                            <span>字数：2800字</span>
-                            <span>评分：42分</span>
-                            <span>主题：分层架构</span>
-                        </div>
-                        <div class="essay-summary">本文以某电商平台重构项目为例，论述分层架构的设计与应用。项目采用四层架构（表现层、业务层、数据访问层、数据层），有效解决了原有系统的耦合度高、扩展困难等问题。</div>
-
-                        <!-- 范文详情 -->
-                        <div class="essay-detail">
-                            <div class="essay-content-box">
-                                <div class="essay-section-title">【摘要】</div>
-                                <div class="essay-content">
-                                    本文以我参与的某大型电商平台重构项目为例，论述了分层架构在大型系统中的应用。该项目原有系统采用单体架构，面临耦合度高、扩展困难、部署周期长等问题。重构后采用分层架构，将系统划分为表现层、业务层、数据访问层和数据层四个层次。通过明确的层次划分和单向依赖约束，系统的可维护性、可扩展性显著提升。项目实施后，部署周期从2周缩短到3天，系统故障率降低40%。本文将详细阐述分层架构的设计思路、实施过程以及取得的成效。
-                                </div>
-
-                                <div class="essay-section-title" style="margin-top:20px;">【项目背景】</div>
-                                <div class="essay-content">
-                                    2024年3月，我所在公司承接了某大型电商平台的架构重构项目。该平台日均订单量超过50万，原有系统采用传统的单体架构，全部代码集中在一个项目中。经过多年迭代，代码耦合度极高，一个模块的修改经常影响其他模块。部署时需要整体打包，周期长达2周。业务快速发展，新的需求不断提出，但架构限制导致响应缓慢。
-
-                                    面对这些问题，项目组决定采用分层架构进行重构。分层架构的核心思想是将系统按职责划分为多个层次，每个层次只依赖其下方的层次，形成清晰的单向依赖关系。这种架构风格能够有效降低耦合、提高可维护性，非常适合大型系统的重构需求。
-                                </div>
-
-                                <div class="essay-section-title" style="margin-top:20px;">【架构设计】</div>
-                                <div class="essay-content">
-                                    经过需求分析和架构选型讨论，我们确定了四层架构方案：
-
-                                    1. 表现层（Presentation Layer）：负责用户界面展示和请求接收，采用Spring MVC框架实现，处理HTTP请求的解析和响应的渲染。
-
-                                    2. 业务层（Business Layer）：负责核心业务逻辑处理，包括订单处理、库存管理、促销规则等。采用Spring框架管理业务组件，通过依赖注入解耦各业务模块。
-
-                                    3. 数据访问层（Data Access Layer）：负责与数据库的交互，封装SQL操作，提供统一的数据访问接口。采用MyBatis框架实现，支持多数据源切换。
-
-                                    4. 数据层（Data Layer）：负责数据存储，采用MySQL数据库集群，支持读写分离和分库分表。
-
-                                    （此处应画出架构分层图，标注各层组件和依赖方向）
-
-                                    关键技术实现：
-                                    - 层间通信采用接口定义，上层通过接口调用下层，不直接依赖具体实现
-                                    - 数据访问层封装数据源切换逻辑，业务层无需关心数据库位置
-                                    - 表现层仅处理请求转发，不包含业务逻辑，便于替换前端框架
-                                </div>
-                            </div>
-
-                            <div class="essay-actions">
-                                <div class="action-btn collect" onclick="collectEssay()">⭐ 收藏范文</div>
-                                <div class="action-btn copy" onclick="copyEssay()">📋 复制全文</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="essay-card high" onclick="toggleEssay(this)">
-                        <div class="essay-header">
-                            <div class="essay-title">论微服务架构在高并发系统中的应用</div>
-                            <div class="essay-badge">高分范文 ⭐</div>
-                        </div>
-                        <div class="essay-meta">
-                            <span>字数：2650字</span>
-                            <span>评分：40分</span>
-                            <span>主题：微服务架构</span>
-                        </div>
-                        <div class="essay-summary">本文以某金融交易系统为例，论述微服务架构在高并发场景下的设计与实践。系统拆分为用户服务、交易服务、清算服务等8个独立服务，通过API网关统一入口，使用消息队列实现异步解耦。</div>
-                    </div>
-
-                    <div class="essay-card medium" onclick="toggleEssay(this)">
-                        <div class="essay-header">
-                            <div class="essay-title">论事件驱动架构在物联网平台中的应用</div>
-                            <div class="essay-badge">参考范文</div>
-                        </div>
-                        <div class="essay-meta">
-                            <span>字数：2400字</span>
-                            <span>评分：35分</span>
-                            <span>主题：事件驱动</span>
-                        </div>
-                        <div class="essay-summary">本文以某智能家居物联网平台为例，论述事件驱动架构的设计与应用。平台采用事件总线模式，设备状态变化触发事件，各服务订阅处理，实现松耦合的系统架构。</div>
-                    </div>
+                    <!-- 由EssayRenderer.renderEssayList()动态渲染论文卡片 -->
                 </div>
             </div>
         </div>

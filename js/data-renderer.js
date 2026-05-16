@@ -1,9 +1,10 @@
 // 系统架构设计师备考网站数据加载模块
 
-// 加载JSON数据
+// 加载JSON数据（添加时间戳避免缓存）
 async function loadJSON(url) {
     try {
-        const response = await fetch(url);
+        const timestamp = new Date().getTime();
+        const response = await fetch(`${url}?t=${timestamp}`);
         if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
         return await response.json();
     } catch (error) {
@@ -982,10 +983,10 @@ const QuestionsRenderer = {
                         </div>
                         ${q.subQuestions ? q.subQuestions.map(sq => `
                             <div class="analysis-box">
-                                <div class="analysis-title">${sq.question}</div>
-                                <div class="analysis-text">${sq.answer}</div>
+                                <div class="analysis-title">${sq.question}（${sq.score}分）</div>
+                                <div class="analysis-text">${sq.answer || sq.referenceAnswer || (sq.keyPoints ? sq.keyPoints.join('<br/>') : '请结合场景分析')}</div>
                             </div>
-                        `).join('') : `<div class="analysis-box"><div class="analysis-title">参考答案</div><div class="analysis-text">${q.analysis?.explanation || ''}</div></div>`}
+                        `).join('') : `<div class="analysis-box"><div class="analysis-title">参考答案</div><div class="analysis-text">${q.analysis?.keyPoints ? q.analysis.keyPoints.join('<br/>') : q.analysis?.explanation || ''}</div></div>`}
                         ${q.relatedKnowledge ? `
                             <div class="related-points">
                                 ${q.relatedKnowledge.map(rp => `<div class="related-link">→ ${rp}</div>`).join('')}
@@ -1439,6 +1440,9 @@ const EssayRenderer = {
         const topicList = document.querySelector('.topic-list');
         if (!topicList || !this.data.categories) return;
 
+        // 过滤掉guide分类（写作指南），因为已硬编码处理
+        const essayCategories = this.data.categories.filter(cat => cat.id !== 'guide');
+
         topicList.innerHTML = `
             <li class="topic-item">
                 <div class="topic-link active" onclick="EssayRenderer.selectCategory('guide', this)" style="border-color: #1976d2;">
@@ -1446,7 +1450,7 @@ const EssayRenderer = {
                     <span class="topic-count">框架·技巧</span>
                 </div>
             </li>
-            ${this.data.categories.map(cat => `
+            ${essayCategories.map(cat => `
                 <li class="topic-item">
                     <div class="topic-link" onclick="EssayRenderer.selectCategory('${cat.id}', this)">
                         <span class="topic-name">${cat.name}</span>
@@ -1553,14 +1557,15 @@ const EssayRenderer = {
         card.innerHTML = `
             <div class="essay-header">
                 <div class="essay-title">${essay.title}</div>
-                <div class="essay-badge">${essay.level === 'high' ? '高分范文 ⭐' : '参考范文'}</div>
+                <div class="essay-badge">${(essay.meta?.score || essay.score || 40) >= 42 ? '高分范文 ⭐' : '真题范文'}</div>
             </div>
             <div class="essay-meta">
-                <span>字数：${essay.wordCount}字</span>
-                <span>评分：${essay.score}分</span>
-                <span>主题：${essay.topic}</span>
+                <span>字数：${essay.meta?.wordCount || essay.wordCount || 2500}字</span>
+                <span>评分：${essay.meta?.score || essay.score || 40}分</span>
+                <span>主题：${essay.meta?.topic || essay.topic || '架构设计'}</span>
+                <span>年份：${essay.year || '2023'}年${essay.semester || ''}</span>
             </div>
-            <div class="essay-summary">${essay.summary}</div>
+            <div class="essay-summary">${essay.abstract || essay.summary || ''}</div>
             <div class="essay-detail">
                 <div class="essay-content-box">
                     ${essay.sections ? essay.sections.map(sec => `
@@ -1633,6 +1638,9 @@ const HeatmapRenderer = {
         element.classList.add('active');
         this.currentYear = year;
         this.renderHeatmapGrid();
+        this.renderBarChart();
+        this.renderRankingTable();
+        this.renderDifficultyStats();
     },
 
     // 渲染热力图网格
@@ -1657,14 +1665,27 @@ const HeatmapRenderer = {
     // 渲染柱状图
     renderBarChart() {
         const barChart = document.querySelector('.bar-chart');
-        if (!barChart || !this.data.distributionChart) return;
+        if (!barChart) return;
 
-        barChart.innerHTML = this.data.distributionChart.map(dc => `
+        // 更新标题
+        const barChartTitle = document.getElementById('barChartTitle');
+        if (barChartTitle) {
+            const yearText = this.currentYear === 'all' ? '近5年汇总' : this.currentYear + '年';
+            barChartTitle.textContent = `📊 考点分布柱状图（${yearText}）`;
+        }
+
+        // 根据年份选择数据
+        let chartData = this.data.distributionChart;
+        if (this.data.distributionByYear && this.data.distributionByYear[this.currentYear]) {
+            chartData = this.data.distributionByYear[this.currentYear];
+        }
+
+        barChart.innerHTML = chartData.map(dc => `
             <div class="bar-item">
-                <div class="bar ${dc.category === '系统架构' ? 'red' : dc.category === '分布式系统' ? 'orange' : dc.category === '数据库架构' ? 'blue' : dc.category === '计算机网络' ? 'green' : 'purple'}" style="height: ${dc.count * 7}px;">
+                <div class="bar ${dc.category === '系统架构' ? 'red' : dc.category === '分布式系统' ? 'orange' : dc.category === '数据库架构' ? 'blue' : dc.category === '计算机网络' ? 'green' : dc.category === '信息安全' ? 'purple' : dc.category === '系统可靠性' ? 'teal' : 'gray'}" style="height: ${dc.count * 10}px;">
                     <div class="bar-value" style="color:${dc.color};">${dc.count}题</div>
                 </div>
-                <div class="bar-label">${dc.category.replace('架构', '').replace('系统', '').substring(0, 4)}</div>
+                <div class="bar-label">${dc.category.replace('架构', '').replace('系统', '').replace('可靠性', '可靠').substring(0, 4)}</div>
             </div>
         `).join('');
     },

@@ -1,0 +1,509 @@
+{
+  "years": [
+    {"id": "2022", "name": "2022年", "count": 75, "semesters": [{"id": "2022x", "name": "下半年", "count": 75}]},
+    {"id": "2021", "name": "2021年", "count": 75, "semesters": [{"id": "2021x", "name": "下半年", "count": 75}]},
+    {"id": "2020", "name": "2020年", "count": 75, "semesters": [{"id": "2020x", "name": "下半年", "count": 75}]},
+    {"id": "2019", "name": "2019年", "count": 75, "semesters": [{"id": "2019x", "name": "下半年", "count": 75}]},
+    {"id": "2018", "name": "2018年", "count": 75, "semesters": [{"id": "2018x", "name": "下半年", "count": 75}]}
+  ],
+  "topics": [
+    {"id": "arch", "name": "系统架构", "count": 15},
+    {"id": "os", "name": "操作系统", "count": 10},
+    {"id": "db", "name": "数据库", "count": 10},
+    {"id": "network", "name": "计算机网络", "count": 10},
+    {"id": "security", "name": "信息安全", "count": 8},
+    {"id": "software", "name": "软件工程", "count": 12},
+    {"id": "other", "name": "其他", "count": 10}
+  ],
+  "difficulties": [
+    {"id": "easy", "name": "简单", "count": 25},
+    {"id": "medium", "name": "中等", "count": 40},
+    {"id": "hard", "name": "困难", "count": 10}
+  ],
+  "types": [
+    {"id": "choice", "name": "选择题", "count": 75},
+    {"id": "case", "name": "案例分析", "count": 5}
+  ],
+  "questions": [
+    {
+      "id": "q2022x-01",
+      "year": "2022",
+      "semester": "下",
+      "number": 1,
+      "topic": "arch",
+      "subTopic": "云计算体系结构",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "云计算服务体系结构中，应用层、平台层、基础设施层分别对应（ ）。",
+      "options": [
+        {"label": "A", "text": "SaaS、PaaS、IaaS"},
+        {"label": "B", "text": "PaaS、SaaS、IaaS"},
+        {"label": "C", "text": "IaaS、PaaS、SaaS"},
+        {"label": "D", "text": "SaaS、IaaS、PaaS"}
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "云计算三层架构",
+        "explanation": "云计算三层架构：应用层对应SaaS(软件即服务)、平台层对应PaaS(平台即服务)、基础设施层对应IaaS(基础设施即服务)。从上到下依次为SaaS、PaaS、IaaS。",
+        "optionAnalysis": ["A正确：应用层SaaS、平台层PaaS、基础设施层IaaS", "B错误：顺序不对", "C错误：顺序反了", "D错误：PaaS和IaaS顺序不对"]
+      },
+      "relatedKnowledge": ["云计算架构", "SaaS/PaaS/IaaS"]
+    },
+    {
+      "id": "q2022x-02",
+      "year": "2022",
+      "semester": "下",
+      "number": 2,
+      "topic": "os",
+      "subTopic": "前趋图",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "前趋图是一个有向无环图，记为→={(Pi,Pj)|Pi must complete before Pj may start}。假设系统中进程P={P1,P2,P3,P4,P5,P6,P7,P8}，且进程的前趋图如下图所示，则该前趋图的正确集合表示是（ ）。图示：P1→P2→P5→P7→P8，P1→P3→P6→P7，P1→P4→P7",
+      "options": [
+        {"label": "A", "text": "→={(P1,P2),(P1,P3),(P1,P4),(P2,P3),(P2,P5),(P3,P4),(P3,P6),(P4,P7),(P5,P6),(P5,P8),(P6,P7),(P7,P8)}"},
+        {"label": "B", "text": "→={(P1,P2),(P1,P3),(P1,P4),(P2,P3),(P2,P5),(P3,P4),(P3,P5),(P4,P6),(P5,P7),(P5,P8),(P6,P7),(P7,P8)}"},
+        {"label": "C", "text": "→={(P1,P2),(P1,P3),(P1,P4),(P2,P5),(P3,P6),(P4,P7),(P5,P7),(P6,P7),(P7,P8)}"},
+        {"label": "D", "text": "→={(P1,P2),(P1,P5),(P2,P3),(P2,P5),(P3,P4),(P5,P6),(P4,P7),(P5,P6),(P5,P8),(P6,P7),(P6,P8),(P7,P8)}"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "前趋图进程同步",
+        "explanation": "根据图示，P1先执行，然后P2、P3、P4并行执行；P2完成后P5执行；P3完成后P6执行；P4、P5、P6完成后P7执行；P7完成后P8执行。正确的前趋关系集合应反映这些依赖。",
+        "optionAnalysis": ["A错误：包含多余的依赖关系", "B错误：P3不依赖P4", "C正确：符合图示依赖关系", "D错误：P1不直接依赖P5"]
+      },
+      "relatedKnowledge": ["进程同步", "前趋图"]
+    },
+    {
+      "id": "q2022x-03",
+      "year": "2022",
+      "semester": "下",
+      "number": 3,
+      "topic": "os",
+      "subTopic": "文件系统可靠性",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "若系统正在将（ ）文件修改的结果写回磁盘时系统发生掉电，则对系统影响相对较大。",
+      "options": [
+        {"label": "A", "text": "系统目录"},
+        {"label": "B", "text": "空闲块"},
+        {"label": "C", "text": "用户程序"},
+        {"label": "D", "text": "用户数据"}
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "文件系统可靠性",
+        "explanation": "系统目录文件包含文件系统的元数据结构，如果写入时掉电导致损坏，可能导致整个文件系统无法正常工作，影响最大。",
+        "optionAnalysis": ["A正确：系统目录损坏影响整个文件系统", "B错误：空闲块损坏影响较小", "C错误：用户程序损坏可重新加载", "D错误：用户数据损坏影响范围有限"]
+      },
+      "relatedKnowledge": ["文件系统", "系统可靠性"]
+    },
+    {
+      "id": "q2022x-04",
+      "year": "2022",
+      "semester": "下",
+      "number": 4,
+      "topic": "os",
+      "subTopic": "磁盘调度算法",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "在磁盘调度管理中，应先进行移臂调度再进行旋转调度。假设磁盘移动臂位于20号柱面上，进程请求序列为：(18,8,6)、(16,6,3)、(16,9,6)、(21,10,5)、(18,8,4)、(21,3,10)、(18,7,6)、(16,10,1)、(22,10,8)。若采用最短移臂调度算法，则系统响应序列应为（ ）。",
+      "options": [
+        {"label": "A", "text": "①⑤⑦⑧②③⑨④⑥"},
+        {"label": "B", "text": "①⑤⑦⑧②③④⑨⑥"},
+        {"label": "C", "text": "①⑦⑤⑧②③⑨④⑥"},
+        {"label": "D", "text": "①⑦⑤⑧②③④⑨⑥"}
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "最短移臂调度算法",
+        "explanation": "最短移臂调度(SCAN)优先响应距离当前位置最近的柱面请求。当前位置20，最近的18(距离2)，然后是16(距离2)，接着是21(距离1)，最后是22(距离1)。需要按距离和方向综合排序。",
+        "optionAnalysis": ["A正确：按最短移臂顺序排列", "B错误：顺序不正确", "C错误：顺序不正确", "D错误：顺序不正确"]
+      },
+      "relatedKnowledge": ["磁盘调度算法", "操作系统"]
+    },
+    {
+      "id": "q2022x-05",
+      "year": "2022",
+      "semester": "下",
+      "number": 5,
+      "topic": "db",
+      "subTopic": "数据库三级模式结构",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "采用三级模式结构的数据库系统中，如果对一个表创建聚簇索引，那么改变的是数据库的（ ）。",
+      "options": [
+        {"label": "A", "text": "外模式"},
+        {"label": "B", "text": "模式"},
+        {"label": "C", "text": "内模式"},
+        {"label": "D", "text": "用户模式"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "数据库三级模式结构",
+        "explanation": "聚簇索引改变数据的物理存储顺序，属于内模式（物理结构）。三级模式：外模式（用户视图）、模式（逻辑结构）、内模式（物理存储）。",
+        "optionAnalysis": ["A错误：外模式是用户视图", "B错误：模式是逻辑结构", "C正确：内模式是物理存储结构", "D错误：用户模式即外模式"]
+      },
+      "relatedKnowledge": ["数据库三级模式", "聚簇索引"]
+    },
+    {
+      "id": "q2022x-06",
+      "year": "2022",
+      "semester": "下",
+      "number": 6,
+      "topic": "db",
+      "subTopic": "数据库恢复",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "假设系统中有正在运行的事务，若要转储全部数据库，则应采用（ ）方式。",
+      "options": [
+        {"label": "A", "text": "静态全局转储"},
+        {"label": "B", "text": "动态增量转储"},
+        {"label": "C", "text": "动态全局转储"},
+        {"label": "D", "text": "静态增量转储"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "数据库转储方式",
+        "explanation": "有事务正在运行时，不能使用静态转储（需要暂停事务），必须使用动态转储。要转储全部数据库，所以是动态全局转储。",
+        "optionAnalysis": ["A错误：静态转储需要暂停事务", "B错误：增量转储只转储部分数据", "C正确：动态转储不暂停，全局转储全部数据", "D错误：静态需要暂停"]
+      },
+      "relatedKnowledge": ["数据库恢复", "数据转储"]
+    },
+    {
+      "id": "q2021x-01",
+      "year": "2021",
+      "semester": "下",
+      "number": 1,
+      "topic": "os",
+      "subTopic": "前趋图",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "前趋图是一个有向无环图，记为→={(Pi,Pj)|Pi must complete before Pj may start}。假设系统中进程P={P1,P2,P3,P4,P5,P6,P7,P8}，且进程的前趋图如下图所示，则该前趋图的正确集合表示是（ ）。图示：P1→P2→P3，P1→P4，P2→P5，P3→P5，P3→P4，P4→P7，P5→P6→P7，P7→P8",
+      "options": [
+        {"label": "A", "text": "→={(P1,P2),(P3,P1),(P4,P1),(P5,P2),(P5,P3),(P6,P4),(P7,P5),(P7,P6),(P4,P5),(P6,P7),(P7,P8)}"},
+        {"label": "B", "text": "→={(P1,P2),(P1,P3),(P2,P5),(P2,P3),(P3,P4),(P3,P5),(P4,P5),(P5,P6),(P5,P7),(P8,P5),(P6,P7),(P7,P8)}"},
+        {"label": "C", "text": "→={(P1,P2),(P1,P3),(P2,P3),(P2,P5),(P3,P4),(P3,P5),(P4,P6),(P5,P6),(P5,P7),(P5,P8),(P6,P8),(P7,P8)}"},
+        {"label": "D", "text": "→={(P1,P2),(P1,P3),(P2,P3),(P2,P5),(P3,P6),(P3,P4),(P4,P7),(P5,P6),(P6,P7),(P6,P5),(P7,P5),(P7,P8)}"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "前趋图进程同步",
+        "explanation": "根据图示，P1完成后P2、P3开始；P2完成后P5开始；P3完成后P4、P5开始；P4完成后P6开始；P5完成后P6、P7开始；P6完成后P8开始；P7完成后P8开始。",
+        "optionAnalysis": ["A错误：顺序反了", "B错误：包含不存在的依赖", "C正确：符合图示依赖关系", "D错误：包含循环依赖"]
+      },
+      "relatedKnowledge": ["进程同步", "前趋图"]
+    },
+    {
+      "id": "q2021x-02",
+      "year": "2021",
+      "semester": "下",
+      "number": 2,
+      "topic": "os",
+      "subTopic": "页面变换表",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "某计算机系统页面大小为4K，进程P1的页面变换表如下：页号0对应物理块1，页号1对应6，页号2对应3，页号3对应8。若P1要访问数据的逻辑地址为十六进制1B1AH，则该逻辑地址变换后的物理地址应为十六进制（ ）。",
+      "options": [
+        {"label": "A", "text": "1B1AH"},
+        {"label": "B", "text": "3B1AH"},
+        {"label": "C", "text": "6B1AH"},
+        {"label": "D", "text": "8B1AH"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "分页存储管理",
+        "explanation": "页面大小4K=2^12，低12位为页内地址。十六进制1B1AH中B1A为页内偏移，1为页号。页号1对应物理块号6，故物理地址为6B1AH。",
+        "optionAnalysis": ["A错误：未进行地址变换", "B错误：物理块号不对", "C正确：页号1→物理块6", "D错误：物理块号不对"]
+      },
+      "relatedKnowledge": ["分页存储", "地址变换"]
+    },
+    {
+      "id": "q2021x-03",
+      "year": "2021",
+      "semester": "下",
+      "number": 3,
+      "topic": "os",
+      "subTopic": "文件索引节点",
+      "difficulty": "hard",
+      "type": "choice",
+      "text": "某文件系统采用文件索引节点法，假设索引节点有8个地址项iaddr[0]~iaddr[7]，每个地址项4字节。iaddr[0]~iaddr[4]为直接地址索引，iaddr[5]、iaddr[6]为一级间接索引，iaddr[7]为二级间接索引。磁盘索引块和数据块大小均为1KB。若要访问文件的逻辑块号分别为1、518，则系统应分别采用（ ）。",
+      "options": [
+        {"label": "A", "text": "直接地址索引、直接地址索引"},
+        {"label": "B", "text": "直接地址索引、一级间接地址索引"},
+        {"label": "C", "text": "直接地址索引、二级间接地址索引"},
+        {"label": "D", "text": "一级间接地址索引、二级间接地址索引"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "文件索引节点",
+        "explanation": "直接索引iaddr[0]~iaddr[4]对应逻辑块号0~4。一级间接索引每个可指向1KB/4B=256个数据块，iaddr[5]对应块号5~260，iaddr[6]对应261~516。逻辑块号518超过516，需要二级间接索引。",
+        "optionAnalysis": ["A错误：518超出直接索引范围", "B错误：518超出一级间接范围", "C正确：块1用直接索引，518用二级间接索引", "D错误：块1是直接索引"]
+      },
+      "relatedKnowledge": ["文件系统", "索引节点"]
+    },
+    {
+      "id": "q2021x-04",
+      "year": "2021",
+      "semester": "下",
+      "number": 4,
+      "topic": "os",
+      "subTopic": "银行家算法",
+      "difficulty": "hard",
+      "type": "choice",
+      "text": "假设系统互斥资源R可用数为25。T0时刻进程P1、P2、P3、P4对资源R的最大需求、已分配、尚需分别为：(10,6,4)、(11,4,7)、(9,7,2)、(12,6,6)。若P1和P3分别申请资源R数为1和2，则系统（ ）。",
+      "options": [
+        {"label": "A", "text": "只能先给P1分配，因为分配后系统状态是安全的"},
+        {"label": "B", "text": "只能先给P3分配，因为分配后系统状态是安全的"},
+        {"label": "C", "text": "可以同时给P1、P3分配，因为分配后系统状态是安全的"},
+        {"label": "D", "text": "不能给P3分配，因为分配后系统状态是不安全的"}
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "银行家算法",
+        "explanation": "T0时刻可用资源=25-(6+4+7+6)=2。P3尚需2，正好可以满足，分配后系统仍安全。P1尚需4，当前可用2无法满足。",
+        "optionAnalysis": ["A错误：P1尚需4大于可用2", "B正确：先给P3分配2，系统安全", "C错误：无法同时满足", "D错误：可以给P3分配"]
+      },
+      "relatedKnowledge": ["银行家算法", "死锁避免"]
+    },
+    {
+      "id": "q2021x-05",
+      "year": "2021",
+      "semester": "下",
+      "number": 5,
+      "topic": "db",
+      "subTopic": "E-R图冲突",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "某企业设计E-R图时，人力部门定义员工实体具有属性：员工号、姓名、性别、出生日期、联系方式和部门；培训部门定义培训师实体具有属性：培训师号、姓名和职称，其中职称={初级培训师,中级培训师,高级培训师}。这种情况属于（ ）。",
+      "options": [
+        {"label": "A", "text": "属性冲突"},
+        {"label": "B", "text": "结构冲突"},
+        {"label": "C", "text": "命名冲突"},
+        {"label": "D", "text": "实体冲突"}
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "E-R图冲突类型",
+        "explanation": "同一对象在不同部门被抽象为不同实体（员工和培训师），且属性不同，属于结构冲突。属性冲突是同一属性在不同视图中的类型或值域不同。命名冲突是同名异义或异名同义。",
+        "optionAnalysis": ["A错误：不是属性类型不同", "B正确：同一对象抽象为不同实体", "C错误：不是命名问题", "D错误：概念不明确"]
+      },
+      "relatedKnowledge": ["E-R图设计", "数据库设计"]
+    },
+    {
+      "id": "q2021x-06",
+      "year": "2021",
+      "semester": "下",
+      "number": 6,
+      "topic": "db",
+      "subTopic": "E-R图合并",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "在合并E-R图时，解决上述冲突的方法是（ ）。",
+      "options": [
+        {"label": "A", "text": "员工实体和培训师实体均保持不变"},
+        {"label": "B", "text": "保留员工实体，删除培训师实体"},
+        {"label": "C", "text": "员工实体中加入职称属性，删除培训师实体"},
+        {"label": "D", "text": "将培训师实体所有属性并入员工实体，删除培训师实体"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "E-R图冲突解决",
+        "explanation": "解决结构冲突：将培训师实体合并到员工实体中，保留培训师的特有属性（职称），形成统一的员工实体。",
+        "optionAnalysis": ["A错误：不解决冲突", "B错误：丢失职称属性", "C正确：合并实体保留属性", "D错误：培训师号不需要"]
+      },
+      "relatedKnowledge": ["E-R图合并", "数据库设计"]
+    },
+    {
+      "id": "q2020x-01",
+      "year": "2020",
+      "semester": "下",
+      "number": 1,
+      "topic": "arch",
+      "subTopic": "软件架构风格",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "软件架构风格描述了某一特定应用领域中的系统组织方式和惯用模式，反映了领域中众多系统所共有的结构和语义特性。以下关于软件架构风格的说法中，正确的是（ ）。",
+      "options": [
+        {"label": "A", "text": "架构风格是独立于具体应用领域的通用架构模式"},
+        {"label": "B", "text": "架构风格定义了系统的组件、连接件和约束的配置方式"},
+        {"label": "C", "text": "架构风格仅关注系统的功能需求"},
+        {"label": "D", "text": "架构风格与设计模式是同一概念"}
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "软件架构风格定义",
+        "explanation": "架构风格定义了系统组织的惯用模式，包括组件、连接件和约束的配置方式。架构风格针对特定应用领域，关注非功能属性，与设计模式层次不同。",
+        "optionAnalysis": ["A错误：架构风格针对特定领域", "B正确：定义组件连接件约束", "C错误：也关注非功能属性", "D错误：层次不同"]
+      },
+      "relatedKnowledge": ["软件架构风格", "架构定义"]
+    },
+    {
+      "id": "q2020x-02",
+      "year": "2020",
+      "semester": "下",
+      "number": 2,
+      "topic": "arch",
+      "subTopic": "管道-过滤器架构",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "管道-过滤器架构风格中，每个过滤器独立工作，管道负责连接相邻过滤器。以下关于该架构风格的说法中，错误的是（ ）。",
+      "options": [
+        {"label": "A", "text": "过滤器是独立的数据处理单元"},
+        {"label": "B", "text": "管道负责数据在过滤器间的传输"},
+        {"label": "C", "text": "过滤器之间可以共享状态信息"},
+        {"label": "D", "text": "适合应用于编译器等数据处理系统"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "管道-过滤器架构特点",
+        "explanation": "管道-过滤器架构中，过滤器独立工作，不共享状态，每个过滤器只依赖输入数据。这是该架构的核心特点。",
+        "optionAnalysis": ["A正确：过滤器独立处理", "B正确：管道传输数据", "C错误：过滤器不共享状态", "D正确：编译器是典型应用"]
+      },
+      "relatedKnowledge": ["管道过滤器架构", "架构风格"]
+    },
+    {
+      "id": "q2020x-03",
+      "year": "2020",
+      "semester": "下",
+      "number": 3,
+      "topic": "network",
+      "subTopic": "HTTP协议",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "HTTP协议是Web应用的基础协议。以下关于HTTP/1.1的说法中，正确的是（ ）。",
+      "options": [
+        {"label": "A", "text": "HTTP/1.1默认使用持久连接"},
+        {"label": "B", "text": "HTTP/1.1不支持管道化请求"},
+        {"label": "C", "text": "HTTP/1.1只能使用短连接"},
+        {"label": "D", "text": "HTTP/1.1不支持Host头部"}
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "HTTP/1.1特性",
+        "explanation": "HTTP/1.1默认使用持久连接(Keep-Alive)，支持管道化请求(Pipelining)，支持Host头部，一个连接可发送多个请求。",
+        "optionAnalysis": ["A正确：默认持久连接", "B错误：支持管道化", "C错误：支持持久连接", "D错误：必须使用Host"]
+      },
+      "relatedKnowledge": ["HTTP协议", "Web技术"]
+    },
+    {
+      "id": "q2019x-01",
+      "year": "2019",
+      "semester": "下",
+      "number": 1,
+      "topic": "arch",
+      "subTopic": "软件架构定义",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "软件架构是软件开发过程中的重要制品。以下关于软件架构的说法中，错误的是（ ）。",
+      "options": [
+        {"label": "A", "text": "架构是系统的高层抽象"},
+        {"label": "B", "text": "架构反映了系统的整体结构"},
+        {"label": "C", "text": "架构设计仅关注功能需求"},
+        {"label": "D", "text": "架构是系统开发的蓝图"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "软件架构定义",
+        "explanation": "软件架构关注系统的整体结构、组件关系和约束，不仅关注功能需求，更关注非功能需求（性能、安全性、可维护性等）。",
+        "optionAnalysis": ["A正确：架构是高层抽象", "B正确：反映整体结构", "C错误：也关注非功能需求", "D正确：架构指导开发"]
+      },
+      "relatedKnowledge": ["软件架构定义", "架构设计"]
+    },
+    {
+      "id": "q2019x-02",
+      "year": "2019",
+      "semester": "下",
+      "number": 2,
+      "topic": "arch",
+      "subTopic": "架构评估方法",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "软件架构评估方法中，ATAM（架构权衡分析方法）的主要目的是（ ）。",
+      "options": [
+        {"label": "A", "text": "评估架构的功能完整性"},
+        {"label": "B", "text": "评估架构决策对质量属性的影响，识别权衡点"},
+        {"label": "C", "text": "验证架构设计是否符合需求"},
+        {"label": "D", "text": "评估架构的实现难度"}
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "ATAM架构评估",
+        "explanation": "ATAM用于评估架构决策对质量属性的影响，识别质量属性之间的权衡点、敏感点和风险。",
+        "optionAnalysis": ["A错误：ATAM评估质量属性", "B正确：评估影响识别权衡点", "C错误：ATAM不验证需求", "D错误：不评估实现难度"]
+      },
+      "relatedKnowledge": ["ATAM", "架构评估"]
+    },
+    {
+      "id": "q2019x-03",
+      "year": "2019",
+      "semester": "下",
+      "number": 3,
+      "topic": "dist",
+      "subTopic": "CAP定理",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "CAP定理指出分布式系统最多只能同时满足三个特性中的两个。以下关于CAP定理的说法中，正确的是（ ）。",
+      "options": [
+        {"label": "A", "text": "一致性(C)指所有节点数据在同一时刻完全相同"},
+        {"label": "B", "text": "可用性(A)指系统在任何时刻都能响应请求"},
+        {"label": "C", "text": "分区容错性(P)指系统可以容忍网络分区"},
+        {"label": "D", "text": "分布式系统可以同时满足C、A、P三个特性"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "CAP定理",
+        "explanation": "CAP定理：C指一致性（所有节点看到相同数据）、A指可用性（系统总能响应）、P指分区容错（网络分区时系统继续运行）。分布式系统最多同时满足两个。",
+        "optionAnalysis": ["A错误：一致性指最终一致或强一致", "B错误：可用性指部分故障时仍响应", "C正确：P定义正确", "D错误：最多只能满足两个"]
+      },
+      "relatedKnowledge": ["CAP定理", "分布式系统"]
+    },
+    {
+      "id": "q2018x-01",
+      "year": "2018",
+      "semester": "下",
+      "number": 1,
+      "topic": "arch",
+      "subTopic": "构件与连接件",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "软件架构由构件、连接件和约束三要素组成。以下关于连接件的说法中，正确的是（ ）。",
+      "options": [
+        {"label": "A", "text": "连接件负责执行业务逻辑"},
+        {"label": "B", "text": "连接件协调构件之间的交互"},
+        {"label": "C", "text": "连接件是系统的核心组件"},
+        {"label": "D", "text": "连接件与构件功能相同"}
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "连接件定义",
+        "explanation": "连接件是架构中的连接元素，负责协调构件之间的交互和通信，如过程调用、消息传递、事件广播等。",
+        "optionAnalysis": ["A错误：业务逻辑由构件执行", "B正确：协调构件交互", "C错误：构件是核心", "D错误：功能不同"]
+      },
+      "relatedKnowledge": ["构件与连接件", "软件架构"]
+    },
+    {
+      "id": "q2018x-02",
+      "year": "2018",
+      "semester": "下",
+      "number": 2,
+      "topic": "security",
+      "subTopic": "加密算法",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下关于加密算法的说法中，正确的是（ ）。",
+      "options": [
+        {"label": "A", "text": "对称加密算法加密和解密使用不同密钥"},
+        {"label": "B", "text": "RSA是典型的对称加密算法"},
+        {"label": "C", "text": "AES是典型的对称加密算法"},
+        {"label": "D", "text": "非对称加密比对称加密效率更高"}
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "加密算法分类",
+        "explanation": "对称加密使用相同密钥，如AES、DES；非对称加密使用不同密钥，如RSA、ECC。非对称加密效率低于对称加密。",
+        "optionAnalysis": ["A错误：对称加密使用相同密钥", "B错误：RSA是非对称加密", "C正确：AES是对称加密", "D错误：非对称效率低"]
+      },
+      "relatedKnowledge": ["加密算法", "信息安全"]
+    }
+  ]
+}
