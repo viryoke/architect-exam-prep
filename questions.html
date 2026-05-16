@@ -694,11 +694,31 @@
 
     <script src="js/data-renderer.js"></script>
     <script>
-        // 全局辅助函数在data-renderer.js中定义
-        // 以下为页面特定功能的补充
+        // 页面初始化
+        document.addEventListener('DOMContentLoaded', async function() {
+            // 初始化真题渲染器
+            await QuestionsRenderer.init();
+        });
+
+        // 全局辅助函数 - 桥接调用QuestionsRenderer
+        function filterYear(year, element) {
+            QuestionsRenderer.filterYear(year, element);
+        }
+
+        function filterTopic(topic, element) {
+            QuestionsRenderer.filterTopic(topic, element);
+        }
+
+        function filterDifficulty(diff, element) {
+            QuestionsRenderer.filterDifficulty(diff, element);
+        }
+
+        function filterType(type, element) {
+            QuestionsRenderer.filterType(type, element);
+        }
 
         function shuffleQuestions() {
-            alert('题目顺序已随机打乱');
+            QuestionsRenderer.shuffleQuestions();
         }
 
         function toggleAllAnswers() {
@@ -721,6 +741,30 @@
                 });
                 btn.textContent = '📕 收起全部答案';
             }
+        }
+
+        function selectOption(element, label, result) {
+            // 移除其他选项的选中状态
+            element.parentElement.querySelectorAll('.choice-option').forEach(opt => {
+                opt.classList.remove('selected', 'correct', 'wrong');
+            });
+            element.classList.add('selected', result);
+        }
+
+        function toggleAnswer(btn) {
+            const section = btn.nextElementSibling;
+            const isExpanded = section.classList.contains('expanded');
+            if (isExpanded) {
+                section.classList.remove('expanded');
+                btn.textContent = '📖 查看答案与解析';
+            } else {
+                section.classList.add('expanded');
+                btn.textContent = '📕 收起答案与解析';
+            }
+        }
+
+        function toggleStatus(btn) {
+            btn.classList.toggle('active');
         }
     </script>
 </body>

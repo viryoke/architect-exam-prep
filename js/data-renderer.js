@@ -813,8 +813,9 @@ const QuestionsRenderer = {
 
     // 渲染筛选器
     renderFilters() {
-        // 年份筛选
-        const yearSection = document.querySelector('.filter-section:nth-child(1) .filter-options');
+        // 年份筛选 - 使用更精确的选择器
+        const filterSections = document.querySelectorAll('.filter-panel .filter-section');
+        const yearSection = filterSections[0]?.querySelector('.filter-options');
         if (yearSection && this.data.years) {
             yearSection.innerHTML = this.data.years.map(ys => `
                 <div class="filter-option" onclick="QuestionsRenderer.filterYear('${ys.id}', this)">
@@ -824,7 +825,7 @@ const QuestionsRenderer = {
         }
 
         // 考点筛选
-        const topicSection = document.querySelector('.filter-section:nth-child(2) .filter-options');
+        const topicSection = filterSections[1]?.querySelector('.filter-options');
         if (topicSection && this.data.topics) {
             topicSection.innerHTML = this.data.topics.map(ts => `
                 <div class="filter-option" onclick="QuestionsRenderer.filterTopic('${ts.id}', this)">
@@ -977,7 +978,8 @@ const QuestionsRenderer = {
 
     // 筛选年份
     filterYear(year, element) {
-        document.querySelectorAll('.filter-section:nth-child(1) .filter-option').forEach(o => o.classList.remove('active'));
+        const filterSections = document.querySelectorAll('.filter-panel .filter-section');
+        filterSections[0]?.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
         element.classList.add('active');
         this.currentFilters.year = year;
         this.filterQuestions();
@@ -985,7 +987,8 @@ const QuestionsRenderer = {
 
     // 筛选考点
     filterTopic(topic, element) {
-        document.querySelectorAll('.filter-section:nth-child(2) .filter-option').forEach(o => o.classList.remove('active'));
+        const filterSections = document.querySelectorAll('.filter-panel .filter-section');
+        filterSections[1]?.querySelectorAll('.filter-option').forEach(o => o.classList.remove('active'));
         element.classList.add('active');
         this.currentFilters.topic = topic;
         this.filterQuestions();
@@ -1029,6 +1032,33 @@ const QuestionsRenderer = {
             const yearName = this.currentFilters.year === 'all' ? '全部年份' : this.data.years?.find(y => y.id === this.currentFilters.year)?.name || this.currentFilters.year;
             const typeName = this.currentFilters.type === 'choice' ? '选择题' : this.currentFilters.type === 'case' ? '案例分析' : '全部题型';
             statsText.textContent = `当前筛选：${yearName} ${typeName} · 共${visibleCount}题`;
+        }
+    },
+
+    // 随机排序题目
+    shuffleQuestions() {
+        const questionsArea = document.querySelector('.questions-area');
+        if (!questionsArea) return;
+
+        const cards = Array.from(questionsArea.querySelectorAll('.question-card'));
+
+        // Fisher-Yates洗牌算法
+        for (let i = cards.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [cards[i], cards[j]] = [cards[j], cards[i]];
+        }
+
+        // 重新排序DOM
+        const statsBar = questionsArea.querySelector('.stats-bar');
+        cards.forEach(card => {
+            questionsArea.insertBefore(card, statsBar.nextSibling);
+        });
+
+        // 更新提示
+        const statsText = document.querySelector('.stats-bar .stats-text');
+        if (statsText) {
+            const currentText = statsText.textContent;
+            statsText.textContent = currentText.replace('·', '· 已随机排序 ·');
         }
     }
 };
