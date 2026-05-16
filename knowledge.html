@@ -551,14 +551,13 @@
     <script src="js/data-renderer.js"></script>
     <script>
         // 渲染快速导航栏
-        document.addEventListener('DOMContentLoaded', function() {
-            renderQuickNav('knowledge');
+        renderQuickNav('knowledge');
 
         // 初始化
 
 
         // 页面初始化时处理URL参数跳转
-        window.addEventListener('DOMContentLoaded', async function() {
+        window.addEventListener('load', async function() {
             // 等待数据加载
             await KnowledgeRenderer.init();
 
