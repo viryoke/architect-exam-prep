@@ -25,20 +25,6 @@
         }
 
         /* 顶部导航 */
-        .top-nav {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px;
-            padding: 10px 12px;
-            background: rgba(255,255,255,0.7);
-            border: 3px solid #1976d2;
-            border-radius: 8px;
-        }
-        .back-home {
-            padding: 8px 15px; background: rgba(25,118,210,0.1); border: 2px solid #1976d2;
-            border-radius: 5px; color: #1976d2; cursor: pointer; font-size: 15px;
-            font-family: 'ZCOOL KuaiLe', cursive;
-        }
-        .back-home:hover { background: rgba(25,118,210,0.2); }
         .module-header { margin-bottom: 12px; }
         .module-title {
             color: #d32f2f; font-family: 'Ma Shan Zheng', cursive;
@@ -261,19 +247,13 @@
 
         /* 响应式 */
         @media (max-width: 1024px) { .main-content { grid-template-columns: 1fr; } .trend-content { grid-template-columns: 1fr; } .error-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 768px) { .top-nav { flex-direction: column; gap: 15px; } .search-box { width: 100%; } .search-input { width: 100%; } }
+        @media (max-width: 768px) { .search-box { width: 100%; } .search-input { width: 100%; } }
     </style>
 </head>
 <body>
     <div class="whiteboard-container">
         <!-- 顶部导航 -->
-        <div class="top-nav" style="justify-content: space-between;">
-            <button class="back-home" onclick="location.href='index.html'">🏠 返回首页</button>
-            <div class="search-box">
-                <input type="text" class="search-input" placeholder="搜索知识点...">
-                <button class="search-btn">🔍 搜索</button>
-            </div>
-        </div>
+                </div>
 
         <!-- 模块标题 -->
         <div class="module-header" style="margin-bottom: 15px;">
