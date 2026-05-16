@@ -18,27 +18,28 @@ body {
         linear-gradient(rgba(0,0,0,0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0,0,0,0.08) 1px, transparent 1px);
     background-size: 40px 40px;
-    padding: 10px;
+    padding: 8px;
     color: #333;
     min-height: 100vh;
-    font-size: 15px;
+    font-size: 17px;
+    line-height: 1.6;
 }
 
-/* 白板容器 - 减少padding */
+/* 白板容器 */
 .whiteboard-container {
     background: rgba(255,255,255,0.3);
-    border: 10px solid #1976d2;
+    border: 8px solid #1976d2;
     border-radius: 8px;
-    padding: 15px;
+    padding: 12px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-/* 模块标题 - 减少间距 */
+/* 模块标题 */
 .module-header {
     text-align: center;
-    margin-bottom: 15px;
-    padding: 12px;
+    margin-bottom: 12px;
+    padding: 10px;
     background: rgba(255,255,255,0.7);
     border: 3px solid #d32f2f;
     border-radius: 8px;
@@ -47,13 +48,13 @@ body {
 .module-title {
     color: #d32f2f;
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 28px;
+    font-size: 32px;
 }
 
 .module-subtitle {
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
-    margin-top: 5px;
+    margin-top: 4px;
 }
 
 /* 导航标签 */
@@ -64,8 +65,8 @@ body {
 
 .nav-tab {
     font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 15px;
-    padding: 10px 20px;
+    font-size: 17px;
+    padding: 12px 24px;
     border: 3px solid;
     border-radius: 5px;
     cursor: pointer;
@@ -80,20 +81,20 @@ body {
 .nav-tab.green.active { background: #388e3c; color: #fff; }
 .nav-tab.green { color: #388e3c; border-color: #388e3c; }
 
-/* 顶部导航栏 - 减少间距 */
+/* 顶部导航栏 */
 .top-nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
-    padding: 10px 12px;
+    margin-bottom: 10px;
+    padding: 10px 15px;
     background: rgba(255,255,255,0.7);
     border: 3px solid #1976d2;
     border-radius: 8px;
 }
 
 .breadcrumb {
-    font-size: 14px;
+    font-size: 16px;
     color: #666;
 }
 
@@ -104,13 +105,13 @@ body {
 
 /* 返回首页按钮 */
 .back-home {
-    padding: 8px 15px;
+    padding: 10px 18px;
     background: rgba(25,118,210,0.1);
     border: 2px solid #1976d2;
     border-radius: 5px;
     color: #1976d2;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     transition: all 0.3s;
 }
 
@@ -121,9 +122,9 @@ body {
 /* 标签样式 */
 .subject-tag {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: 5px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
     margin-right: 5px;
 }
@@ -155,11 +156,11 @@ body {
 /* 年份徽章 */
 .year-badge {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 5px 12px;
     background: #1976d2;
     color: #fff;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 16px;
     font-weight: 700;
     margin-right: 5px;
 }
@@ -167,12 +168,12 @@ body {
 /* 考点徽章 */
 .topic-badge {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 5px 12px;
     background: rgba(25,118,210,0.15);
     color: #1976d2;
     border: 1px solid #1976d2;
     border-radius: 3px;
-    font-size: 12px;
+    font-size: 16px;
     margin-right: 3px;
     margin-bottom: 3px;
 }
@@ -180,12 +181,12 @@ body {
 /* 比例徽章 */
 .percent-badge {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 5px 12px;
     background: rgba(211,47,47,0.15);
     color: #d32f2f;
     border: 1px solid #d32f2f;
     border-radius: 3px;
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 700;
 }
 
@@ -196,29 +197,29 @@ body {
 }
 
 .search-input {
-    padding: 8px 15px;
+    padding: 10px 18px;
     border: 3px solid #1976d2;
     border-radius: 5px;
     width: 250px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .search-btn {
-    padding: 8px 20px;
+    padding: 10px 24px;
     background: #1976d2;
     color: #fff;
     border: 3px solid #1976d2;
     border-radius: 5px;
     cursor: pointer;
     font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 /* 卡片标题 */
 .card-title {
     font-family: 'Ma Shan Zheng', cursive;
-    font-size: 24px;
-    margin-bottom: 12px;
+    font-size: 28px;
+    margin-bottom: 10px;
     padding-bottom: 8px;
     border-bottom: 3px solid;
 }
@@ -231,9 +232,9 @@ body {
 /* 内容区域标题 */
 .section-title {
     font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 20px;
-    margin-bottom: 10px;
-    padding-bottom: 6px;
+    font-size: 22px;
+    margin-bottom: 8px;
+    padding-bottom: 5px;
     border-bottom: 3px solid;
 }
 
@@ -264,14 +265,14 @@ body {
     font-family: 'ZCOOL KuaiLe', cursive;
     padding: 12px;
     text-align: center;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 .data-table td {
     padding: 12px;
     text-align: center;
     border-bottom: 1px solid rgba(0,0,0,0.1);
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .data-table tr:hover td {
@@ -285,7 +286,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     font-family: 'ZCOOL KuaiLe', cursive;
-    font-size: 16px;
+    font-size: 18px;
     transition: all 0.3s;
 }
 
@@ -311,7 +312,7 @@ body {
 
 /* 进度条 */
 .progress-bar-container {
-    height: 12px;
+    height: 14px;
     background: #e0e0e0;
     border-radius: 6px;
     overflow: hidden;
@@ -334,7 +335,7 @@ body {
 @media (max-width: 768px) {
     .top-nav {
         flex-direction: column;
-        gap: 15px;
+        gap: 10px;
     }
 
     .search-box {
