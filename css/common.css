@@ -349,15 +349,16 @@ body {
 
 /* ===== 快速导航栏 ===== */
 .quick-nav-bar {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 12px 15px;
-    margin-bottom: 15px;
-    background: rgba(255,255,255,0.8);
-    border: 3px solid #1976d2;
-    border-radius: 8px;
-    flex-wrap: wrap;
+    display: flex !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    padding: 12px 15px !important;
+    margin-bottom: 15px !important;
+    background: rgba(255,255,255,0.8) !important;
+    border: 3px solid #1976d2 !important;
+    border-radius: 8px !important;
+    flex-wrap: wrap !important;
+    min-height: 50px !important;
 }
 
 .quick-nav-item {

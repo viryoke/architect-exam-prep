@@ -213,7 +213,24 @@ const NAV_ITEMS = [
 // 渲染快速导航栏
 function renderQuickNav(currentPage) {
     const navBar = document.querySelector('.quick-nav-bar');
-    if (!navBar) return;
+    if (!navBar) {
+        console.warn('quick-nav-bar 元素不存在');
+        return;
+    }
+
+    // 如果已经有内容，不重复渲染
+    if (navBar.children.length > 0) {
+        // 只更新高亮状态
+        navBar.querySelectorAll('.quick-nav-item').forEach(item => {
+            const itemId = item.classList[1];
+            if (itemId === currentPage) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+        return;
+    }
 
     navBar.innerHTML = NAV_ITEMS.map(item => {
         const isActive = item.id === currentPage;
@@ -225,4 +242,6 @@ function renderQuickNav(currentPage) {
             </div>
         `;
     }).join('');
+
+    console.log('快速导航栏已渲染，当前页面:', currentPage);
 }
