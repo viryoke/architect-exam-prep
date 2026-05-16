@@ -225,13 +225,18 @@ const KnowledgeRenderer = {
                     <div class="section-title blue">核心定义与概念讲解</div>
                     <div class="section-content">
                         <p>${topic.coreDefinition || topic.summary}</p>
-                        ${topic.keyPoints ? `
+                        ${topic.keyPoints && topic.keyPoints.length > 0 ? `
                             <ul style="margin-top: 10px; margin-left: 20px;">
-                                ${topic.keyPoints.map(kp => `
-                                    <li><span style="color: ${kp.color || '#1976d2'};">${kp.name}</span>：${kp.desc}
-                                        ${kp.examples ? `（如：${kp.examples.join('、')}）` : ''}
-                                    </li>
-                                `).join('')}
+                                ${topic.keyPoints.map(kp => {
+                                    // 支持字符串和对象两种格式
+                                    if (typeof kp === 'string') {
+                                        return `<li style="margin-bottom: 5px;"><span style="color: #1976d2;">◆</span> ${kp}</li>`;
+                                    } else {
+                                        return `<li><span style="color: ${kp.color || '#1976d2'};">${kp.name}</span>：${kp.desc}
+                                            ${kp.examples ? `（如：${kp.examples.join('、')}）` : ''}
+                                        </li>`;
+                                    }
+                                }).join('')}
                             </ul>
                         ` : ''}
                     </div>
@@ -242,13 +247,22 @@ const KnowledgeRenderer = {
             <div class="error-points-card">
                 <div class="section-title red">易错点与注意事项</div>
                 <div class="error-grid">
-                    ${(topic.errorPoints && topic.errorPoints.length > 0) ? topic.errorPoints.map(err => `
-                        <div class="error-card">
-                            <div class="error-icon">❌</div>
-                            <div class="error-title">${err.wrong || '错误认知'}</div>
-                            <div class="error-correct">✓ ${err.correct || '正确认知'}</div>
-                        </div>
-                    `).join('') : `
+                    ${(topic.errorPoints && topic.errorPoints.length > 0) ? topic.errorPoints.map(err => {
+                        // 支持字符串和对象两种格式
+                        if (typeof err === 'string') {
+                            return `<div class="error-card">
+                                <div class="error-icon">⚠️</div>
+                                <div class="error-title">${err}</div>
+                                <div class="error-correct">✓ 注意避免此错误</div>
+                            </div>`;
+                        } else {
+                            return `<div class="error-card">
+                                <div class="error-icon">❌</div>
+                                <div class="error-title">${err.wrong || '错误认知'}</div>
+                                <div class="error-correct">✓ ${err.correct || '正确认知'}</div>
+                            </div>`;
+                        }
+                    }).join('') : `
                         <div class="error-card">
                             <div class="error-icon">💡</div>
                             <div class="error-title">暂无易错点记录</div>
@@ -259,29 +273,42 @@ const KnowledgeRenderer = {
             </div>
 
             <!-- 真题示例 -->
-            ${topic.questions ? `
+            ${topic.questions && topic.questions.length > 0 ? `
                 <div class="example-card">
                     <div class="section-title green">真题示例练习</div>
-                    ${topic.questions.map(q => `
-                        <div class="example-question">
-                            <div class="question-header">${q.year}年${q.semester}半年真题 第${q.number}题</div>
-                            <div class="question-text">${q.text}</div>
-                            <div class="question-options">
-                                ${q.options.map(opt => `
-                                    <div class="option-item" onclick="selectOption(this, '${opt.label}', '${opt.correct ? 'correct' : 'wrong'}')">
-                                        <span class="option-label">${opt.label}.</span>${opt.text}
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 查看答案与解析</button>
-                            <div class="answer-section">
-                                <div class="answer-box">
-                                    <div class="answer-label">✓ 正确答案：${q.options.find(o => o.correct)?.label}</div>
-                                    <div class="answer-text"><strong>解析：</strong>${q.analysis}</div>
+                    ${topic.questions.map(q => {
+                        // 支持两种格式：完整真题格式和简单问答格式
+                        if (q.q && q.a) {
+                            // 简单问答格式
+                            return `<div style="margin: 15px 0; padding: 15px; background: rgba(56,142,60,0.1); border-radius: 8px; border-left: 3px solid #388e3c;">
+                                <div style="font-weight: 700; color: #388e3c; margin-bottom: 10px;">❓ ${q.q}</div>
+                                <div style="padding: 10px; background: rgba(255,255,255,0.5); border-radius: 5px;">
+                                    <strong style="color: #1976d2;">✓ 答案：</strong>${q.a}
                                 </div>
-                            </div>
-                        </div>
-                    `).join('')}
+                            </div>`;
+                        } else if (q.text && q.options) {
+                            // 完整真题格式
+                            return `<div class="example-question">
+                                <div class="question-header">${q.year || '2025'}年${q.semester || ''}真题 ${q.number ? `第${q.number}题` : ''}</div>
+                                <div class="question-text">${q.text}</div>
+                                <div class="question-options">
+                                    ${q.options.map(opt => `
+                                        <div class="option-item" onclick="selectOption(this, '${opt.label}', '${opt.correct ? 'correct' : 'wrong'}')">
+                                            <span class="option-label">${opt.label}.</span>${opt.text}
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <button class="show-answer-btn" onclick="toggleAnswer(this)">📖 查看答案与解析</button>
+                                <div class="answer-section">
+                                    <div class="answer-box">
+                                        <div class="answer-label">✓ 正确答案：${q.options.find(o => o.correct)?.label || 'A'}</div>
+                                        <div class="answer-text"><strong>解析：</strong>${q.analysis || '详见教材'}</div>
+                                    </div>
+                                </div>
+                            </div>`;
+                        }
+                        return '';
+                    }).join('')}
                 </div>
             ` : ''}
 
