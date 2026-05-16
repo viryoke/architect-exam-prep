@@ -702,14 +702,16 @@
         // 渲染快速导航栏
         document.addEventListener('DOMContentLoaded', function() {
             renderQuickNav('questions');
-        });
+
+        // 初始化
 
 
         // 页面初始化
         document.addEventListener('DOMContentLoaded', async function() {
             // 初始化真题渲染器
             await QuestionsRenderer.init();
-        });
+
+        // 初始化
 
         // 全局辅助函数 - 桥接调用QuestionsRenderer
         function filterYear(year, element) {
@@ -738,18 +740,22 @@
             if (isExpanded) {
                 document.querySelectorAll('.answer-section').forEach(section => {
                     section.classList.remove('expanded');
-                });
+        
+        // 初始化
                 document.querySelectorAll('.show-answer-btn').forEach(btn => {
                     btn.textContent = '📖 查看答案与解析';
-                });
+        
+        // 初始化
                 btn.textContent = '📖 显示全部答案';
             } else {
                 document.querySelectorAll('.answer-section').forEach(section => {
                     section.classList.add('expanded');
-                });
+        
+        // 初始化
                 document.querySelectorAll('.show-answer-btn').forEach(btn => {
                     btn.textContent = '📕 收起答案与解析';
-                });
+        
+        // 初始化
                 btn.textContent = '📕 收起全部答案';
             }
         }
@@ -758,7 +764,8 @@
             // 移除其他选项的选中状态
             element.parentElement.querySelectorAll('.choice-option').forEach(opt => {
                 opt.classList.remove('selected', 'correct', 'wrong');
-            });
+    
+        // 初始化
             element.classList.add('selected', result);
         }
 

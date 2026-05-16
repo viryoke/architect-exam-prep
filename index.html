@@ -988,10 +988,8 @@
 
     <script src="js/common.js"></script>
     <script>
-        // 页面加载完成后渲染快速导航栏
-        document.addEventListener('DOMContentLoaded', function() {
-            renderQuickNav('home');
-        });
+        // 直接渲染快速导航栏（script在DOM底部，元素已存在）
+        renderQuickNav('home');
 
         // 计算考试倒计时
         function calculateCountdown() {
