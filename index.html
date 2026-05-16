@@ -569,7 +569,16 @@
         </div>
 
         <!-- 快速导航栏 -->
-        <div class="quick-nav-bar"></div>
+        <!-- 快速导航栏 -->
+        <div class="quick-nav-bar">
+            <div class="quick-nav-item home active" onclick="location.href='index.html'"><span class="nav-icon">🏠</span><span class="nav-label">首页</span></div>
+            <div class="quick-nav-item knowledge" onclick="location.href='knowledge.html'"><span class="nav-icon">📚</span><span class="nav-label">必学必记</span></div>
+            <div class="quick-nav-item tips" onclick="location.href='tips.html'"><span class="nav-icon">💡</span><span class="nav-label">备考技巧</span></div>
+            <div class="quick-nav-item questions" onclick="location.href='questions.html'"><span class="nav-icon">📊</span><span class="nav-label">真题分析</span></div>
+            <div class="quick-nav-item exam" onclick="location.href='exam.html'"><span class="nav-icon">✍️</span><span class="nav-label">考试模拟</span></div>
+            <div class="quick-nav-item essay" onclick="location.href='essay.html'"><span class="nav-icon">📄</span><span class="nav-label">论文专区</span></div>
+            <div class="quick-nav-item heatmap" onclick="location.href='heatmap.html'"><span class="nav-icon">🔥</span><span class="nav-label">考点热力图</span></div>
+        </div>
 
         <!-- 页面标题 -->
         <div class="page-title">📚 7天冲刺学习计划 - 系统架构设计师</div>
@@ -989,7 +998,7 @@
     <script src="js/common.js"></script>
     <script>
         // 直接渲染快速导航栏（script在DOM底部，元素已存在）
-        renderQuickNav('home');
+        // 导航栏已硬编码，无需渲染
 
         // 计算考试倒计时
         function calculateCountdown() {
