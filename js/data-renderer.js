@@ -438,8 +438,8 @@ const KnowledgeRenderer = {
                     <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
                         ${topic.phases.map((p, i) => `
                             <div style="padding: 10px 15px; background: rgba(255,152,0,${0.1 + i * 0.05}); border-radius: 8px; border-left: 3px solid #ff9800;">
-                                <strong style="color: #ff9800;">阶段${i + 1}：${p.name}</strong>
-                                <p style="font-size: 13px; margin-top: 3px;">${p.desc}</p>
+                                <strong style="color: #ff9800;">阶段${i + 1}：${p.name || p.phase || '阶段'}</strong>
+                                <p style="font-size: 13px; margin-top: 3px;">${p.desc || p.description || ''}</p>
                             </div>
                         `).join('')}
                     </div>
@@ -455,8 +455,8 @@ const KnowledgeRenderer = {
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
                         ${topic.categories.map(c => `
                             <div style="padding: 10px; background: rgba(123,31,162,0.1); border-radius: 8px; text-align: center; border: 2px solid rgba(123,31,162,0.3);">
-                                <strong style="color: #7b1fa2;">${c.name}</strong>
-                                <p style="font-size: 12px; color: #666; margin-top: 5px;">${c.desc || c.count + '种'}</p>
+                                <strong style="color: #7b1fa2;">${c.name || c.category || '分类'}</strong>
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">${c.desc || c.description || (c.count ? c.count + '种' : '')}</p>
                             </div>
                         `).join('')}
                     </div>
@@ -525,8 +525,8 @@ const KnowledgeRenderer = {
                     <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
                         ${topic.implementations.map(impl => `
                             <div style="padding: 12px; background: rgba(56,142,60,0.1); border-radius: 8px; border-left: 3px solid #388e3c;">
-                                <strong style="color: #388e3c;">${impl.name}</strong>
-                                <p style="font-size: 13px; margin-top: 5px;">${impl.desc}</p>
+                                <strong style="color: #388e3c;">${impl.name || impl.implementation || '方案'}</strong>
+                                <p style="font-size: 13px; margin-top: 5px;">${impl.desc || impl.description || ''}</p>
                                 ${impl.pros ? `<p style="font-size: 12px; color: #388e3c;">优点：${impl.pros}</p>` : ''}
                                 ${impl.cons ? `<p style="font-size: 12px; color: #d32f2f;">缺点：${impl.cons}</p>` : ''}
                             </div>
@@ -544,8 +544,8 @@ const KnowledgeRenderer = {
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
                         ${topic.components.map(c => `
                             <div style="padding: 12px; background: rgba(255,152,0,0.1); border-radius: 8px; border-left: 3px solid #ff9800;">
-                                <strong style="color: #ff9800;">${c.name}</strong>
-                                <p style="font-size: 13px; margin-top: 5px;">${c.desc}</p>
+                                <strong style="color: #ff9800;">${c.name || c.component || '组件'}</strong>
+                                <p style="font-size: 13px; margin-top: 5px;">${c.desc || c.description || ''}</p>
                                 ${c.responsibilities ? `<p style="font-size: 12px; color: #666;">职责：${c.responsibilities.join(', ')}</p>` : ''}
                             </div>
                         `).join('')}
@@ -562,9 +562,45 @@ const KnowledgeRenderer = {
                     <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
                         ${topic.strategies.map(s => `
                             <div style="padding: 10px 15px; background: rgba(25,118,210,0.1); border-radius: 8px; border-left: 3px solid #1976d2;">
-                                <strong style="color: #1976d2;">${s.name}</strong>
-                                <p style="font-size: 13px; margin-top: 3px;">${s.desc}</p>
+                                <strong style="color: #1976d2;">${s.strategy || s.name || '策略'}</strong>
+                                <p style="font-size: 13px; margin-top: 3px;">${s.desc || ''}</p>
+                                ${s.example ? `<p style="font-size: 12px; color: #666;">示例：${s.example}</p>` : ''}
+                                ${s.advantages ? `<p style="font-size: 12px; color: #388e3c;">优点：${s.advantages}</p>` : ''}
                                 ${s.when ? `<p style="font-size: 12px; color: #666;">适用：${s.when}</p>` : ''}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 原则列表
+        if (topic.principles) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title orange">核心原则</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                        ${topic.principles.map(p => `
+                            <div style="padding: 10px 15px; background: rgba(255,152,0,0.1); border-radius: 8px; border-left: 3px solid #ff9800;">
+                                <strong style="color: #ff9800;">${p.principle || p.name || '原则'}</strong>
+                                <p style="font-size: 13px; margin-top: 3px;">${p.desc || ''}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // 拆分指导
+        if (topic.splittingGuidelines) {
+            html += `
+                <div class="detail-card" style="margin-top: 15px;">
+                    <div class="section-title green">拆分指导</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                        ${topic.splittingGuidelines.map(g => `
+                            <div style="padding: 10px 15px; background: rgba(56,142,60,0.1); border-radius: 8px; border-left: 3px solid #388e3c;">
+                                <strong style="color: #388e3c;">${g.guideline || g.name || '指导'}</strong>
+                                <p style="font-size: 13px; margin-top: 3px;">${g.desc || ''}</p>
                             </div>
                         `).join('')}
                     </div>
@@ -596,8 +632,8 @@ const KnowledgeRenderer = {
                     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px;">
                         ${topic.cacheTypes.map(c => `
                             <div style="padding: 10px; background: rgba(123,31,162,0.1); border-radius: 8px; text-align: center; border: 2px solid rgba(123,31,162,0.3);">
-                                <strong style="color: #7b1fa2;">${c.name}</strong>
-                                <p style="font-size: 12px; color: #666; margin-top: 5px;">${c.desc}</p>
+                                <strong style="color: #7b1fa2;">${c.name || c.type || '缓存类型'}</strong>
+                                <p style="font-size: 12px; color: #666; margin-top: 5px;">${c.desc || c.description || ''}</p>
                             </div>
                         `).join('')}
                     </div>
@@ -621,9 +657,9 @@ const KnowledgeRenderer = {
                         <tbody>
                             ${topic.cacheProblems.map(p => `
                                 <tr>
-                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>${p.name}</strong></td>
-                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${p.reason}</td>
-                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${p.solution?.join(', ') || p.solution}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>${p.name || p.problem || '问题'}</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${p.reason || p.cause || ''}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${p.solution?.join(', ') || p.solution || ''}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -640,8 +676,8 @@ const KnowledgeRenderer = {
                     <div style="display: flex; flex-direction: column; gap: 5px; margin-top: 10px;">
                         ${topic.layers.map((l, i) => `
                             <div style="padding: 10px; background: rgba(25,118,210,${0.2 - i * 0.03}); border-radius: 8px; display: flex; justify-content: space-between;">
-                                <strong style="color: #1976d2;">${l.name}</strong>
-                                <span style="font-size: 13px;">${l.desc}</span>
+                                <strong style="color: #1976d2;">${l.name || l.layer || '层级'}</strong>
+                                <span style="font-size: 13px;">${l.desc || l.description || ''}</span>
                             </div>
                         `).join('')}
                     </div>
@@ -657,8 +693,8 @@ const KnowledgeRenderer = {
                     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
                         ${topic.types.map(t => `
                             <div style="padding: 12px; background: rgba(255,152,0,0.1); border-radius: 8px; border-left: 3px solid #ff9800;">
-                                <strong style="color: #ff9800;">${t.name}</strong>
-                                <p style="font-size: 13px; margin-top: 5px;">${t.desc}</p>
+                                <strong style="color: #ff9800;">${t.name || t.type || '类型'}</strong>
+                                <p style="font-size: 13px; margin-top: 5px;">${t.desc || t.description || ''}</p>
                             </div>
                         `).join('')}
                     </div>
@@ -674,8 +710,8 @@ const KnowledgeRenderer = {
                     <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
                         ${topic.tactics.map(t => `
                             <div style="padding: 10px 15px; background: rgba(56,142,60,0.1); border-radius: 8px; border-left: 3px solid #388e3c;">
-                                <strong style="color: #388e3c;">${t.name}</strong>
-                                <p style="font-size: 13px; margin-top: 3px;">${t.desc}</p>
+                                <strong style="color: #388e3c;">${t.name || t.tactic || '策略'}</strong>
+                                <p style="font-size: 13px; margin-top: 3px;">${t.desc || t.description || ''}</p>
                             </div>
                         `).join('')}
                     </div>
@@ -699,9 +735,9 @@ const KnowledgeRenderer = {
                         <tbody>
                             ${topic.metrics.map(m => `
                                 <tr>
-                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>${m.name}</strong></td>
-                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${m.desc}</td>
-                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${m.formula || '-'}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);"><strong>${m.name || m.metric || '指标'}</strong></td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${m.desc || m.description || ''}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1);">${m.formula || m.calculation || '-'}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
