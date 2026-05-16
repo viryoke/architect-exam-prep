@@ -802,7 +802,7 @@ const KnowledgeRenderer = {
 // ==================== 真题模块渲染 ====================
 const QuestionsRenderer = {
     data: null,
-    currentFilters: { year: 'all', topic: 'all', selectedDifficulties: ['easy', 'medium', 'hard'], type: 'choice' },
+    currentFilters: { year: 'all', topic: 'all', selectedDifficulties: ['easy', 'medium', 'hard'], type: 'all' },
 
     async init() {
         this.data = await loadJSON('data/questions.json');
@@ -848,8 +848,25 @@ const QuestionsRenderer = {
 
         // 先渲染统计栏
         const statsBar = questionsArea.querySelector('.stats-bar .stats-text');
+
+        // 应用筛选条件
+        const filteredQuestions = this.data.questions.filter(q => {
+            const yearMatch = this.currentFilters.year === 'all' || q.year === this.currentFilters.year;
+            const topicMatch = this.currentFilters.topic === 'all' || q.topic === this.currentFilters.topic;
+            const typeMatch = this.currentFilters.type === 'all' || q.type === this.currentFilters.type;
+            const diffMatch = this.currentFilters.selectedDifficulties.length === 0 ||
+                              this.currentFilters.selectedDifficulties.includes(q.difficulty);
+            return yearMatch && topicMatch && typeMatch && diffMatch;
+        });
+
         if (statsBar) {
-            statsBar.textContent = `当前筛选：${this.currentFilters.year === 'all' ? '全部年份' : this.currentFilters.year + '年'} ${this.currentFilters.type === 'choice' ? '选择题' : '案例分析'} · 共${this.data.questions.length}题`;
+            const yearName = this.currentFilters.year === 'all' ? '全部年份' :
+                (this.data.years?.find(y => y.id === this.currentFilters.year)?.name || this.currentFilters.year + '年');
+            const typeName = this.currentFilters.type === 'all' ? '全部题型' :
+                (this.currentFilters.type === 'choice' ? '选择题' : '案例分析');
+            const diffNames = this.currentFilters.selectedDifficulties.length === 0 ? '' :
+                ` · ${this.currentFilters.selectedDifficulties.map(d => d === 'easy' ? '简单' : d === 'medium' ? '中等' : '困难').join('/')}`;
+            statsBar.textContent = `当前筛选：${yearName} ${typeName}${diffNames} · 共${filteredQuestions.length}题`;
         }
 
         // 渲染真题卡片
@@ -857,7 +874,7 @@ const QuestionsRenderer = {
         existingCards.forEach(card => card.remove());
 
         // 插入新卡片
-        this.data.questions.forEach((q, index) => {
+        filteredQuestions.forEach((q, index) => {
             const card = this.createQuestionCard(q, index);
             questionsArea.insertBefore(card, questionsArea.querySelector('.stats-bar').nextSibling);
         });
