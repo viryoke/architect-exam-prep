@@ -563,7 +563,9 @@
     <script src="js/data-renderer.js"></script>
     <script>
         // 渲染快速导航栏
-        renderQuickNav('exam');
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuickNav('exam');
+        });
 
 
         // 页面特定功能 - 使用ExamRenderer中的方法

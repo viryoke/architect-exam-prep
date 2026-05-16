@@ -662,7 +662,9 @@
     <script src="js/data-renderer.js"></script>
     <script>
         // 渲染快速导航栏
-        renderQuickNav('heatmap');
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuickNav('heatmap');
+        });
 
 
         // 页面特定功能 - 使用HeatmapRenderer中的方法

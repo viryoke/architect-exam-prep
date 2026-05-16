@@ -535,7 +535,9 @@
     <script src="js/data-renderer.js"></script>
     <script>
         // 渲染快速导航栏
-        renderQuickNav('essay');
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuickNav('essay');
+        });
 
 
         // 页面特定功能

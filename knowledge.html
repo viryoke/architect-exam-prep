@@ -551,7 +551,9 @@
     <script src="js/data-renderer.js"></script>
     <script>
         // 渲染快速导航栏
-        renderQuickNav('knowledge');
+        document.addEventListener('DOMContentLoaded', function() {
+            renderQuickNav('knowledge');
+        });
 
 
         // 页面初始化时处理URL参数跳转
