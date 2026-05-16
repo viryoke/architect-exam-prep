@@ -3,82 +3,27 @@
     {
       "id": "2025",
       "name": "2025年",
-      "count": 55,
-      "semesters": [
-        {
-          "id": "2025s",
-          "name": "上半年",
-          "count": 55
-        }
-      ]
+      "count": 62
     },
     {
       "id": "2024",
       "name": "2024年",
-      "count": 79,
-      "semesters": [
-        {
-          "id": "2024s",
-          "name": "上半年",
-          "count": 40
-        },
-        {
-          "id": "2024x",
-          "name": "下半年",
-          "count": 36
-        }
-      ]
+      "count": 88
     },
     {
       "id": "2023",
       "name": "2023年",
-      "count": 47,
-      "semesters": [
-        {
-          "id": "2023s",
-          "name": "上半年",
-          "count": 22
-        },
-        {
-          "id": "2023x",
-          "name": "下半年",
-          "count": 22
-        }
-      ]
+      "count": 50
     },
     {
       "id": "2022",
       "name": "2022年",
-      "count": 33,
-      "semesters": [
-        {
-          "id": "2022s",
-          "name": "上半年",
-          "count": 17
-        },
-        {
-          "id": "2022x",
-          "name": "下半年",
-          "count": 13
-        }
-      ]
+      "count": 35
     },
     {
       "id": "2021",
       "name": "2021年",
-      "count": 23,
-      "semesters": [
-        {
-          "id": "2021s",
-          "name": "上半年",
-          "count": 12
-        },
-        {
-          "id": "2021x",
-          "name": "下半年",
-          "count": 8
-        }
-      ]
+      "count": 25
     }
   ],
   "topics": [
@@ -110,7 +55,7 @@
     {
       "id": "reliability",
       "name": "系统可靠性",
-      "count": 3
+      "count": 26
     }
   ],
   "difficulties": [
@@ -122,19 +67,19 @@
     {
       "id": "medium",
       "name": "中等",
-      "count": 162
+      "count": 184
     },
     {
       "id": "hard",
       "name": "困难",
-      "count": 57
+      "count": 58
     }
   ],
   "types": [
     {
       "id": "choice",
       "name": "选择题",
-      "count": 222
+      "count": 245
     },
     {
       "id": "case",
@@ -7353,7 +7298,8 @@
         "服务拆分原则",
         "分布式事务",
         "服务治理"
-      ]
+      ],
+      "subTopic": "微服务架构设计"
     },
     {
       "id": "case2025s-2",
@@ -7394,7 +7340,8 @@
         "缓存策略",
         "数据一致性",
         "高并发系统设计"
-      ]
+      ],
+      "subTopic": "分布式缓存设计"
     },
     {
       "id": "case2025s-3",
@@ -7435,7 +7382,8 @@
         "分布式ID生成",
         "数据库架构设计",
         "数据迁移"
-      ]
+      ],
+      "subTopic": "数据库优化设计"
     },
     {
       "id": "case2024s-1",
@@ -7476,7 +7424,8 @@
         "服务注册发现",
         "服务治理",
         "容错设计"
-      ]
+      ],
+      "subTopic": "微服务架构设计"
     },
     {
       "id": "case2024s-2",
@@ -7516,7 +7465,8 @@
         "数据库容灾",
         "双活架构",
         "业务连续性"
-      ]
+      ],
+      "subTopic": "高可用架构设计"
     },
     {
       "id": "case2024s-3",
@@ -7558,7 +7508,8 @@
         "Kafka设计原理",
         "消息可靠性",
         "分布式系统设计"
-      ]
+      ],
+      "subTopic": "消息队列设计"
     },
     {
       "id": "case2023s-1",
@@ -7600,7 +7551,8 @@
         "微服务架构",
         "服务治理",
         "高可用架构"
-      ]
+      ],
+      "subTopic": "微服务架构设计"
     },
     {
       "id": "case2023s-2",
@@ -7641,7 +7593,8 @@
         "热点数据处理",
         "一致性哈希",
         "读写分离"
-      ]
+      ],
+      "subTopic": "社交平台数据库设计"
     },
     {
       "id": "case2023s-3",
@@ -7683,7 +7636,8 @@
         "两地三中心",
         "CAP定理",
         "数据一致性"
-      ]
+      ],
+      "subTopic": "容灾架构设计"
     },
     {
       "id": "case2022s-1",
@@ -7724,7 +7678,8 @@
         "高并发架构",
         "分布式锁",
         "库存管理"
-      ]
+      ],
+      "subTopic": "秒杀系统设计"
     },
     {
       "id": "case2022s-2",
@@ -7765,7 +7720,8 @@
         "业务中台",
         "数据中台",
         "架构治理"
-      ]
+      ],
+      "subTopic": "中台架构设计"
     },
     {
       "id": "case2022s-3",
@@ -7807,7 +7763,8 @@
         "任务分片",
         "高可用设计",
         "容错机制"
-      ]
+      ],
+      "subTopic": "分布式任务调度"
     },
     {
       "id": "case2021s-1",
@@ -7848,7 +7805,8 @@
         "数据隔离策略",
         "SaaS架构设计",
         "定制化方案"
-      ]
+      ],
+      "subTopic": "多租户架构设计"
     },
     {
       "id": "case2021s-2",
@@ -7890,7 +7848,8 @@
         "物联网架构",
         "数据存储设计",
         "冷热数据分离"
-      ]
+      ],
+      "subTopic": "时序数据库设计"
     },
     {
       "id": "case2021s-3",
@@ -7932,7 +7891,8 @@
         "TCC模式",
         "Saga模式",
         "数据一致性"
-      ]
+      ],
+      "subTopic": "分布式事务设计"
     },
     {
       "id": "q2025s-43",
@@ -10528,6 +10488,1019 @@
       "relatedKnowledge": [
         "最小权限",
         "安全原则"
+      ]
+    },
+    {
+      "id": "q2025s-53",
+      "year": "2025",
+      "semester": "上",
+      "number": 53,
+      "topic": "reliability",
+      "subTopic": "可用性计算",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "系统可用性从99.9%提升到99.99%，年停机时间从约8.7小时变为约？",
+      "options": [
+        {
+          "label": "A",
+          "text": "约52分钟"
+        },
+        {
+          "label": "B",
+          "text": "约5分钟"
+        },
+        {
+          "label": "C",
+          "text": "约1小时"
+        },
+        {
+          "label": "D",
+          "text": "约1分钟"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "可用性计算",
+        "explanation": "99.99%=1-0.0001，年停机=365×24×60×0.0001≈52分钟。",
+        "optionAnalysis": [
+          "A正确：约52分钟",
+          "B错误：约5分钟是99.999%",
+          "C错误：约1小时",
+          "D错误：约1分钟"
+        ]
+      },
+      "relatedKnowledge": [
+        "可用性计算",
+        "系统可靠性"
+      ]
+    },
+    {
+      "id": "q2025s-54",
+      "year": "2025",
+      "semester": "上",
+      "number": 54,
+      "topic": "reliability",
+      "subTopic": "容灾策略",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "两地三中心容灾架构的主要特点是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "只有一数据中心"
+        },
+        {
+          "label": "B",
+          "text": "同城双中心+异地灾备中心，兼顾高可用和灾难恢复"
+        },
+        {
+          "label": "C",
+          "text": "只有异地中心"
+        },
+        {
+          "label": "D",
+          "text": "不需要备份"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "两地三中心",
+        "explanation": "两地三中心：同城双中心实时同步，异地中心异步备份，兼顾日常故障和灾难恢复。",
+        "optionAnalysis": [
+          "A错误：有多个中心",
+          "B正确：同城双中心异地灾备",
+          "C错误：同城也重要",
+          "D错误：需要备份"
+        ]
+      },
+      "relatedKnowledge": [
+        "两地三中心",
+        "容灾架构"
+      ]
+    },
+    {
+      "id": "q2025s-55",
+      "year": "2025",
+      "semester": "上",
+      "number": 55,
+      "topic": "reliability",
+      "subTopic": "故障恢复",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "快速故障恢复的关键因素不包括？",
+      "options": [
+        {
+          "label": "A",
+          "text": "完善的监控告警"
+        },
+        {
+          "label": "B",
+          "text": "自动化故障检测和切换"
+        },
+        {
+          "label": "C",
+          "text": "代码注释数量"
+        },
+        {
+          "label": "D",
+          "text": "完善的应急预案"
+        }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "故障恢复",
+        "explanation": "故障恢复关键：监控告警、自动检测切换、应急预案、快速定位、备份恢复。",
+        "optionAnalysis": [
+          "A是关键因素",
+          "B是关键因素",
+          "C正确：不是关键因素",
+          "D是关键因素"
+        ]
+      },
+      "relatedKnowledge": [
+        "故障恢复",
+        "运维"
+      ]
+    },
+    {
+      "id": "q2025s-56",
+      "year": "2025",
+      "semester": "上",
+      "number": 56,
+      "topic": "reliability",
+      "subTopic": "RPO与RTO",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "RTO(恢复时间目标)的含义是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "数据丢失量"
+        },
+        {
+          "label": "B",
+          "text": "系统恢复到正常运行所需的最大时间"
+        },
+        {
+          "label": "C",
+          "text": "备份频率"
+        },
+        {
+          "label": "D",
+          "text": "存储容量"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "RTO概念",
+        "explanation": "RTO是系统从故障到恢复正常运行的最大允许时间；RPO是最大允许数据丢失量。",
+        "optionAnalysis": [
+          "A错误：是RPO含义",
+          "B正确：恢复时间目标",
+          "C错误：不是备份频率",
+          "D错误：不是存储容量"
+        ]
+      },
+      "relatedKnowledge": [
+        "RTO",
+        "RPO",
+        "容灾指标"
+      ]
+    },
+    {
+      "id": "q2025s-57",
+      "year": "2025",
+      "semester": "上",
+      "number": 57,
+      "topic": "reliability",
+      "subTopic": "RPO概念",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "RPO(恢复点目标)的含义是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "系统恢复时间"
+        },
+        {
+          "label": "B",
+          "text": "最大允许的数据丢失量"
+        },
+        {
+          "label": "C",
+          "text": "备份频率"
+        },
+        {
+          "label": "D",
+          "text": "存储容量"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "RPO概念",
+        "explanation": "RPO是系统恢复后最大允许丢失的数据量，反映备份策略的完善程度。",
+        "optionAnalysis": [
+          "A错误：是RTO含义",
+          "B正确：数据丢失量目标",
+          "C错误：不是备份频率",
+          "D错误：不是存储容量"
+        ]
+      },
+      "relatedKnowledge": [
+        "RPO",
+        "容灾指标"
+      ]
+    },
+    {
+      "id": "q2025s-58",
+      "year": "2025",
+      "semester": "上",
+      "number": 58,
+      "topic": "reliability",
+      "subTopic": "异地灾备",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "异地灾备中心的数据同步策略通常是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "实时同步"
+        },
+        {
+          "label": "B",
+          "text": "异步同步，平衡延迟和数据安全"
+        },
+        {
+          "label": "C",
+          "text": "不同步"
+        },
+        {
+          "label": "D",
+          "text": "手动复制"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "异地灾备同步",
+        "explanation": "异地灾备因网络延迟通常采用异步同步，平衡数据安全性和性能。",
+        "optionAnalysis": [
+          "A错误：异地实时同步延迟大",
+          "B正确：异步平衡延迟和安全",
+          "C错误：必须同步",
+          "D错误：自动化同步"
+        ]
+      },
+      "relatedKnowledge": [
+        "异地灾备",
+        "数据同步"
+      ]
+    },
+    {
+      "id": "q2025s-59",
+      "year": "2025",
+      "semester": "上",
+      "number": 59,
+      "topic": "reliability",
+      "subTopic": "故障演练",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "故障演练的主要目的是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "制造故障"
+        },
+        {
+          "label": "B",
+          "text": "验证故障恢复预案有效性，发现问题改进"
+        },
+        {
+          "label": "C",
+          "text": "增加故障"
+        },
+        {
+          "label": "D",
+          "text": "炫耀技术"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "故障演练",
+        "explanation": "故障演练主动模拟故障场景，验证预案有效性，发现盲点持续改进。",
+        "optionAnalysis": [
+          "A错误：目的是验证不是制造",
+          "B正确：验证预案有效性",
+          "C错误：目的是减少故障",
+          "D错误：严肃的运维工作"
+        ]
+      },
+      "relatedKnowledge": [
+        "故障演练",
+        "运维"
+      ]
+    },
+    {
+      "id": "q2024s-41",
+      "year": "2024",
+      "semester": "上",
+      "number": 41,
+      "topic": "reliability",
+      "subTopic": "监控告警",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "监控系统告警分级的主要原因是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "减少告警数量"
+        },
+        {
+          "label": "B",
+          "text": "区分告警严重程度，优先处理重要告警"
+        },
+        {
+          "label": "C",
+          "text": "美观"
+        },
+        {
+          "label": "D",
+          "text": "方便统计"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "告警分级",
+        "explanation": "告警分级区分P0-P3不同严重程度，避免告警泛滥，优先处理关键告警。",
+        "optionAnalysis": [
+          "A错误：不仅减少数量",
+          "B正确：区分严重程度优先处理",
+          "C错误：不是美观",
+          "D错误：主要不是为了统计"
+        ]
+      },
+      "relatedKnowledge": [
+        "告警分级",
+        "监控运维"
+      ]
+    },
+    {
+      "id": "q2024s-42",
+      "year": "2024",
+      "semester": "上",
+      "number": 42,
+      "topic": "reliability",
+      "subTopic": "自动切换",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "自动故障切换相比手动切换的优势是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "恢复速度更快"
+        },
+        {
+          "label": "B",
+          "text": "恢复速度慢"
+        },
+        {
+          "label": "C",
+          "text": "成本更高"
+        },
+        {
+          "label": "D",
+          "text": "风险更大"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "自动切换",
+        "explanation": "自动切换秒级恢复，避免人工介入延迟，但需要完善的检测和切换逻辑。",
+        "optionAnalysis": [
+          "A正确：恢复速度快",
+          "B错误：自动切换快",
+          "C错误：不一定成本更高",
+          "D错误：风险可控"
+        ]
+      },
+      "relatedKnowledge": [
+        "自动切换",
+        "故障恢复"
+      ]
+    },
+    {
+      "id": "q2024s-43",
+      "year": "2024",
+      "semester": "上",
+      "number": 43,
+      "topic": "reliability",
+      "subTopic": "健康检查",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "服务健康检查的主要方式是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "人工巡检"
+        },
+        {
+          "label": "B",
+          "text": "心跳检测或HTTP探测定期检查服务状态"
+        },
+        {
+          "label": "C",
+          "text": "用户反馈"
+        },
+        {
+          "label": "D",
+          "text": "猜测"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "健康检查",
+        "explanation": "健康检查通过心跳或HTTP探测定期检测服务存活状态，及时发现故障。",
+        "optionAnalysis": [
+          "A错误：自动化更重要",
+          "B正确：心跳或HTTP探测",
+          "C错误：不能依赖用户反馈",
+          "D错误：不能猜测"
+        ]
+      },
+      "relatedKnowledge": [
+        "健康检查",
+        "心跳检测"
+      ]
+    },
+    {
+      "id": "q2024s-44",
+      "year": "2024",
+      "semester": "上",
+      "number": 44,
+      "topic": "reliability",
+      "subTopic": "熔断降级",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "服务熔断后通常的处理方式是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "继续调用"
+        },
+        {
+          "label": "B",
+          "text": "快速失败或返回降级响应"
+        },
+        {
+          "label": "C",
+          "text": "无限等待"
+        },
+        {
+          "label": "D",
+          "text": "重启服务"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "熔断处理",
+        "explanation": "熔断后快速失败避免资源耗尽，或返回降级响应保证用户体验。",
+        "optionAnalysis": [
+          "A错误：熔断后不调用",
+          "B正确：快速失败或降级",
+          "C错误：不能无限等待",
+          "D错误：熔断不重启服务"
+        ]
+      },
+      "relatedKnowledge": [
+        "熔断降级",
+        "服务保护"
+      ]
+    },
+    {
+      "id": "q2024s-45",
+      "year": "2024",
+      "semester": "上",
+      "number": 45,
+      "topic": "reliability",
+      "subTopic": "降级策略",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "服务降级的常见策略不包括？",
+      "options": [
+        {
+          "label": "A",
+          "text": "关闭非核心功能"
+        },
+        {
+          "label": "B",
+          "text": "返回默认值或缓存数据"
+        },
+        {
+          "label": "C",
+          "text": "增加服务器数量"
+        },
+        {
+          "label": "D",
+          "text": "延迟处理"
+        }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "降级策略",
+        "explanation": "降级策略：关闭非核心功能、返回默认值、读缓存、延迟处理、限流。",
+        "optionAnalysis": [
+          "A是降级策略",
+          "B是降级策略",
+          "C正确：不是降级策略",
+          "D是降级策略"
+        ]
+      },
+      "relatedKnowledge": [
+        "降级策略",
+        "服务保护"
+      ]
+    },
+    {
+      "id": "q2024x-37",
+      "year": "2024",
+      "semester": "下",
+      "number": 37,
+      "topic": "reliability",
+      "subTopic": "冗余设计",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "系统冗余设计的主要目的是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "浪费资源"
+        },
+        {
+          "label": "B",
+          "text": "消除单点故障，提高可用性"
+        },
+        {
+          "label": "C",
+          "text": "降低成本"
+        },
+        {
+          "label": "D",
+          "text": "简化架构"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "冗余设计",
+        "explanation": "冗余设计通过备份组件消除单点故障，故障时自动切换保证可用性。",
+        "optionAnalysis": [
+          "A错误：不是浪费",
+          "B正确：消除单点故障",
+          "C错误：冗余增加成本",
+          "D错误：冗余增加复杂度"
+        ]
+      },
+      "relatedKnowledge": [
+        "冗余设计",
+        "高可用"
+      ]
+    },
+    {
+      "id": "q2024x-38",
+      "year": "2024",
+      "semester": "下",
+      "number": 38,
+      "topic": "reliability",
+      "subTopic": "单点故障",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "消除单点故障的有效方法是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "只用一台服务器"
+        },
+        {
+          "label": "B",
+          "text": "关键组件冗余部署，故障自动切换"
+        },
+        {
+          "label": "C",
+          "text": "忽略故障"
+        },
+        {
+          "label": "D",
+          "text": "减少服务数量"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "单点故障消除",
+        "explanation": "消除SPOF：关键组件冗余部署、自动故障检测和切换机制。",
+        "optionAnalysis": [
+          "A错误：单机就是单点",
+          "B正确：冗余自动切换",
+          "C错误：不能忽略",
+          "D错误：不解决单点问题"
+        ]
+      },
+      "relatedKnowledge": [
+        "单点故障",
+        "冗余部署"
+      ]
+    },
+    {
+      "id": "q2024x-39",
+      "year": "2024",
+      "semester": "下",
+      "number": 39,
+      "topic": "reliability",
+      "subTopic": "SLA定义",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "SLA(服务水平协议)的主要作用是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "技术文档"
+        },
+        {
+          "label": "B",
+          "text": "定义服务提供商与客户之间的服务承诺和责任"
+        },
+        {
+          "label": "C",
+          "text": "代码规范"
+        },
+        {
+          "label": "D",
+          "text": "测试报告"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "SLA",
+        "explanation": "SLA定义服务承诺如可用性99.9%、响应时间等，明确双方责任和违约条款。",
+        "optionAnalysis": [
+          "A错误：SLA是协议不是文档",
+          "B正确：定义服务承诺责任",
+          "C错误：不是代码规范",
+          "D错误：不是测试报告"
+        ]
+      },
+      "relatedKnowledge": [
+        "SLA",
+        "服务水平协议"
+      ]
+    },
+    {
+      "id": "q2024x-40",
+      "year": "2024",
+      "semester": "下",
+      "number": 40,
+      "topic": "reliability",
+      "subTopic": "SLI指标",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "SLI(服务水平指标)的典型例子是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "代码行数"
+        },
+        {
+          "label": "B",
+          "text": "请求成功率、响应延迟、可用性百分比"
+        },
+        {
+          "label": "C",
+          "text": "员工数量"
+        },
+        {
+          "label": "D",
+          "text": "服务器数量"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "SLI",
+        "explanation": "SLI是可测量的服务质量指标：成功率、延迟、吞吐量、可用性等。",
+        "optionAnalysis": [
+          "A错误：不是SLI",
+          "B正确：成功率延迟可用性",
+          "C错误：不是SLI",
+          "D错误：不是SLI"
+        ]
+      },
+      "relatedKnowledge": [
+        "SLI",
+        "可观测性"
+      ]
+    },
+    {
+      "id": "q2023s-23",
+      "year": "2023",
+      "semester": "上",
+      "number": 23,
+      "topic": "reliability",
+      "subTopic": "备份策略",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "数据库备份策略中，增量备份的特点是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "备份全部数据"
+        },
+        {
+          "label": "B",
+          "text": "只备份自上次备份以来的变化数据"
+        },
+        {
+          "label": "C",
+          "text": "不备份"
+        },
+        {
+          "label": "D",
+          "text": "手动选择备份"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "增量备份",
+        "explanation": "增量备份只备份变化数据，备份快但恢复需要全量+所有增量。",
+        "optionAnalysis": [
+          "A错误：全量备份全部",
+          "B正确：只备份变化",
+          "C错误：必须备份",
+          "D错误：不是手动选择"
+        ]
+      },
+      "relatedKnowledge": [
+        "增量备份",
+        "备份策略"
+      ]
+    },
+    {
+      "id": "q2023s-24",
+      "year": "2023",
+      "semester": "上",
+      "number": 24,
+      "topic": "reliability",
+      "subTopic": "全量备份",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "全量备份的优点是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "备份速度快"
+        },
+        {
+          "label": "B",
+          "text": "恢复简单快速，只需一个备份文件"
+        },
+        {
+          "label": "C",
+          "text": "占用空间小"
+        },
+        {
+          "label": "D",
+          "text": "不需要存储"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "全量备份",
+        "explanation": "全量备份恢复最简单，只需一个文件，但备份时间长、占用空间大。",
+        "optionAnalysis": [
+          "A错误：全量备份慢",
+          "B正确：恢复简单",
+          "C错误：空间大",
+          "D错误：需要存储"
+        ]
+      },
+      "relatedKnowledge": [
+        "全量备份",
+        "备份策略"
+      ]
+    },
+    {
+      "id": "q2023x-23",
+      "year": "2023",
+      "semester": "下",
+      "number": 23,
+      "topic": "reliability",
+      "subTopic": "故障定位",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "快速故障定位的关键手段是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "猜测"
+        },
+        {
+          "label": "B",
+          "text": "完善的日志和监控，链路追踪"
+        },
+        {
+          "label": "C",
+          "text": "用户投诉"
+        },
+        {
+          "label": "D",
+          "text": "重启服务"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "故障定位",
+        "explanation": "快速定位依赖完善的日志、监控指标、链路追踪，精准定位故障点。",
+        "optionAnalysis": [
+          "A错误：不能猜测",
+          "B正确：日志监控链路追踪",
+          "C错误：不能依赖投诉",
+          "D错误：重启不是定位"
+        ]
+      },
+      "relatedKnowledge": [
+        "故障定位",
+        "可观测性"
+      ]
+    },
+    {
+      "id": "q2022s-18",
+      "year": "2022",
+      "semester": "上",
+      "number": 18,
+      "topic": "reliability",
+      "subTopic": "同城双中心",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "同城双中心架构的主要优势是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "成本最低"
+        },
+        {
+          "label": "B",
+          "text": "距离近实时同步快，日常故障可快速切换"
+        },
+        {
+          "label": "C",
+          "text": "不需要同步"
+        },
+        {
+          "label": "D",
+          "text": "只有一个中心"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "同城双中心",
+        "explanation": "同城双中心距离近，网络延迟小，可实时同步，日常故障秒级切换。",
+        "optionAnalysis": [
+          "A错误：成本较高",
+          "B正确：实时同步快速切换",
+          "C错误：需要同步",
+          "D错误：是双中心"
+        ]
+      },
+      "relatedKnowledge": [
+        "同城双中心",
+        "高可用"
+      ]
+    },
+    {
+      "id": "q2022x-14",
+      "year": "2022",
+      "semester": "下",
+      "number": 14,
+      "topic": "reliability",
+      "subTopic": "灾备等级",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "容灾等级从高到低的正确排序是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "同城灾备→异地灾备→冷备份"
+        },
+        {
+          "label": "B",
+          "text": "异地灾备→同城灾备→冷备份"
+        },
+        {
+          "label": "C",
+          "text": "冷备份→同城灾备→异地灾备"
+        },
+        {
+          "label": "D",
+          "text": "都是一样的"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "灾备等级",
+        "explanation": "灾备等级：同城双活(最高)→同城灾备→异地灾备→冷备份(最低)。",
+        "optionAnalysis": [
+          "A正确：同城>异地>冷备",
+          "B错误：顺序反了",
+          "C错误：顺序反了",
+          "D错误：等级不同"
+        ]
+      },
+      "relatedKnowledge": [
+        "灾备等级",
+        "容灾"
+      ]
+    },
+    {
+      "id": "q2021s-13",
+      "year": "2021",
+      "semester": "上",
+      "number": 13,
+      "topic": "reliability",
+      "subTopic": "冷热备",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "冷备份与热备份的区别是？",
+      "options": [
+        {
+          "label": "A",
+          "text": "冷备份服务器不运行，故障时启动；热备份实时同步随时切换"
+        },
+        {
+          "label": "B",
+          "text": "两者相同"
+        },
+        {
+          "label": "C",
+          "text": "热备份不运行"
+        },
+        {
+          "label": "D",
+          "text": "冷备份实时同步"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "冷热备份",
+        "explanation": "冷备服务器平时不运行故障时启动恢复慢；热备实时同步可秒级切换。",
+        "optionAnalysis": [
+          "A正确：冷备不运行热备实时",
+          "B错误：两者不同",
+          "C错误：热备份运行",
+          "D错误：冷备不实时同步"
+        ]
+      },
+      "relatedKnowledge": [
+        "冷热备份",
+        "备份策略"
+      ]
+    },
+    {
+      "id": "q2021x-09",
+      "year": "2021",
+      "semester": "下",
+      "number": 9,
+      "topic": "reliability",
+      "subTopic": "故障预算",
+      "difficulty": "hard",
+      "type": "choice",
+      "text": "错误预算用完后应该优先做什么？",
+      "options": [
+        {
+          "label": "A",
+          "text": "继续发布新功能"
+        },
+        {
+          "label": "B",
+          "text": "暂停新功能发布，专注于解决可靠性问题"
+        },
+        {
+          "label": "C",
+          "text": "忽略预算"
+        },
+        {
+          "label": "D",
+          "text": "删除预算"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "错误预算使用",
+        "explanation": "错误预算耗尽表示可靠性不达标，应暂停新功能发布，专注解决可靠性问题。",
+        "optionAnalysis": [
+          "A错误：应暂停发布",
+          "B正确：专注解决可靠性",
+          "C错误：不能忽略",
+          "D错误：不能删除"
+        ]
+      },
+      "relatedKnowledge": [
+        "错误预算",
+        "SRE"
       ]
     }
   ]
