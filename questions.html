@@ -370,6 +370,10 @@
         </div>
 
         <!-- 模块标题 -->
+        
+        <!-- 快速导航栏 -->
+        <div class="quick-nav-bar"></div>
+
         <div class="module-header">
             <div class="module-title">📝 历年真题分析与解析</div>
         </div>
@@ -695,6 +699,10 @@
 
     <script src="js/data-renderer.js"></script>
     <script>
+        // 渲染快速导航栏
+        renderQuickNav('questions');
+
+
         // 页面初始化
         document.addEventListener('DOMContentLoaded', async function() {
             // 初始化真题渲染器

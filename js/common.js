@@ -198,3 +198,31 @@ function updateProgressDisplay(progress) {
         progressFill.style.width = `${progress.percent}%`;
     }
 }
+
+// ===== 快速导航栏 =====
+const NAV_ITEMS = [
+    { id: 'home', icon: '🏠', label: '首页', url: 'index.html' },
+    { id: 'knowledge', icon: '📚', label: '必学必记', url: 'knowledge.html' },
+    { id: 'tips', icon: '💡', label: '备考技巧', url: 'tips.html' },
+    { id: 'questions', icon: '📊', label: '真题分析', url: 'questions.html' },
+    { id: 'exam', icon: '✍️', label: '考试模拟', url: 'exam.html' },
+    { id: 'essay', icon: '📄', label: '论文专区', url: 'essay.html' },
+    { id: 'heatmap', icon: '🔥', label: '考点热力图', url: 'heatmap.html' }
+];
+
+// 渲染快速导航栏
+function renderQuickNav(currentPage) {
+    const navBar = document.querySelector('.quick-nav-bar');
+    if (!navBar) return;
+
+    navBar.innerHTML = NAV_ITEMS.map(item => {
+        const isActive = item.id === currentPage;
+        return `
+            <div class="quick-nav-item ${item.id} ${isActive ? 'active' : ''}"
+                 onclick="location.href='${item.url}'">
+                <span class="nav-icon">${item.icon}</span>
+                <span class="nav-label">${item.label}</span>
+            </div>
+        `;
+    }).join('');
+}

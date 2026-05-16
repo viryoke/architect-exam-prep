@@ -344,6 +344,10 @@
         </div>
 
         <!-- 模块标题 -->
+        
+        <!-- 快速导航栏 -->
+        <div class="quick-nav-bar"></div>
+
         <div class="module-header">
             <div class="module-title">💡 备考技巧与应试策略</div>
             <div class="module-subtitle">掌握技巧，事半功倍 | 系统架构设计师冲刺必备</div>
@@ -652,6 +656,10 @@
 
     <script src="js/data-renderer.js"></script>
     <script>
+        // 渲染快速导航栏
+        renderQuickNav('tips');
+
+
         // 页面特定功能 - 使用TipsRenderer中的方法
         function filterCategory(category, element) {
             TipsRenderer.filterCategory(category, element);

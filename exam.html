@@ -396,7 +396,11 @@
     </style>
 </head>
 <body>
-    <div class="whiteboard-container">
+    
+        <!-- 快速导航栏 -->
+        <div class="quick-nav-bar"></div>
+
+        <div class="whiteboard-container">
         <!-- 考试页面 -->
         <div class="exam-page" id="examPage">
             <!-- 考试头部 -->
@@ -558,6 +562,10 @@
 
     <script src="js/data-renderer.js"></script>
     <script>
+        // 渲染快速导航栏
+        renderQuickNav('exam');
+
+
         // 页面特定功能 - 使用ExamRenderer中的方法
         function prevQuestion() {
             ExamRenderer.prevQuestion();

@@ -281,6 +281,10 @@
         </div>
 
         <!-- 主内容区 -->
+        
+        <!-- 快速导航栏 -->
+        <div class="quick-nav-bar"></div>
+
         <div class="main-content">
             <!-- 左侧考点目录 -->
             <div class="topic-directory">
@@ -546,6 +550,10 @@
 
     <script src="js/data-renderer.js"></script>
     <script>
+        // 渲染快速导航栏
+        renderQuickNav('knowledge');
+
+
         // 页面初始化时处理URL参数跳转
         window.addEventListener('DOMContentLoaded', async function() {
             // 等待数据加载

@@ -354,6 +354,10 @@
         </div>
 
         <!-- 模块标题 -->
+        
+        <!-- 快速导航栏 -->
+        <div class="quick-nav-bar"></div>
+
         <div class="module-header">
             <div class="module-title">✍️ 论文写作专区</div>
             <div class="module-subtitle">掌握框架、积累素材、高分范文</div>
@@ -530,6 +534,10 @@
 
     <script src="js/data-renderer.js"></script>
     <script>
+        // 渲染快速导航栏
+        renderQuickNav('essay');
+
+
         // 页面特定功能
         function selectTopic(topic, element) {
             EssayRenderer.selectCategory(topic === '写作指南' ? 'guide' : topic, element);

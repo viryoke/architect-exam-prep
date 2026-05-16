@@ -346,3 +346,81 @@ body {
         width: 100%;
     }
 }
+
+/* ===== 快速导航栏 ===== */
+.quick-nav-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.8);
+    border: 3px solid #1976d2;
+    border-radius: 8px;
+    flex-wrap: wrap;
+}
+
+.quick-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border: 2px solid;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 15px;
+    background: rgba(255,255,255,0.5);
+}
+
+.quick-nav-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+}
+
+.quick-nav-item.active {
+    background: currentColor;
+    color: #fff !important;
+}
+
+.quick-nav-item .nav-icon {
+    font-size: 18px;
+}
+
+/* 各模块颜色 */
+.quick-nav-item.home { color: #1976d2; border-color: #1976d2; }
+.quick-nav-item.home:hover, .quick-nav-item.home.active { background: #1976d2; }
+
+.quick-nav-item.knowledge { color: #d32f2f; border-color: #d32f2f; }
+.quick-nav-item.knowledge:hover, .quick-nav-item.knowledge.active { background: #d32f2f; }
+
+.quick-nav-item.tips { color: #1976d2; border-color: #1976d2; }
+.quick-nav-item.tips:hover, .quick-nav-item.tips.active { background: #1976d2; }
+
+.quick-nav-item.questions { color: #388e3c; border-color: #388e3c; }
+.quick-nav-item.questions:hover, .quick-nav-item.questions.active { background: #388e3c; }
+
+.quick-nav-item.exam { color: #ff9800; border-color: #ff9800; }
+.quick-nav-item.exam:hover, .quick-nav-item.exam.active { background: #ff9800; }
+
+.quick-nav-item.essay { color: #7b1fa2; border-color: #7b1fa2; }
+.quick-nav-item.essay:hover, .quick-nav-item.essay.active { background: #7b1fa2; }
+
+.quick-nav-item.heatmap { color: #00796b; border-color: #00796b; }
+.quick-nav-item.heatmap:hover, .quick-nav-item.heatmap.active { background: #00796b; }
+
+/* 响应式 */
+@media (max-width: 768px) {
+    .quick-nav-bar {
+        gap: 6px;
+        padding: 8px 10px;
+    }
+    .quick-nav-item {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+    .quick-nav-item .nav-icon {
+        font-size: 14px;
+    }
+}
