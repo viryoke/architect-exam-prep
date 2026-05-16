@@ -802,7 +802,7 @@ const KnowledgeRenderer = {
 // ==================== 真题模块渲染 ====================
 const QuestionsRenderer = {
     data: null,
-    currentFilters: { year: 'all', topic: 'all', difficulty: 'all', type: 'choice' },
+    currentFilters: { year: 'all', topic: 'all', selectedDifficulties: ['easy', 'medium', 'hard'], type: 'choice' },
 
     async init() {
         this.data = await loadJSON('data/questions.json');
@@ -817,21 +817,27 @@ const QuestionsRenderer = {
         const filterSections = document.querySelectorAll('.filter-panel .filter-section');
         const yearSection = filterSections[0]?.querySelector('.filter-options');
         if (yearSection && this.data.years) {
-            yearSection.innerHTML = this.data.years.map(ys => `
-                <div class="filter-option" onclick="QuestionsRenderer.filterYear('${ys.id}', this)">
-                    ${ys.name} <span class="filter-count">(${ys.count}题)</span>
-                </div>
-            `).join('');
+            yearSection.innerHTML = `
+                <div class="filter-option active" onclick="QuestionsRenderer.filterYear('all', this)">全部</div>
+                ${this.data.years.map(ys => `
+                    <div class="filter-option" onclick="QuestionsRenderer.filterYear('${ys.id}', this)">
+                        ${ys.name}
+                    </div>
+                `).join('')}
+            `;
         }
 
         // 考点筛选
         const topicSection = filterSections[1]?.querySelector('.filter-options');
         if (topicSection && this.data.topics) {
-            topicSection.innerHTML = this.data.topics.map(ts => `
-                <div class="filter-option" onclick="QuestionsRenderer.filterTopic('${ts.id}', this)">
-                    ${ts.name} <span class="filter-count">(${ts.count}题)</span>
-                </div>
-            `).join('');
+            topicSection.innerHTML = `
+                <div class="filter-option active" onclick="QuestionsRenderer.filterTopic('all', this)">全部</div>
+                ${this.data.topics.map(ts => `
+                    <div class="filter-option" onclick="QuestionsRenderer.filterTopic('${ts.id}', this)">
+                        ${ts.name}
+                    </div>
+                `).join('')}
+            `;
         }
     },
 
@@ -997,7 +1003,13 @@ const QuestionsRenderer = {
     // 筛选难度
     filterDifficulty(diff, element) {
         element.classList.toggle('active');
-        // 多选难度
+        // 多选难度 - 跟踪选中的难度
+        const idx = this.currentFilters.selectedDifficulties.indexOf(diff);
+        if (idx === -1) {
+            this.currentFilters.selectedDifficulties.push(diff);
+        } else {
+            this.currentFilters.selectedDifficulties.splice(idx, 1);
+        }
         this.filterQuestions();
     },
 
@@ -1018,8 +1030,11 @@ const QuestionsRenderer = {
             const yearMatch = this.currentFilters.year === 'all' || card.dataset.year === this.currentFilters.year;
             const topicMatch = this.currentFilters.topic === 'all' || card.dataset.topic === this.currentFilters.topic;
             const typeMatch = this.currentFilters.type === 'all' || card.dataset.type === this.currentFilters.type;
+            // 难度匹配：未选中任何难度时显示全部，否则只显示选中的难度
+            const diffMatch = this.currentFilters.selectedDifficulties.length === 0 ||
+                              this.currentFilters.selectedDifficulties.includes(card.dataset.difficulty);
 
-            if (yearMatch && topicMatch && typeMatch) {
+            if (yearMatch && topicMatch && typeMatch && diffMatch) {
                 card.style.display = 'block';
                 visibleCount++;
             } else {
@@ -1031,7 +1046,9 @@ const QuestionsRenderer = {
         if (statsText) {
             const yearName = this.currentFilters.year === 'all' ? '全部年份' : this.data.years?.find(y => y.id === this.currentFilters.year)?.name || this.currentFilters.year;
             const typeName = this.currentFilters.type === 'choice' ? '选择题' : this.currentFilters.type === 'case' ? '案例分析' : '全部题型';
-            statsText.textContent = `当前筛选：${yearName} ${typeName} · 共${visibleCount}题`;
+            const diffNames = this.currentFilters.selectedDifficulties.length === 0 ? '' :
+                ` · ${this.currentFilters.selectedDifficulties.map(d => d === 'easy' ? '简单' : d === 'medium' ? '中等' : '困难').join('/')}`;
+            statsText.textContent = `当前筛选：${yearName} ${typeName}${diffNames} · 共${visibleCount}题`;
         }
     },
 
