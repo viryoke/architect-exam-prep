@@ -814,13 +814,15 @@ const QuestionsRenderer = {
 
     // 渲染筛选器
     renderFilters() {
-        // 年份筛选 - 使用更精确的选择器
+        // 年份筛选 - 使用更精确的选择器，年份按倒序排列
         const filterSections = document.querySelectorAll('.filter-panel .filter-section');
         const yearSection = filterSections[0]?.querySelector('.filter-options');
         if (yearSection && this.data.years) {
+            // 年份倒序排列（最新的年份在前）
+            const sortedYears = [...this.data.years].reverse();
             yearSection.innerHTML = `
                 <div class="filter-option active" onclick="QuestionsRenderer.filterYear('all', this)">全部</div>
-                ${this.data.years.map(ys => `
+                ${sortedYears.map(ys => `
                     <div class="filter-option" onclick="QuestionsRenderer.filterYear('${ys.id}', this)">
                         ${ys.name}
                     </div>
