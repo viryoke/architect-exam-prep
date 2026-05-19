@@ -15051,6 +15051,425 @@
       "isRealQuestion": true,
       "sourceType": "recall",
       "sourceYear": "2023"
+    },
+    {
+      "id": "q_dist_001",
+      "year": "综合",
+      "semester": "",
+      "number": 1,
+      "topic": "dist",
+      "subTopic": "分布式系统架构CAP理论",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "关于分布式系统的CAP理论，以下说法正确的是（）。",
+      "options": [
+        "A. CAP理论指出分布式系统可以同时满足一致性、可用性、分区容错性三个特性",
+        "B. 在网络分区发生时，系统必须在一致性和可用性之间做出选择",
+        "C. 一致性指所有节点在同一时刻看到的数据是相同的",
+        "D. 可用性指系统在出现故障时仍能保证响应时间在毫秒级别"
+      ],
+      "answer": "BC",
+      "analysis": {
+        "keyPoints": [
+          "CAP理论",
+          "一致性C",
+          "可用性A",
+          "分区容错性P"
+        ],
+        "explanation": "CAP理论指出分布式系统最多只能同时满足三个特性中的两个。在网络分区(P)不可避免的情况下，必须在一致性(C)和可用性(A)之间选择。一致性指所有节点数据在同一时刻相同，可用性指每个请求都能在合理时间内得到响应（不一定是毫秒级）。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_dist_002",
+      "year": "综合",
+      "semester": "",
+      "number": 2,
+      "topic": "dist",
+      "subTopic": "分布式一致性协议",
+      "difficulty": "hard",
+      "type": "choice",
+      "text": "关于分布式一致性协议，以下说法错误的是（）。",
+      "options": [
+        "A. 2PC（两阶段提交）协议存在同步阻塞问题，协调者故障会导致所有参与者阻塞",
+        "B. 3PC（三阶段提交）通过引入PreCommit阶段解决了2PC的阻塞问题",
+        "C. Paxos协议基于多数派原则，需要超过半数的节点同意才能达成共识",
+        "D. Raft协议将Paxos简化，通过Leader选举和日志复制实现一致性"
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoints": [
+          "2PC",
+          "3PC",
+          "Paxos",
+          "Raft"
+        ],
+        "explanation": "3PC虽然引入PreCommit阶段，但并没有完全解决阻塞问题。如果协调者在DoCommit阶段故障，参与者仍会阻塞。3PC主要解决的是协调者故障后参与者无法判断是否提交的问题，通过超时机制让参与者自行决策。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_dist_003",
+      "year": "综合",
+      "semester": "",
+      "number": 3,
+      "topic": "dist",
+      "subTopic": "分布式事务与BASE理论",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "BASE理论是对CAP理论的补充，以下关于BASE理论的描述正确的是（）。",
+      "options": [
+        "A. Basically Available指系统基本可用，允许出现短暂不可用",
+        "B. Soft state指系统状态可以有一段时间的不一致",
+        "C. Eventually consistent指系统在一段时间后最终达到一致状态",
+        "D. BASE理论强调的是强一致性"
+      ],
+      "answer": "ABC",
+      "analysis": {
+        "keyPoints": [
+          "BASE理论",
+          "基本可用",
+          "软状态",
+          "最终一致性"
+        ],
+        "explanation": "BASE理论是对CAP中AP方案的延伸。Basically Available（基本可用）：系统出现故障时，允许损失部分可用性。Soft state（软状态）：允许系统存在中间状态，该状态不会影响系统可用性。Eventually consistent（最终一致性）：系统中所有数据副本经过一段时间后最终能够达到一致状态。BASE理论强调的是最终一致性而非强一致性。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_dist_004",
+      "year": "综合",
+      "semester": "",
+      "number": 4,
+      "topic": "dist",
+      "subTopic": "分布式缓存策略",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "在分布式缓存系统中，关于缓存更新策略的说法正确的是（）。",
+      "options": [
+        "A. Cache Aside模式：应用代码同时维护缓存和数据库，读时先查缓存，写时先更新数据库再删除缓存",
+        "B. Read Through模式：缓存代理负责从数据库读取数据，应用只与缓存交互",
+        "C. Write Through模式：应用写入缓存后，缓存同步写入数据库",
+        "D. Write Behind模式：应用写入缓存后，缓存异步批量写入数据库，性能最好但可能丢失数据"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "Cache Aside",
+          "Read Through",
+          "Write Through",
+          "Write Behind"
+        ],
+        "explanation": "四种缓存更新策略各有特点：Cache Aside最常用，应用代码维护双写；Read Through让缓存代理处理读取；Write Through同步双写保证一致性；Write Behind异步写入性能最优但存在数据丢失风险。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_dist_005",
+      "year": "综合",
+      "semester": "",
+      "number": 5,
+      "topic": "dist",
+      "subTopic": "微服务架构",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "关于微服务架构的特点，以下说法正确的是（）。",
+      "options": [
+        "A. 每个微服务独立部署、独立扩展，可以使用不同的编程语言和数据存储技术",
+        "B. 微服务之间通过轻量级通信机制（如REST、消息队列）进行交互",
+        "C. 微服务架构增加了运维复杂度，需要自动化部署、监控和治理工具支持",
+        "D. 服务发现机制（如Eureka、Consul）用于微服务注册和相互发现"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "微服务特点",
+          "独立部署",
+          "轻量级通信",
+          "服务发现"
+        ],
+        "explanation": "微服务架构的核心特点：服务独立性（独立部署、扩展、技术栈）、轻量级通信（REST、MQ）、运维复杂度增加（需要DevOps支持）、服务治理（服务发现、负载均衡、熔断降级等）。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_sec_001",
+      "year": "综合",
+      "semester": "",
+      "number": 1,
+      "topic": "security",
+      "subTopic": "信息安全三要素CIA",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "信息安全的三要素CIA是指（）。",
+      "options": [
+        "A. 机密性（Confidentiality）：信息不被未授权者获取",
+        "B. 完整性（Integrity）：信息在存储和传输过程中不被篡改",
+        "C. 可用性（Availability）：授权用户能够正常使用信息和服务",
+        "D. 不可否认性（Non-repudiation）：信息发送方不能否认自己发送的信息"
+      ],
+      "answer": "ABC",
+      "analysis": {
+        "keyPoints": [
+          "CIA三要素",
+          "机密性",
+          "完整性",
+          "可用性"
+        ],
+        "explanation": "CIA是信息安全的核心三要素：机密性确保信息不被未授权者获取（加密技术）；完整性确保信息不被篡改（校验、数字签名）；可用性确保授权用户能正常使用（容灾备份）。不可否认性是扩展属性，不属于CIA基本三要素。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_sec_002",
+      "year": "综合",
+      "semester": "",
+      "number": 2,
+      "topic": "security",
+      "subTopic": "加密算法分类",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "关于加密算法的分类和应用，以下说法正确的是（）。",
+      "options": [
+        "A. 对称加密算法（如AES、DES）加解密使用相同密钥，速度快，适合大数据量加密",
+        "B. 非对称加密算法（如RSA、ECC）使用公钥加密、私钥解密，安全性高但速度慢",
+        "C. 消息摘要算法（如MD5、SHA）产生固定长度的哈希值，用于完整性校验",
+        "D. 数字签名使用发送方私钥签名，接收方用发送方公钥验证，保证不可否认性"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "对称加密",
+          "非对称加密",
+          "消息摘要",
+          "数字签名"
+        ],
+        "explanation": "加密算法分类：对称加密（AES/DES）速度快适合数据加密；非对称加密（RSA/ECC）安全但慢，用于密钥交换和签名；消息摘要（MD5/SHA）用于完整性校验；数字签名实现身份认证和不可否认性。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_sec_003",
+      "year": "综合",
+      "semester": "",
+      "number": 3,
+      "topic": "security",
+      "subTopic": "认证与访问控制",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "关于身份认证和访问控制技术，以下说法正确的是（）。",
+      "options": [
+        "A. 基于知识的认证方式包括口令、密码等用户知道的信息",
+        "B. 基于令牌的认证方式包括智能卡、动态口令令牌等用户持有的物品",
+        "C. 生物特征认证（指纹、虹膜）属于基于特征的认证方式",
+        "D. RBAC（基于角色的访问控制）通过角色分配权限，用户通过角色获得相应权限"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "认证方式",
+          "访问控制",
+          "RBAC"
+        ],
+        "explanation": "认证方式分为三类：基于知识（口令）、基于令牌（智能卡）、基于特征（生物特征）。RBAC是最常用的访问控制模型，用户-角色-权限三层模型简化权限管理。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_sec_004",
+      "year": "综合",
+      "semester": "",
+      "number": 4,
+      "topic": "security",
+      "subTopic": "网络安全攻击类型",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下属于网络安全攻击类型的有（）。",
+      "options": [
+        "A. DDoS攻击：分布式拒绝服务攻击，通过大量请求耗尽系统资源",
+        "B. SQL注入：通过构造恶意SQL语句获取或篡改数据库数据",
+        "C. XSS攻击：跨站脚本攻击，注入恶意脚本到网页",
+        "D. CSRF攻击：跨站请求伪造，诱导用户执行非预期操作"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "DDoS",
+          "SQL注入",
+          "XSS",
+          "CSRF"
+        ],
+        "explanation": "常见网络攻击类型：DDoS（分布式拒绝服务）攻击可用性；SQL注入攻击数据库；XSS（跨站脚本）攻击用户浏览器；CSRF（跨站请求伪造）利用用户身份执行恶意操作。防御需采用输入验证、过滤、防护机制。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_sec_005",
+      "year": "综合",
+      "semester": "",
+      "number": 5,
+      "topic": "security",
+      "subTopic": "PKI公钥基础设施",
+      "difficulty": "hard",
+      "type": "choice",
+      "text": "关于PKI（公钥基础设施）的组成和作用，以下说法正确的是（）。",
+      "options": [
+        "A. CA（证书颁发机构）负责签发和管理数字证书",
+        "B. 数字证书包含持有者公钥、CA签名、有效期等信息",
+        "C. RA（注册机构）负责证书申请者的身份审核",
+        "D. PKI通过证书链验证机制实现身份认证和信任传递"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "PKI",
+          "CA证书颁发机构",
+          "数字证书",
+          "证书链验证"
+        ],
+        "explanation": "PKI组成：CA（证书颁发机构）签发证书；RA（注册机构）审核身份；数字证书绑定公钥和身份；证书库存储证书；证书链验证建立信任传递。PKI广泛应用于HTTPS、电子签名等领域。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_db_001",
+      "year": "综合",
+      "semester": "",
+      "number": 1,
+      "topic": "db",
+      "subTopic": "数据库事务ACID特性",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "数据库事务的ACID特性是指（）。",
+      "options": [
+        "A. 原子性（Atomicity）：事务是不可分割的工作单位，要么全做要么全不做",
+        "B. 一致性（Consistency）：事务必须使数据库从一个一致性状态变换到另一个一致性状态",
+        "C. 隔离性（Isolation）：多个事务并发执行时，一个事务不应影响其他事务",
+        "D. 持久性（Durability）：事务一旦提交，对数据库的改变是永久的"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "ACID特性",
+          "原子性",
+          "一致性",
+          "隔离性",
+          "持久性"
+        ],
+        "explanation": "ACID是数据库事务的四个基本特性：原子性保证事务完整性；一致性保证数据状态正确；隔离性保证并发安全；持久性保证已提交数据不丢失。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_db_002",
+      "year": "综合",
+      "semester": "",
+      "number": 2,
+      "topic": "db",
+      "subTopic": "数据库并发控制",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "关于数据库并发控制中的隔离级别，以下说法正确的是（）。",
+      "options": [
+        "A. 读未提交（Read Uncommitted）可能产生脏读问题",
+        "B. 读已提交（Read Committed）避免脏读，但可能产生不可重复读",
+        "C. 可重复读（Repeatable Read）避免脏读和不可重复读，但可能产生幻读",
+        "D. 串行化（Serializable）最高隔离级别，完全避免并发问题但性能最低"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "隔离级别",
+          "脏读",
+          "不可重复读",
+          "幻读"
+        ],
+        "explanation": "数据库四种隔离级别：读未提交→读已提交→可重复读→串行化。脏读：读到未提交数据；不可重复读：同一查询两次结果不同（更新）；幻读：同一查询两次结果不同（插入/删除）。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_net_001",
+      "year": "综合",
+      "semester": "",
+      "number": 1,
+      "topic": "network",
+      "subTopic": "TCP三次握手四次挥手",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "关于TCP连接的建立和断开过程，以下说法正确的是（）。",
+      "options": [
+        "A. TCP建立连接采用三次握手：SYN→SYN+ACK→ACK",
+        "B. 三次握手的主要目的是防止已失效的连接请求报文段突然到达服务器",
+        "C. TCP断开连接采用四次挥手：FIN→ACK→FIN→ACK",
+        "D. 四次挥手的原因是TCP是全双工通信，每个方向都需要单独关闭"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "TCP三次握手",
+          "TCP四次挥手",
+          "全双工通信"
+        ],
+        "explanation": "TCP连接建立：三次握手确认双方收发能力，防止历史报文干扰。TCP连接断开：四次挥手因为全双工通信，主动方FIN后被动方可能还有数据发送，需单独关闭每个方向。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
+    },
+    {
+      "id": "q_net_002",
+      "year": "综合",
+      "semester": "",
+      "number": 2,
+      "topic": "network",
+      "subTopic": "HTTP协议特点",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "关于HTTP协议的特点，以下说法正确的是（）。",
+      "options": [
+        "A. HTTP是无状态协议，服务器不保存客户端状态信息",
+        "B. HTTP/1.1默认开启持久连接（Keep-Alive），一个TCP连接可传输多个HTTP请求",
+        "C. HTTPS在HTTP基础上加入SSL/TLS加密，保证数据传输安全",
+        "D. HTTP常见的请求方法包括GET、POST、PUT、DELETE等"
+      ],
+      "answer": "ABCD",
+      "analysis": {
+        "keyPoints": [
+          "HTTP无状态",
+          "持久连接",
+          "HTTPS",
+          "HTTP方法"
+        ],
+        "explanation": "HTTP特点：无状态（需Cookie/Session保存状态）；HTTP/1.1持久连接减少TCP开销；HTTPS加密传输；请求方法GET获取、POST提交、PUT更新、DELETE删除等。"
+      },
+      "isRealQuestion": false,
+      "sourceType": "knowledge",
+      "sourceYear": "综合"
     }
   ]
 }
