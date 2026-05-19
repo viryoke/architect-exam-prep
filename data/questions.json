@@ -60,7 +60,7 @@
     {
       "id": "2025",
       "name": "2025年",
-      "count": 54,
+      "count": 86,
       "semesters": [
         {
           "id": "2025x",
@@ -14152,6 +14152,376 @@
       "analysis": {
         "keyPoint": "组合计算",
         "explanation": "总的取值组合是2的5次方=32。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2024x-case01",
+      "year": "2024",
+      "semester": "下",
+      "number": 1,
+      "topic": "system",
+      "subTopic": "缓存架构与多线程",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "王工使用了多线程技术进行缓存处理，线程1负责写入，线程2负责读取，可能存在数据不一致性问题。",
+      "scenario": "某电商系统采用Redis缓存架构，王工设计了多线程缓存处理方案，线程1负责写入缓存，线程2负责读取缓存数据。在实际运行中发现存在数据不一致性问题。",
+      "subQuestions": [
+        {
+          "question": "请解释多线程缓存处理可能存在数据不一致性的原因",
+          "score": 6,
+          "answer": "竞态条件：如果没有适当的同步机制，两个或多个线程可能同时访问和修改共享资源，导致最终结果取决于线程调度顺序。可见性问题：在多线程环境中，一个线程对共享变量所做的更改不一定立刻被其他线程看到。原子性破坏：写入操作可能不是一个原子操作，意味着它可以被中断或分段执行。"
+        },
+        {
+          "question": "请给出至少3个解决办法",
+          "score": 9,
+          "answer": "1、使用锁机制（如互斥锁、分布式锁），保证原子性\n2、同步删除策略（先删缓存再更新数据库）\n3、使用消息队列异步更新\n4、基于缓存更新策略（如Write-through、Write-behind）\n5、使用双写一致性方案（如延时双删）"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "竞态条件",
+          "可见性问题",
+          "原子性",
+          "锁机制",
+          "消息队列",
+          "缓存更新策略"
+        ],
+        "explanation": "多线程并发访问共享资源时需要考虑数据一致性问题，可通过锁机制、消息队列等方式解决。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2024"
+    },
+    {
+      "id": "q2024x-case02",
+      "year": "2024",
+      "semester": "下",
+      "number": 2,
+      "topic": "system",
+      "subTopic": "ROS机器人操作系统",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "关于机器人操作系统ROS的分析与设计。",
+      "scenario": "某机器人研发项目需要基于ROS构建机器人控制系统，涉及ROS1与ROS2的架构对比、通信机制设计等内容。",
+      "subQuestions": [
+        {
+          "question": "ROS的定义和特点",
+          "score": 6,
+          "answer": "ROS(Robot Operating System)是为机器人软件开发提供工具、库和约定的框架。特点：1、模块化设计\n2、通信机制(发布/订阅)\n3、包管理(catkin)\n4、工具和库丰富\n5、仿真支持(Gazebo)\n6、跨平台\n7、教育研究友好"
+        },
+        {
+          "question": "ROS2与ROS1相比哪些地方做了改进",
+          "score": 8,
+          "answer": "1、系统架构：ROS1集中式依赖Master，ROS2分布式去中心化采用DDS\n2、通信机制：ROS1依赖TCP/IP，ROS2采用DDS提供可靠/不可靠传输和QoS配置\n3、编译系统：ROS1用Catkin，ROS2用Ament更快\n4、跨平台：ROS2支持Linux、Windows、macOS、RTOS\n5、多语言支持：C++、Python等"
+        },
+        {
+          "question": "介绍ROS2中的四种通信服务",
+          "score": 6,
+          "answer": "1、话题通信：单向通信，发布方发布数据，订阅方订阅数据\n2、服务通信：请求响应模式，客户端请求，服务端响应\n3、动作通信：带连续反馈的通信，中间状态反馈\n4、参数服务：共享数据模式，服务端设置数据，客户端操作数据"
+        },
+        {
+          "question": "解析ROS2架构每一层含义",
+          "score": 5,
+          "answer": "1、操作系统层(OS Layer)：提供基础硬件驱动，支持Linux/Windows/macOS/RTOS\n2、中间层(Middleware Layer)：由DDS与ROS2封装中间件组成，提供QoS机制保证通讯效果\n3、应用层(Application Layer)：以功能包为核心，包含源码、数据定义、接口等"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "ROS定义",
+          "ROS1与ROS2对比",
+          "DDS通信",
+          "QoS机制",
+          "四层架构"
+        ],
+        "explanation": "ROS2相比ROS1在架构、通信、跨平台等方面做了重大改进，采用DDS实现分布式通信。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2024"
+    },
+    {
+      "id": "q2024x-case03",
+      "year": "2024",
+      "semester": "下",
+      "number": 3,
+      "topic": "arch",
+      "subTopic": "Elasticsearch分词与推荐系统",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "基于Elasticsearch分词的商品推荐系统设计（微信小程序接入）。",
+      "scenario": "某电商平台需要开发基于Elasticsearch的商品推荐系统，通过微信小程序接入，实现商品搜索和智能推荐功能。",
+      "subQuestions": [
+        {
+          "question": "Standard、Simple、Whitespace、Keyword分词引擎的特点差异",
+          "score": 6,
+          "answer": "Standard：按单词、数字、邮件、网址拆分，适合多语言但对CJK语言效果差\nSimple：按非字母字符分割，丢弃数字标点，只保留字母序列\nWhitespace：仅按空白字符分割，保留标点作为独立单元\nKeyword：不分词，整个文本作为单一词汇单元输出"
+        },
+        {
+          "question": "Elasticsearch分词系统架构图填空（选择合适的技术填入）",
+          "score": 12,
+          "answer": "架构层次：显示层→控制层→JavaScript→RESTful→业务逻辑层→数据层→Mybatis→Nginx\n技术选型：前端用JavaScript，通信用RESTful，后端业务逻辑层和数据层，数据库用Elasticsearch，接入用Nginx"
+        },
+        {
+          "question": "RESTful架构如何实现前后端分离",
+          "score": 7,
+          "answer": "1、无状态性：每个请求包含所有信息，服务器不存储状态\n2、统一接口：标准操作集(GET/POST/PUT/DELETE)与资源关联\n3、资源导向：资源通过URL标识，HTTP方法表示操作\n4、分层系统：支持中间层(负载均衡、缓存代理)\n5、JSON/XML数据格式：轻量级跨平台传输\n6、前后端分离部署：前端静态托管，后端专注业务逻辑，仅通过API通信"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "ES分词器",
+          "RESTful架构",
+          "前后端分离",
+          "系统架构设计"
+        ],
+        "explanation": "Elasticsearch提供多种分词器适应不同场景，RESTful架构通过无状态、统一接口实现前后端解耦。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2024"
+    },
+    {
+      "id": "q2024x-case04",
+      "year": "2024",
+      "semester": "下",
+      "number": 4,
+      "topic": "system",
+      "subTopic": "安全编程与高可靠性系统",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "安全编程/高可靠性编程 - 医用血糖监测系统（胰岛素泵系统）。",
+      "scenario": "某胰岛素泵系统通过血糖仪测量数据，自动计算胰岛素剂量，并通过泵系统自动注射胰岛素。系统需要高度可靠和安全。",
+      "subQuestions": [
+        {
+          "question": "危险驱动的安全分析的4个步骤及简要说明",
+          "score": 10,
+          "answer": "1、危害性认证：识别系统中可能存在的危害，并对其进行确认和分类\n2、剂量-反应关系评价：评估危害对人体健康的影响程度\n3、接触评定：确认人们接触危害的频率和程度，评估实际风险\n4、危险度特征分析：综合评估危害的总体风险特征"
+        },
+        {
+          "question": "胰岛素系统危险分析图填空",
+          "score": 9,
+          "answer": "危险层次分析：传感系统异常→错误时间推送预定的量→泵信号失效→定时器失效→胰岛素计算错误→算法错误→计算错误→血糖传感器错误→血糖计算不准"
+        },
+        {
+          "question": "形式化开发和软件测试技术各自的特点",
+          "score": 6,
+          "answer": "形式化开发特点：数学基础、严格性、可验证性、抽象层次、自动化支持、高成本\n软件测试特点：验证和确认、多样性(单元/集成/系统/验收测试)、迭代过程、人为因素、成本效益、无法完全保证质量、依赖测试工具"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "危险分析",
+          "安全编程",
+          "形式化开发",
+          "高可靠性系统"
+        ],
+        "explanation": "医疗系统需要严格的安全分析，形式化开发提供数学验证，软件测试补充验证确认。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2024"
+    },
+    {
+      "id": "q2025s-case01",
+      "year": "2025",
+      "semester": "上半年",
+      "number": 1,
+      "topic": "arch",
+      "subTopic": "大模型训练平台与质量属性场景",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "在线大模型训练平台的架构设计与质量属性场景分析。",
+      "scenario": "某公司开发一个在线大模型训练平台，支持Python代码编写、模型训练和部署。用户通过Python编写模型代码，将代码交给系统进行模型代码的解析，最终由系统匹配相应的计算机资源进行输出，用户不需要关心底层硬件平台。",
+      "subQuestions": [
+        {
+          "question": "写出题目中的a-l共12个场景对应的质量属性分别是什么？",
+          "score": 12,
+          "answer": "a.容错性(或健壮性或鲁棒性) b.易用性 c.功能性 d.性能 e.可用性 f.安全性 g.可靠性 h.可测试性 i.可修改性 j.易用性 k.互操作性 l.可伸缩性"
+        },
+        {
+          "question": "根据题目描述，完成解释器风格架构图的填空。",
+          "score": 6,
+          "answer": "(1)程序执行的当前状态 (2)解释器引擎 (3)解释器引擎的内部状态"
+        },
+        {
+          "question": "请简要说明该平台为什么适合用解释器风格？",
+          "score": 7,
+          "answer": "解释器风格可以构建一个运行环境，在这个环境上，可以解释和执行自定义的一些语言和规则。题目中，用户通过Python编写模型代码，交由系统进行解析执行，正好是符合解释器模型的应用范围。"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "质量属性场景",
+          "解释器风格架构",
+          "大模型训练平台"
+        ],
+        "explanation": "本题考察质量属性场景的识别和解释器风格架构的应用。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025s-case02",
+      "year": "2025",
+      "semester": "上半年",
+      "number": 2,
+      "topic": "arch",
+      "subTopic": "医疗知识图谱问答系统",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "医药领域智能问答系统的知识图谱架构设计与爬虫框架应用。",
+      "scenario": "某公司拟开发一个医药领域的智能问答系统，以帮助用户快速准确的获取疾病病因、治疗方式、治疗周期、常用药物、症状表现和药物企业等医药领域信息。",
+      "subQuestions": [
+        {
+          "question": "医药知识图谱智能问答系统架构图填空。",
+          "score": 6,
+          "answer": "(1)应用层 (2)业务层 (3)数据层 (4)问题 (5)答案 (6)知识表示"
+        },
+        {
+          "question": "该知识图谱的实现使用了爬虫框架Scrapy，请填写图中空(1)-(3)。",
+          "score": 6,
+          "answer": "(1)Scheduler(调度器) (2)ScrapyEngine(核心引擎) (3)ItemPipeline(数据管道)"
+        },
+        {
+          "question": "请解释异步IO的概念。",
+          "score": 6,
+          "answer": "异步IO是一种非阻塞式的输入输出处理模型，允许程序在发起IO操作后立即返回，无需等待操作完成，通过回调、事件或信号机制在IO完成后获取结果。"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "知识图谱架构",
+          "Scrapy爬虫框架",
+          "异步IO"
+        ],
+        "explanation": "本题考察知识图谱的系统架构设计和Scrapy爬虫框架的核心组件。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025s-case03",
+      "year": "2025",
+      "semester": "上半年",
+      "number": 3,
+      "topic": "system",
+      "subTopic": "Redis数据库主从复制与持久化",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "Redis主从复制架构与数据持久化机制分析。",
+      "scenario": "某系统采用Redis主从复制、读写分离的架构，需要了解主从库同步机制和数据持久化策略，以保障系统的高可用性和数据安全性。",
+      "subQuestions": [
+        {
+          "question": "在Redis主从复制读写分离架构中，主从库第一次同步的架构图填空。",
+          "score": 6,
+          "answer": "(1)返回master的数据版本信息 (2)执行bgsave (3)repl_backlog中的命令"
+        },
+        {
+          "question": "主从库第一次同步完成之后，后面如果有数据更新是如何同步的？请填写图中空缺处。",
+          "score": 6,
+          "answer": "(1)psync replid offset (2)continue (3)获取offset后的数据"
+        },
+        {
+          "question": "请列举出Redis中数据持久化的两种方式，并论述其优缺点。",
+          "score": 12,
+          "answer": "RDB持久化：定时生成内存数据的二进制快照。优点：高性能、低磁盘占用、容灾友好。缺点：数据丢失风险、Fork内存开销。\nAOF持久化：记录所有写操作命令。优点：数据安全、可读性强、故障恢复灵活。缺点：文件体积大、恢复速度慢、写入性能开销。"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "Redis主从复制",
+          "PSYNC命令",
+          "RDB持久化",
+          "AOF持久化"
+        ],
+        "explanation": "本题考察Redis的主从复制机制和数据持久化策略。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025s-case04",
+      "year": "2025",
+      "semester": "上半年",
+      "number": 4,
+      "topic": "system",
+      "subTopic": "端侧AI与资源池架构设计",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "端侧AI与云端AI对比分析及资源池架构设计。",
+      "scenario": "某装备研制企业为了适应产品的智能化升级换代，要求研发部门开展端侧AI技术的研究工作。王工主要承担了智能终端的资源池化设计工作。",
+      "subQuestions": [
+        {
+          "question": "请给出云端AI和端侧AI的定义，并说明端侧AI相比于云端AI的优势是什么？",
+          "score": 6,
+          "answer": "云端AI：AI模型部署在云端服务器，终端设备通过网络传输数据至云端处理。端侧AI：AI模型直接部署在终端设备，数据在本地完成计算。端侧AI优势：超低延迟、数据隐私安全、离线可用、带宽成本低、能效提升。"
+        },
+        {
+          "question": "请判断表中空(1)-(7)分别属于哪个方面。",
+          "score": 7,
+          "answer": "(1)b-动态调度与能效优化 (2)c-安全与隔离机制 (3)a-资源抽象与异构计算 (4)c-安全与隔离机制 (5)b-动态调度与能效优化 (6)b-动态调度与能效优化 (7)a-资源抽象与异构计算"
+        },
+        {
+          "question": "请填写集中式、分布式、混合型资源池对比表空(1)-(6)。",
+          "score": 12,
+          "answer": "(1)多中心化 (2)集中管理 (3)核心数据在中心/热数据在边缘 (4)高 (5)低 (6)低"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "端侧AI与云端AI",
+          "资源池架构",
+          "异构计算",
+          "动态调度"
+        ],
+        "explanation": "本题考察端侧AI与云端AI的对比分析，以及资源池架构设计的核心要素。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025s-case05",
+      "year": "2025",
+      "semester": "上半年",
+      "number": 5,
+      "topic": "arch",
+      "subTopic": "区块链系统架构设计",
+      "difficulty": "hard",
+      "type": "case",
+      "text": "区块链六层架构设计与智能合约应用。",
+      "scenario": "某区块链系统需要实现农产品溯源功能，系统包含信息填写人员、核对人员、审核人员三种角色，通过智能合约实现数据上链和验证。",
+      "subQuestions": [
+        {
+          "question": "区块链的六个层次分别是什么，并简单介绍。",
+          "score": 12,
+          "answer": "数据层：封装底层数据结构(区块链式结构、哈希函数、Merkle树、时间戳、非对称加密)。\n网络层：P2P组网技术构建分布式系统。\n共识层：PoW/PoS/DPoS等算法解决记账权分配。\n激励层：经济模型驱动节点参与验证。\n合约层：部署智能合约实现自动化执行。\n应用层：面向具体场景开发DApp。"
+        },
+        {
+          "question": "请用400字以内文字说明三种不同人员的操作流程。",
+          "score": 9,
+          "answer": "信息填写人员：登录系统录入农产品数据，上传原始凭证至IPFS，调用智能合约生成哈希值上链，生成区块链存证编号。\n核对人员：接收待核验数据，比对上链数据与原始凭证一致性，实地抽查验证，使用多重签名钱包签名触发审核。\n审核人员：调取全流程日志，复核数据修改记录，激活时间锁使数据进入只读状态，颁发数字凭证同步至监管链节点。"
+        },
+        {
+          "question": "介绍下什么是智能合约，并说明智能合约包含哪三方面。",
+          "score": 4,
+          "answer": "智能合约是一种以代码形式编写的程序，存储在区块链上，用于自动执行合约条款。包含三方面：1.自动化履约-满足预设条件时自动执行；2.透明性和不可篡改性-代码公开且无法篡改；3.去中心化和安全性-依赖区块链架构和加密技术确保安全。"
+        }
+      ],
+      "analysis": {
+        "keyPoints": [
+          "区块链六层架构",
+          "智能合约",
+          "共识机制",
+          "数据上链流程"
+        ],
+        "explanation": "本题考察区块链的六层架构设计和智能合约的应用。"
       },
       "isRealQuestion": true,
       "sourceType": "recall",
