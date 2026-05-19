@@ -42,17 +42,17 @@
     {
       "id": "2024",
       "name": "2024年",
-      "count": 85,
+      "count": 89,
       "semesters": [
         {
           "id": "2024x",
           "name": "上半年",
-          "count": 18
+          "count": 89
         },
         {
           "id": "2024b",
           "name": "下半年",
-          "count": 67
+          "count": 89
         }
       ],
       "sourceType": "recall"
