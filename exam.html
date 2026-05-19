@@ -387,6 +387,118 @@
 
         /* 响应式 */
         @media (max-width: 1024px) { .exam-main { grid-template-columns: 1fr; } }
+
+        /* 考试模式选择页 */
+        .mode-select-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            padding: 40px;
+        }
+        .mode-title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 42px;
+            color: #1976d2;
+            margin-bottom: 30px;
+        }
+        .mode-desc {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        .mode-options {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .mode-card {
+            padding: 30px 40px;
+            border: 3px solid #1976d2;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 200px;
+            text-align: center;
+        }
+        .mode-card:hover {
+            background: rgba(25,118,210,0.15);
+            transform: translateY(-3px);
+        }
+        .mode-card.selected {
+            background: #1976d2;
+            color: #fff;
+        }
+        .mode-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        .mode-name {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .mode-info {
+            font-size: 14px;
+            color: #666;
+        }
+        .mode-card.selected .mode-info { color: rgba(255,255,255,0.8); }
+
+        /* 套题选择 */
+        .set-selector {
+            display: none;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 600px;
+        }
+        .set-selector.active { display: flex; }
+        .set-title {
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 20px;
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+        .set-list {
+            display: flex;
+            gap: 15px;
+        }
+        .set-item {
+            padding: 15px 25px;
+            border: 2px solid #1976d2;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .set-item:hover { background: rgba(25,118,210,0.1); }
+        .set-item.selected {
+            background: #1976d2;
+            color: #fff;
+        }
+
+        .start-btn {
+            margin-top: 40px;
+            padding: 20px 60px;
+            background: #d32f2f;
+            color: #fff;
+            border: 3px solid #d32f2f;
+            border-radius: 12px;
+            font-family: 'ZCOOL KuaiLe', cursive;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .start-btn:hover { background: #b71c1c; }
+        .start-btn:disabled {
+            background: #ccc;
+            border-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
         @media (max-width: 768px) {
             .exam-header { flex-direction: column; gap: 15px; }
             .exam-info { flex-direction: column; }
@@ -402,8 +514,40 @@
             <div class="quick-nav-item home" onclick="location.href='index.html'"><span class="nav-icon">🏠</span><span class="nav-label">首页</span></div><div class="quick-nav-item knowledge" onclick="location.href='knowledge.html'"><span class="nav-icon">📚</span><span class="nav-label">必学必记</span></div><div class="quick-nav-item tips" onclick="location.href='tips.html'"><span class="nav-icon">💡</span><span class="nav-label">备考技巧</span></div><div class="quick-nav-item questions" onclick="location.href='questions.html'"><span class="nav-icon">📊</span><span class="nav-label">真题分析</span></div><div class="quick-nav-item exam active" onclick="location.href='exam.html'"><span class="nav-icon">✍️</span><span class="nav-label">考试模拟</span></div><div class="quick-nav-item essay" onclick="location.href='essay.html'"><span class="nav-icon">📄</span><span class="nav-label">论文专区</span></div><div class="quick-nav-item heatmap" onclick="location.href='heatmap.html'"><span class="nav-icon">🔥</span><span class="nav-label">考点热力图</span></div>
         </div>
 
+        <!-- 模式选择页 -->
+        <div class="mode-select-page" id="modeSelectPage">
+            <div class="mode-title">🎯 选择考试模式</div>
+            <div class="mode-desc">选择真题练习或模拟考试，开始您的备考之旅</div>
+
+            <div class="mode-options">
+                <div class="mode-card" id="realMode" onclick="selectMode('real')">
+                    <div class="mode-icon">📝</div>
+                    <div class="mode-name">真题练习</div>
+                    <div class="mode-info">历年真题精选<br>395道真题按年份练习</div>
+                </div>
+                <div class="mode-card" id="simMode" onclick="selectMode('simulation')">
+                    <div class="mode-icon">🎲</div>
+                    <div class="mode-name">模拟考试</div>
+                    <div class="mode-info">高质量模拟题<br>5套×75题全覆盖练习</div>
+                </div>
+            </div>
+
+            <div class="set-selector" id="setSelector">
+                <div class="set-title">选择套题</div>
+                <div class="set-list">
+                    <div class="set-item" onclick="selectSet(1)">第1套 (75题)</div>
+                    <div class="set-item" onclick="selectSet(2)">第2套 (75题)</div>
+                    <div class="set-item" onclick="selectSet(3)">第3套 (75题)</div>
+                    <div class="set-item" onclick="selectSet(4)">第4套 (75题)</div>
+                    <div class="set-item" onclick="selectSet(5)">第5套 (75题)</div>
+                </div>
+            </div>
+
+            <button class="start-btn" id="startBtn" onclick="startExam()" disabled>开始考试</button>
+        </div>
+
         <!-- 考试页面 -->
-        <div class="exam-page" id="examPage">
+        <div class="exam-page" id="examPage" style="display: none;">
             <!-- 考试头部 -->
             <div class="exam-header">
                 <div class="exam-info">
@@ -563,11 +707,104 @@
 
     <script src="js/data-renderer.js"></script>
     <script>
+        // 考试模式变量
+        let selectedMode = null;
+        let selectedSet = null;
+        let simulationData = null;
+
+        // 模式选择
+        function selectMode(mode) {
+            selectedMode = mode;
+            selectedSet = null;
+
+            // 更新UI
+            document.getElementById('realMode').classList.toggle('selected', mode === 'real');
+            document.getElementById('simMode').classList.toggle('selected', mode === 'simulation');
+
+            // 显示/隐藏套题选择器
+            const setSelector = document.getElementById('setSelector');
+            if (mode === 'simulation') {
+                setSelector.classList.add('active');
+            } else {
+                setSelector.classList.remove('active');
+            }
+
+            // 更新开始按钮
+            updateStartButton();
+        }
+
+        // 套题选择
+        function selectSet(setNum) {
+            selectedSet = setNum;
+
+            // 更新UI
+            const setItems = document.querySelectorAll('.set-item');
+            setItems.forEach((item, index) => {
+                item.classList.toggle('selected', index + 1 === setNum);
+            });
+
+            updateStartButton();
+        }
+
+        // 更新开始按钮状态
+        function updateStartButton() {
+            const startBtn = document.getElementById('startBtn');
+            if (selectedMode === 'real') {
+                startBtn.disabled = false;
+                startBtn.textContent = '开始真题练习';
+            } else if (selectedMode === 'simulation' && selectedSet) {
+                startBtn.disabled = false;
+                startBtn.textContent = `开始第${selectedSet}套模拟题`;
+            } else {
+                startBtn.disabled = true;
+                startBtn.textContent = '开始考试';
+            }
+        }
+
+        // 开始考试
+        async function startExam() {
+            if (!selectedMode) return;
+
+            // 隐藏模式选择页，显示考试页
+            document.getElementById('modeSelectPage').style.display = 'none';
+            document.getElementById('examPage').style.display = 'block';
+
+            if (selectedMode === 'simulation') {
+                // 加载模拟题数据
+                try {
+                    const response = await fetch('data/simulation_questions.json');
+                    simulationData = await response.json();
+
+                    // 获取选定的套题
+                    const examSet = simulationData.examSets.find(s => s.id === `set${selectedSet}`);
+                    if (examSet) {
+                        // 初始化考试
+                        ExamRenderer.initExam(examSet.questions, '模拟考试 - 第' + selectedSet + '套');
+                    }
+                } catch (error) {
+                    console.error('加载模拟题失败:', error);
+                    alert('加载模拟题失败，请刷新页面重试');
+                }
+            } else {
+                // 加载真题数据
+                try {
+                    const response = await fetch('data/questions.json');
+                    const realData = await response.json();
+
+                    // 随机抽取75题进行练习
+                    const shuffled = realData.questions.sort(() => Math.random() - 0.5);
+                    const selectedQuestions = shuffled.slice(0, 75);
+
+                    ExamRenderer.initExam(selectedQuestions, '真题练习');
+                } catch (error) {
+                    console.error('加载真题失败:', error);
+                    alert('加载真题失败，请刷新页面重试');
+                }
+            }
+        }
+
         // 渲染快速导航栏
         // 导航栏已硬编码
-
-        // 初始化
-
 
         // 页面特定功能 - 使用ExamRenderer中的方法
         function prevQuestion() {

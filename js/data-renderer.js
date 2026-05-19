@@ -1181,6 +1181,39 @@ const ExamRenderer = {
         this.loadQuestion(1);
     },
 
+    // 使用自定义题目数据初始化考试（支持模拟题）
+    initExam(questions, examTitle) {
+        // 创建考试数据结构
+        this.data = {
+            config: {
+                totalQuestions: questions.length,
+                timeLimit: 150, // 150分钟
+                examQuestions: questions.length
+            },
+            questions: questions.map((q, index) => ({
+                id: index + 1,
+                ...q
+            }))
+        };
+
+        // 更新考试标题
+        const titleElement = document.querySelector('.exam-title');
+        if (titleElement && examTitle) {
+            titleElement.textContent = '🎯 ' + examTitle;
+        }
+
+        // 初始化考试状态
+        this.currentQuestion = 1;
+        this.answers = {};
+        this.markedQuestions = [];
+        this.timeRemaining = this.data.config.timeLimit * 60;
+
+        this.generateQuestionGrid();
+        this.updateProgress();
+        this.startTimer();
+        this.loadQuestion(1);
+    },
+
     // 生成答题卡网格
     generateQuestionGrid() {
         const grid = document.getElementById('questionGrid');
