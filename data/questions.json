@@ -13157,6 +13157,1005 @@
       "isRealQuestion": true,
       "sourceType": "exam",
       "sourceYear": "2021"
+    },
+    {
+      "id": "q2025x-01",
+      "year": "2025",
+      "semester": "上",
+      "number": 1,
+      "topic": "os",
+      "subTopic": "位示图计算",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "某系统中，对空闲存储空间管理采取位示图方式，其中每页大小为4KB，总存储容量为16GB，则位示图大小为多少KB。",
+      "options": [
+        {
+          "label": "A",
+          "text": "512"
+        },
+        {
+          "label": "B",
+          "text": "256"
+        },
+        {
+          "label": "C",
+          "text": "128"
+        },
+        {
+          "label": "D",
+          "text": "64"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "位示图计算",
+        "explanation": "位示图使用1bit表示一个物理块的占用情况。16GB/4KB=4M个物理块，位示图大小就是4Mb，换算为字节：4Mb/8=0.5MB=512KB。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-02",
+      "year": "2025",
+      "semester": "上",
+      "number": 2,
+      "topic": "network",
+      "subTopic": "调制解调技术",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "下列选项中，属于调制解调技术的是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "模拟信道传递模拟信号"
+        },
+        {
+          "label": "B",
+          "text": "模拟信道传递数字信号"
+        },
+        {
+          "label": "C",
+          "text": "数字信道传递模拟信号"
+        },
+        {
+          "label": "D",
+          "text": "数字信道传递数字信号"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "调制解调",
+        "explanation": "调制解调技术核心是将数字信号转换为模拟信号以便在模拟信道上传输。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-03",
+      "year": "2025",
+      "semester": "上",
+      "number": 3,
+      "topic": "software",
+      "subTopic": "CMMI阶段式",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "CMMI有阶段式和连续式两个不同划分方式，其中阶段式共分为几个阶段。",
+      "options": [
+        {
+          "label": "A",
+          "text": "3"
+        },
+        {
+          "label": "B",
+          "text": "4"
+        },
+        {
+          "label": "C",
+          "text": "5"
+        },
+        {
+          "label": "D",
+          "text": "6"
+        }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "CMMI成熟度等级",
+        "explanation": "CMMI阶段式五级：初始级、已管理级、已定义级、定量管理级、优化级。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-12",
+      "year": "2025",
+      "semester": "上",
+      "number": 12,
+      "topic": "arch",
+      "subTopic": "断路器模式状态",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下哪些属于微服务断路器模式的状态。",
+      "options": [
+        {
+          "label": "A",
+          "text": "激活状态、关闭状态、休眠状态"
+        },
+        {
+          "label": "B",
+          "text": "打开状态、关闭状态、熔断状态"
+        },
+        {
+          "label": "C",
+          "text": "打开状态、关闭状态、半打开状态"
+        },
+        {
+          "label": "D",
+          "text": "打开状态、休眠状态、挂起状态"
+        }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "断路器模式",
+        "explanation": "断路器模式包含三个状态：关闭状态、打开状态、半打开状态。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-13",
+      "year": "2025",
+      "semester": "上",
+      "number": 13,
+      "topic": "arch",
+      "subTopic": "层次式架构",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下关于层次式架构的说法中，错误的是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "B/S架构是一种特殊的二层C/S架构"
+        },
+        {
+          "label": "B",
+          "text": "三层C/S比两层C/S架构多了一个应用服务器"
+        },
+        {
+          "label": "C",
+          "text": "三层C/S有较高的可扩展性"
+        },
+        {
+          "label": "D",
+          "text": "三层C/S架构一般分为表现层、功能层、数据层"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "层次架构",
+        "explanation": "B/S架构本质是三层架构，不是二层C/S架构的特殊形式。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-17",
+      "year": "2025",
+      "semester": "上",
+      "number": 17,
+      "topic": "software",
+      "subTopic": "Web服务器性能评测",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "不属于Web服务器性能评测方法是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "基准性能测试"
+        },
+        {
+          "label": "B",
+          "text": "压力测试"
+        },
+        {
+          "label": "C",
+          "text": "可靠性测试"
+        },
+        {
+          "label": "D",
+          "text": "UI测试"
+        }
+      ],
+      "answer": "D",
+      "analysis": {
+        "keyPoint": "Web服务器性能评测",
+        "explanation": "Web服务器性能评测方法有基准性能测试、压力测试、可靠性测试。UI测试是功能测试。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-18",
+      "year": "2025",
+      "semester": "上",
+      "number": 18,
+      "topic": "system",
+      "subTopic": "ERP三流",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "ERP企业资源三流是哪三流。",
+      "options": [
+        {
+          "label": "A",
+          "text": "物流、资金流、信息流"
+        },
+        {
+          "label": "B",
+          "text": "物流、人流、资金流"
+        },
+        {
+          "label": "C",
+          "text": "物流、税务流、信息流"
+        },
+        {
+          "label": "D",
+          "text": "税务流、资金流、信息流"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "ERP三流",
+        "explanation": "ERP管理的企业资源主要是三种：物流、资金流、信息流。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-21",
+      "year": "2025",
+      "semester": "上",
+      "number": 21,
+      "topic": "software",
+      "subTopic": "净室软件工程",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "净室软件工程的理论基础主要是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "函数理论和抽样理论"
+        },
+        {
+          "label": "B",
+          "text": "概率统计和软件认证"
+        },
+        {
+          "label": "C",
+          "text": "统计测试和正确性验证"
+        },
+        {
+          "label": "D",
+          "text": "质量保证和概率统计"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "净室软件工程",
+        "explanation": "净室软件工程的理论基础主要是函数理论和抽样理论。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-22",
+      "year": "2025",
+      "semester": "上",
+      "number": 22,
+      "topic": "os",
+      "subTopic": "文件打开操作",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "当用户首次打开一个文件的时候，系统做什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "先读取文件名"
+        },
+        {
+          "label": "B",
+          "text": "把文件内容读入内存"
+        },
+        {
+          "label": "C",
+          "text": "先读FCB"
+        },
+        {
+          "label": "D",
+          "text": "先读到缓冲区中"
+        }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "文件打开",
+        "explanation": "文件首次打开时，系统优先读取该文件的FCB。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-23",
+      "year": "2025",
+      "semester": "上",
+      "number": 23,
+      "topic": "os",
+      "subTopic": "死锁计算",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "当前系统中有5个进程，每个进程运行需要2个资源，那么至少提供多少个资源不会造成系统死锁。",
+      "options": [
+        {
+          "label": "A",
+          "text": "5"
+        },
+        {
+          "label": "B",
+          "text": "6"
+        },
+        {
+          "label": "C",
+          "text": "8"
+        },
+        {
+          "label": "D",
+          "text": "10"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "死锁避免",
+        "explanation": "避免死锁的最少资源数=n*(k-1)+1=5*(2-1)+1=6。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-24",
+      "year": "2025",
+      "semester": "上",
+      "number": 24,
+      "topic": "system",
+      "subTopic": "大模型架构",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "大模型的生成代码架构是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "Knowledge Map"
+        },
+        {
+          "label": "B",
+          "text": "Data Flow"
+        },
+        {
+          "label": "C",
+          "text": "Rule Base System"
+        },
+        {
+          "label": "D",
+          "text": "Transformer"
+        }
+      ],
+      "answer": "D",
+      "analysis": {
+        "keyPoint": "大模型架构",
+        "explanation": "当前主流大模型的生成能力均基于Transformer架构实现。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-36",
+      "year": "2025",
+      "semester": "上",
+      "number": 36,
+      "topic": "software",
+      "subTopic": "用例模型关系",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "在面向对象分析建模时，用例模型不包含哪种关系。",
+      "options": [
+        {
+          "label": "A",
+          "text": "包含"
+        },
+        {
+          "label": "B",
+          "text": "扩展"
+        },
+        {
+          "label": "C",
+          "text": "泛化"
+        },
+        {
+          "label": "D",
+          "text": "聚合"
+        }
+      ],
+      "answer": "D",
+      "analysis": {
+        "keyPoint": "用例关系",
+        "explanation": "用例模型包含的关系有包含、扩展、泛化。聚合属于类图关系。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-37",
+      "year": "2025",
+      "semester": "上",
+      "number": 37,
+      "topic": "software",
+      "subTopic": "螺旋模型",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "以下哪种开发模型增加了风险评估的环节。",
+      "options": [
+        {
+          "label": "A",
+          "text": "瀑布模型"
+        },
+        {
+          "label": "B",
+          "text": "螺旋模型"
+        },
+        {
+          "label": "C",
+          "text": "V模型"
+        },
+        {
+          "label": "D",
+          "text": "增量模型"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "螺旋模型特点",
+        "explanation": "螺旋模型强调风险分析是其主要特点。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-43",
+      "year": "2025",
+      "semester": "上",
+      "number": 43,
+      "topic": "software",
+      "subTopic": "Scrum Backlog排序",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "在Scrum中，产品Backlog是按照什么排序的需求列表。",
+      "options": [
+        {
+          "label": "A",
+          "text": "实现难易度"
+        },
+        {
+          "label": "B",
+          "text": "商业价值"
+        },
+        {
+          "label": "C",
+          "text": "最后期限"
+        },
+        {
+          "label": "D",
+          "text": "技术成熟度"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "Scrum Backlog",
+        "explanation": "产品Backlog是按照商业价值排序的需求列表。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-44",
+      "year": "2025",
+      "semester": "上",
+      "number": 44,
+      "topic": "software",
+      "subTopic": "单元测试依据",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "单元测试的依据是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "概要设计"
+        },
+        {
+          "label": "B",
+          "text": "需求分析"
+        },
+        {
+          "label": "C",
+          "text": "详细设计"
+        },
+        {
+          "label": "D",
+          "text": "用户需求"
+        }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "单元测试依据",
+        "explanation": "单元测试依据是详细设计阶段。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-46",
+      "year": "2025",
+      "semester": "上",
+      "number": 46,
+      "topic": "software",
+      "subTopic": "RUP细化阶段",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "RUP确定体系结构是什么阶段。",
+      "options": [
+        {
+          "label": "A",
+          "text": "初始"
+        },
+        {
+          "label": "B",
+          "text": "细化"
+        },
+        {
+          "label": "C",
+          "text": "构建"
+        },
+        {
+          "label": "D",
+          "text": "移交"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "RUP阶段",
+        "explanation": "细化阶段确定体系结构。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-52",
+      "year": "2025",
+      "semester": "上",
+      "number": 52,
+      "topic": "software",
+      "subTopic": "黑盒测试方法",
+      "difficulty": "easy",
+      "type": "choice",
+      "text": "以下哪种不属于黑盒测试的方法。",
+      "options": [
+        {
+          "label": "A",
+          "text": "因果图"
+        },
+        {
+          "label": "B",
+          "text": "正交实验"
+        },
+        {
+          "label": "C",
+          "text": "路径覆盖"
+        },
+        {
+          "label": "D",
+          "text": "边界值分析"
+        }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "黑盒测试方法",
+        "explanation": "路径覆盖属于白盒测试。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-53",
+      "year": "2025",
+      "semester": "上",
+      "number": 53,
+      "topic": "system",
+      "subTopic": "边缘计算特点",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下哪种不是边缘计算的特点。",
+      "options": [
+        {
+          "label": "A",
+          "text": "降低功耗"
+        },
+        {
+          "label": "B",
+          "text": "提高带宽"
+        },
+        {
+          "label": "C",
+          "text": "低延迟"
+        },
+        {
+          "label": "D",
+          "text": "提高安全"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "边缘计算特点",
+        "explanation": "边缘计算减少带宽需求，不是提高带宽。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-54",
+      "year": "2025",
+      "semester": "上",
+      "number": 54,
+      "topic": "arch",
+      "subTopic": "可靠性子特性",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "下列哪种不属于可靠性的子特性。",
+      "options": [
+        {
+          "label": "A",
+          "text": "容错性"
+        },
+        {
+          "label": "B",
+          "text": "成熟性"
+        },
+        {
+          "label": "C",
+          "text": "可恢复性"
+        },
+        {
+          "label": "D",
+          "text": "稳定性"
+        }
+      ],
+      "answer": "D",
+      "analysis": {
+        "keyPoint": "软件质量特性",
+        "explanation": "稳定性属于可维护性的子特性。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-56",
+      "year": "2025",
+      "semester": "上",
+      "number": 56,
+      "topic": "software",
+      "subTopic": "结构化分析特点",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "以下属于结构化分析特点的是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "自底向上"
+        },
+        {
+          "label": "B",
+          "text": "面向数据流"
+        },
+        {
+          "label": "C",
+          "text": "非直接耦合"
+        },
+        {
+          "label": "D",
+          "text": "模块间数据耦合居多"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "结构化分析特点",
+        "explanation": "结构化分析面向数据流。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-60",
+      "year": "2025",
+      "semester": "上",
+      "number": 60,
+      "topic": "security",
+      "subTopic": "OSI安全服务",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "OSI开放系统互联安全体系的5类安全服务包括什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "鉴别、访问控制、机密性、完整性、不可抵赖性"
+        },
+        {
+          "label": "B",
+          "text": "认证、访问控制、机密性、完整性、不可抵赖性"
+        },
+        {
+          "label": "C",
+          "text": "鉴别、机密性、完整性、不可抵赖性"
+        },
+        {
+          "label": "D",
+          "text": "认证、鉴别、访问控制、机密性、完整性"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "OSI安全服务",
+        "explanation": "OSI安全体系5类服务：鉴别、访问控制、数据机密性、数据完整性、抗抵赖性。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-62",
+      "year": "2025",
+      "semester": "上",
+      "number": 62,
+      "topic": "arch",
+      "subTopic": "SOAP协议",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "哪个协议定义了服务请求者和服务提供者之间的数据传输规范。",
+      "options": [
+        {
+          "label": "A",
+          "text": "UDDI"
+        },
+        {
+          "label": "B",
+          "text": "SOAP"
+        },
+        {
+          "label": "C",
+          "text": "WSDL"
+        },
+        {
+          "label": "D",
+          "text": "XML"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "SOA协议",
+        "explanation": "SOAP用于服务请求者和提供者之间传输数据。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-63",
+      "year": "2025",
+      "semester": "上",
+      "number": 63,
+      "topic": "system",
+      "subTopic": "数据中台应用场景",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "数据中台的应用场景不包括什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "风险控制"
+        },
+        {
+          "label": "B",
+          "text": "数据治理"
+        },
+        {
+          "label": "C",
+          "text": "数据库扩容"
+        },
+        {
+          "label": "D",
+          "text": "用户画像"
+        }
+      ],
+      "answer": "C",
+      "analysis": {
+        "keyPoint": "数据中台",
+        "explanation": "数据库扩容属于基础设施运维，不属于数据中台应用。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-64",
+      "year": "2025",
+      "semester": "上",
+      "number": 64,
+      "topic": "os",
+      "subTopic": "进程状态转换",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "进程从运行状态变成就绪状态的条件是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "主动让出CPU"
+        },
+        {
+          "label": "B",
+          "text": "信号量执行wait"
+        },
+        {
+          "label": "C",
+          "text": "缺页中断"
+        },
+        {
+          "label": "D",
+          "text": "请求磁盘"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "进程状态转换",
+        "explanation": "运行到就绪是时间片到或主动让出CPU。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-65",
+      "year": "2025",
+      "semester": "上",
+      "number": 65,
+      "topic": "arch",
+      "subTopic": "软件产品线双生命周期",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "软件产品线的双生命周期模型中，包含的两个生命周期工程分别是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "领域工程和应用工程"
+        },
+        {
+          "label": "B",
+          "text": "领域工程和企业工程"
+        },
+        {
+          "label": "C",
+          "text": "企业工程和应用工程"
+        },
+        {
+          "label": "D",
+          "text": "领域工程和管理工程"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "软件产品线",
+        "explanation": "软件产品线双生命周期：领域工程和应用工程。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-66",
+      "year": "2025",
+      "semester": "上",
+      "number": 66,
+      "topic": "arch",
+      "subTopic": "黑板架构中央数据结构",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "在黑板架构风格中，数据处理单元是什么。",
+      "options": [
+        {
+          "label": "A",
+          "text": "中央数据结构"
+        },
+        {
+          "label": "B",
+          "text": "知识源"
+        },
+        {
+          "label": "C",
+          "text": "控制器"
+        },
+        {
+          "label": "D",
+          "text": "黑板"
+        }
+      ],
+      "answer": "A",
+      "analysis": {
+        "keyPoint": "黑板架构",
+        "explanation": "中央数据结构起到数据处理单元的作用。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
+    },
+    {
+      "id": "q2025x-67",
+      "year": "2025",
+      "semester": "上",
+      "number": 67,
+      "topic": "math",
+      "subTopic": "组合计算",
+      "difficulty": "medium",
+      "type": "choice",
+      "text": "当前系统中有5个对象，每个对象有2种不同的取值，所有取值都组合一遍，一共有多少组合。",
+      "options": [
+        {
+          "label": "A",
+          "text": "25"
+        },
+        {
+          "label": "B",
+          "text": "32"
+        },
+        {
+          "label": "C",
+          "text": "10"
+        },
+        {
+          "label": "D",
+          "text": "20"
+        }
+      ],
+      "answer": "B",
+      "analysis": {
+        "keyPoint": "组合计算",
+        "explanation": "总的取值组合是2的5次方=32。"
+      },
+      "isRealQuestion": true,
+      "sourceType": "recall",
+      "sourceYear": "2025"
     }
   ]
 }
