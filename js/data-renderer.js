@@ -905,8 +905,8 @@ const QuestionsRenderer = {
             card.innerHTML = `
                 <div class="question-header">
                     <div class="question-meta">
-                        <div class="question-number">第${q.number}题</div>
-                        <div class="year-tag">${q.year}${q.semester}</div>
+                        <div class="question-number">第${q.number || (index + 1)}题</div>
+                        <div class="year-tag">${q.year || ''}年${q.semester || ''}</div>
                         <div class="topic-tag ${topicClass}">${topicName}</div>
                         <div class="question-type-badge">选择题</div>
                     </div>
@@ -936,9 +936,9 @@ const QuestionsRenderer = {
                         <div class="analysis-box">
                             <div class="analysis-title">解析说明</div>
                             <div class="analysis-text">
-                                <p><strong>知识点：${q.analysis?.keyPoint || q.subTopic}</strong></p>
-                                <p style="margin-top:5px;">${q.analysis?.explanation || ''}</p>
-                                ${q.analysis?.optionAnalysis ? `
+                                <p><strong>知识点：${(q.analysis && q.analysis.keyPoint) || q.subTopic || '综合应用'}</strong></p>
+                                <p style="margin-top:5px;">${(q.analysis && q.analysis.explanation) || '请结合题目内容进行分析'}</p>
+                                ${(q.analysis && q.analysis.optionAnalysis) ? `
                                     <p style="margin-top:8px;"><strong>选项分析：</strong></p>
                                     ${q.analysis.optionAnalysis.map(oa => `<p>• ${oa}</p>`).join('')}
                                 ` : ''}
@@ -956,8 +956,8 @@ const QuestionsRenderer = {
             card.innerHTML = `
                 <div class="question-header">
                     <div class="question-meta">
-                        <div class="question-number">案例分析题${q.number}</div>
-                        <div class="year-tag">${q.year}${q.semester}</div>
+                        <div class="question-number">案例分析题${q.number || (index + 1)}</div>
+                        <div class="year-tag">${q.year || ''}年${q.semester || ''}</div>
                         <div class="topic-tag ${topicClass}">${topicName}</div>
                         <div class="question-type-badge">案例分析</div>
                     </div>
@@ -983,10 +983,10 @@ const QuestionsRenderer = {
                         </div>
                         ${q.subQuestions ? q.subQuestions.map(sq => `
                             <div class="analysis-box">
-                                <div class="analysis-title">${sq.question}（${sq.score}分）</div>
+                                <div class="analysis-title">${sq.question || '问题'}（${sq.score || 0}分）</div>
                                 <div class="analysis-text">${sq.answer || sq.referenceAnswer || (sq.keyPoints ? sq.keyPoints.join('<br/>') : '请结合场景分析')}</div>
                             </div>
-                        `).join('') : `<div class="analysis-box"><div class="analysis-title">参考答案</div><div class="analysis-text">${q.analysis?.keyPoints ? q.analysis.keyPoints.join('<br/>') : q.analysis?.explanation || ''}</div></div>`}
+                        `).join('') : `<div class="analysis-box"><div class="analysis-title">参考答案</div><div class="analysis-text">${(q.analysis && q.analysis.keyPoints) ? q.analysis.keyPoints.join('<br/>') : (q.analysis && q.analysis.explanation) || '请结合题目内容进行分析'}</div></div>`}
                         ${q.relatedKnowledge ? `
                             <div class="related-points">
                                 ${q.relatedKnowledge.map(rp => `<div class="related-link">→ ${rp}</div>`).join('')}
