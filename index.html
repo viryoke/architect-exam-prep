@@ -34,6 +34,8 @@
             padding: 25px;
             max-width: 1500px;
             margin: 0 auto;
+            max-height: calc(100vh - 40px);
+            overflow: hidden;
         }
 
         /* 倒计时横幅 */
@@ -104,7 +106,31 @@
             grid-template-columns: 1fr 360px;
             gap: 20px;
             min-height: calc(100vh - 250px);
+            max-height: calc(100vh - 180px);
+            overflow: hidden;
         }
+
+        /* 左侧计划区可滚动 */
+        .study-plan-section {
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #1976d2 rgba(0,0,0,0.1);
+        }
+        .study-plan-section::-webkit-scrollbar { width: 8px; }
+        .study-plan-section::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .study-plan-section::-webkit-scrollbar-thumb { background: #1976d2; border-radius: 4px; }
+
+        /* 右侧进度区可滚动 */
+        .progress-section {
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #d32f2f rgba(0,0,0,0.1);
+        }
+        .progress-section::-webkit-scrollbar { width: 8px; }
+        .progress-section::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .progress-section::-webkit-scrollbar-thumb { background: #d32f2f; border-radius: 4px; }
 
         /* 7天学习计划表格 */
         .study-plan-section {

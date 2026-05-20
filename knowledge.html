@@ -49,18 +49,43 @@
         .search-btn { padding: 8px 15px; background: #1976d2; color: #fff; border: 2px solid #1976d2; border-radius: 5px; cursor: pointer; font-family: 'ZCOOL KuaiLe', cursive; font-size: 15px; }
 
         /* 主内容区 - 确保左侧目录可见 */
-        .main-content { display: grid; grid-template-columns: 350px 1fr; gap: 20px; min-height: 600px; }
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 20px;
+            min-height: 600px;
+            max-height: calc(100vh - 180px);
+            overflow: hidden;
+        }
 
-        /* 左侧考点目录 - 确保可见 */
+        /* 左侧考点目录 - 可滚动 */
         .topic-directory {
             background: rgba(255,255,255,0.7);
             border: 3px solid #1976d2;
             border-radius: 8px;
             padding: 15px;
-            min-height: 300px;
-            display: block;
-            visibility: visible;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #1976d2 rgba(0,0,0,0.1);
         }
+        .topic-directory::-webkit-scrollbar { width: 8px; }
+        .topic-directory::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .topic-directory::-webkit-scrollbar-thumb { background: #1976d2; border-radius: 4px; }
+
+        /* 右侧内容区 - 可滚动 */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #d32f2f rgba(0,0,0,0.1);
+        }
+        .content-area::-webkit-scrollbar { width: 8px; }
+        .content-area::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .content-area::-webkit-scrollbar-thumb { background: #d32f2f; border-radius: 4px; }
         .directory-title { color: #1976d2; font-family: 'Ma Shan Zheng', cursive; font-size: 18px; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 3px solid #1976d2; text-align: center; }
         .directory-list { list-style: none; }
         .directory-item { margin-bottom: 6px; }

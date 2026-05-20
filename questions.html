@@ -55,15 +55,28 @@
         }
 
         /* 主内容区 */
-        .main-content { display: grid; grid-template-columns: 250px 1fr; gap: 20px; }
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 20px;
+            max-height: calc(100vh - 180px);
+            overflow: hidden;
+        }
 
-        /* 左侧筛选区 */
+        /* 左侧筛选区 - 可滚动 */
         .filter-panel {
             background: rgba(255,255,255,0.7);
             border: 3px solid #1976d2;
             border-radius: 8px;
-            padding: 40px 50px;
+            padding: 15px;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #1976d2 rgba(0,0,0,0.1);
         }
+        .filter-panel::-webkit-scrollbar { width: 8px; }
+        .filter-panel::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .filter-panel::-webkit-scrollbar-thumb { background: #1976d2; border-radius: 4px; }
         .filter-title {
             color: #1976d2;
             font-family: 'Ma Shan Zheng', cursive;

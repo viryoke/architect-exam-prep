@@ -56,7 +56,38 @@
         .module-subtitle { font-size: 14px; color: #666; margin-top: 5px; }
 
         /* 主内容区 */
-        .main-content { display: grid; grid-template-columns: 280px 1fr; gap: 20px; }
+        .main-content {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 20px;
+            max-height: calc(100vh - 180px);
+            overflow: hidden;
+        }
+
+        /* 左侧题型导航 - 可滚动 */
+        .essay-nav {
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #d32f2f rgba(0,0,0,0.1);
+        }
+        .essay-nav::-webkit-scrollbar { width: 8px; }
+        .essay-nav::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .essay-nav::-webkit-scrollbar-thumb { background: #d32f2f; border-radius: 4px; }
+
+        /* 右侧内容区 - 可滚动 */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #1976d2 rgba(0,0,0,0.1);
+        }
+        .content-area::-webkit-scrollbar { width: 8px; }
+        .content-area::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .content-area::-webkit-scrollbar-thumb { background: #1976d2; border-radius: 4px; }
 
         /* 左侧主题目录 */
         .topic-directory {

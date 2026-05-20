@@ -96,15 +96,39 @@
             display: grid;
             grid-template-columns: 1fr 280px;
             gap: 20px;
+            max-height: calc(100vh - 220px);
+            overflow: hidden;
         }
 
-        /* 题目展示区 */
+        /* 题目展示区 - 可滚动 */
         .question-display {
             background: rgba(255,255,255,0.7);
             border: 3px solid #1976d2;
             border-radius: 8px;
             padding: 25px;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #1976d2 rgba(0,0,0,0.1);
         }
+        .question-display::-webkit-scrollbar { width: 8px; }
+        .question-display::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .question-display::-webkit-scrollbar-thumb { background: #1976d2; border-radius: 4px; }
+
+        /* 答题卡区 - 可滚动 */
+        .answer-card {
+            background: rgba(255,255,255,0.7);
+            border: 3px solid #1976d2;
+            border-radius: 8px;
+            padding: 20px;
+            max-height: 100%;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #d32f2f rgba(0,0,0,0.1);
+        }
+        .answer-card::-webkit-scrollbar { width: 8px; }
+        .answer-card::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+        .answer-card::-webkit-scrollbar-thumb { background: #d32f2f; border-radius: 4px; }
         .question-nav {
             display: flex;
             justify-content: space-between;
@@ -194,13 +218,6 @@
         .mark-btn:hover { background: rgba(255,152,0,0.1); }
         .mark-btn.active { background: #ff9800; color: #fff; }
 
-        /* 右侧答题卡 */
-        .answer-card {
-            background: rgba(255,255,255,0.7);
-            border: 3px solid #1976d2;
-            border-radius: 8px;
-            padding: 20px;
-        }
         .card-title {
             font-family: 'Ma Shan Zheng', cursive;
             font-size: 20px;
