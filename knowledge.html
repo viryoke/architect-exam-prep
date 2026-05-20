@@ -142,19 +142,12 @@
         .topic-badge { display: inline-block; padding: 4px 10px; background: rgba(25,118,210,0.15); color: #1976d2; border: 1px solid #1976d2; border-radius: 3px; font-size: 11px; margin-right: 3px; margin-bottom: 3px; }
         .percent-badge { display: inline-block; padding: 4px 10px; background: rgba(211,47,47,0.15); color: #d32f2f; border: 1px solid #d32f2f; border-radius: 3px; font-size: 16px; font-weight: 700; }
 
-        /* 知识区域（点击考点后显示，整体可滚动） */
+        /* 知识区域（点击考点后显示，跟随content-area滚动） */
         .knowledge-section {
             display: none;
             flex-direction: column;
             gap: 15px;
-            max-height: 100%;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #388e3c rgba(0,0,0,0.1);
         }
-        .knowledge-section::-webkit-scrollbar { width: 8px; }
-        .knowledge-section::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
-        .knowledge-section::-webkit-scrollbar-thumb { background: #388e3c; border-radius: 4px; }
         .knowledge-section.active { display: flex; }
 
         /* 知识图谱（参与滚动） */
@@ -163,7 +156,6 @@
             border: 3px solid #388e3c;
             border-radius: 8px;
             padding: 15px;
-            flex-shrink: 0;
         }
 
         /* 下方内容（参与滚动） */
