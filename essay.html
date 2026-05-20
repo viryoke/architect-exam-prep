@@ -212,6 +212,18 @@
         }
         .scoring-table tr:hover td { background: rgba(211,47,47,0.1); }
         .score-weight { font-weight: 700; color: #d32f2f; }
+        .scoring-note {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255,152,0,0.1);
+            border: 2px solid #ff9800;
+            border-radius: 8px;
+        }
+        .scoring-note p {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
 
         /* 范文列表区域 */
         .essay-section { display: none; }
@@ -431,7 +443,7 @@
 
                     <!-- 评分标准 -->
                     <div class="scoring-card">
-                        <div class="card-title red">📊 论文评分标准（满分45分）</div>
+                        <div class="card-title red">📊 论文评分标准（满分75分）</div>
                         <table class="scoring-table">
                             <thead>
                                 <tr>
@@ -443,37 +455,40 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>内容完整性</td>
-                                    <td class="score-weight">15分</td>
-                                    <td>框架完整、论述充分、案例详实</td>
-                                    <td>缺段落-5分，论述不足-3分</td>
-                                </tr>
-                                <tr>
-                                    <td>技术深度</td>
+                                    <td>概述部分</td>
                                     <td class="score-weight">10分</td>
-                                    <td>架构设计合理、技术选择有依据</td>
-                                    <td>技术描述模糊-3分，选择无依据-2分</td>
+                                    <td>项目背景清晰、问题描述准确、解决方案概述合理</td>
+                                    <td>背景不明-3分，问题不清-2分</td>
                                 </tr>
                                 <tr>
-                                    <td>实践能力</td>
+                                    <td>正文论述</td>
+                                    <td class="score-weight">45分</td>
+                                    <td>架构设计合理、技术分析深入、问题解决过程详实</td>
+                                    <td>论述空洞-10分，技术模糊-5分</td>
+                                </tr>
+                                <tr>
+                                    <td>总结部分</td>
                                     <td class="score-weight">10分</td>
-                                    <td>有实际项目经验、能解决实际问题</td>
-                                    <td>纯理论无实践-5分</td>
+                                    <td>总结到位、经验提炼、展望合理</td>
+                                    <td>缺总结-5分，总结浅显-2分</td>
                                 </tr>
                                 <tr>
-                                    <td>表达能力</td>
+                                    <td>整体质量</td>
                                     <td class="score-weight">5分</td>
-                                    <td>语言流畅、逻辑清晰、结构合理</td>
+                                    <td>结构完整、逻辑清晰、表达流畅</td>
                                     <td>逻辑混乱-2分，表达不清-1分</td>
                                 </tr>
                                 <tr>
-                                    <td>字数要求</td>
+                                    <td>字数达标</td>
                                     <td class="score-weight">5分</td>
                                     <td>字数达标（2500字左右）</td>
                                     <td>字数不足-5分</td>
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="scoring-note">
+                            <p>💡 注意：论文字数要求约2500字，考试时间90分钟。概述约350字、正文约1800字、总结约300字。</p>
+                        </div>
                     </div>
 
                     <!-- 项目素材准备 -->
